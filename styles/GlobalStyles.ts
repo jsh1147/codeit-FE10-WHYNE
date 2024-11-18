@@ -14,6 +14,12 @@ const GlobalStyle = createGlobalStyle`
     --white: #FFFFFF;
   }
 
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+  }
+
   a {
     text-decoration: none;
     color: inherit;
@@ -42,6 +48,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    min-width: 375px;
     color: var(--gray-800);
     word-break: keep-all;
     font-family: "Pretendard", sans-serif;
