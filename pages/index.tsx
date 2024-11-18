@@ -6,7 +6,9 @@ export default function Home() {
       <Head>
         <title>WINE</title>
       </Head>
-      <main></main>
+      <main>
+        ㅁ
+      </main>
     </>
   );
 }
