@@ -13,6 +13,17 @@
 
 <br />
 
+## 💻 프로젝트 설치
+
+```
+git clone https://github.com/jsh1147/codeit-FE10-WINE.git
+cd codeit-FE10-WINE
+npm install
+npx husky
+```
+
+<br />
+
 ## 👩‍💻 팀원 소개
 
 <div align="center">
@@ -72,6 +83,7 @@
 ```
 codeit-FE10-WINE
 ├─ .github               : GitHub 설정
+├─ .husky                : Husky 설정
 ├─ apis                  : 통신 API
 ├─ components            : 컴포넌트
 │   ├─ common            : 공용 컴포넌트
