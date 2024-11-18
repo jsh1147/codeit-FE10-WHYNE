@@ -65,8 +65,8 @@ npx husky
 
 - **FE 기술**
 
-  - <img src="https://img.shields.io/badge/html-FF6F00?logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/css-0051FF?logo=css3"/> <img src="https://img.shields.io/badge/javascript-F7DF1E?logo=javascript&logoColor=black"/>
-  - <img src="https://img.shields.io/badge/react-91E3FF?logo=react&logoColor=087EA4"/> <img src="https://img.shields.io/badge/typescript-3178C6?logo=typescript&logoColor=ffffff"/> <img src="https://img.shields.io/badge/axios-5A29E4?logo=axios"/>
+  - <img src="https://img.shields.io/badge/html-FF6F00?logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/css-0051FF?logo=css3"/> <img src="https://img.shields.io/badge/javascript-F7DF1E?logo=javascript&logoColor=black"/> <img src="https://img.shields.io/badge/typescript-3178C6?logo=typescript&logoColor=ffffff"/> <img src="https://img.shields.io/badge/react-91E3FF?logo=react&logoColor=087EA4"/>
+  - <img src="https://img.shields.io/badge/axios-5A29E4?logo=axios"/> <img src="https://img.shields.io/badge/styled_components-DB7093?logo=styledcomponents&logoColor=ffff00"/>
 
 - **품질 관리**
 
