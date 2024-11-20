@@ -2,276 +2,88 @@ import Image from 'next/image';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
-import sample from '@/public/images/sample.png';
-import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
-import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import { fetchRecommendedWines } from '@/apis/wineListApi';
+import { RecommendWines } from '@/types/wineListTypes';
+import { toDecimalFormat } from '@/utils/toDecimalFormat';
 import StarIcon from '@mui/icons-material/Star';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { NextArrowBtn, PrevArrowBtn } from './SliderArrowButtons';
 import * as S from './MonthlyWineSection.css';
 
-interface ArrowBtnProps {
-  className?: string;
-  onClick?: () => void;
-}
-
-function NextArrowBtn({ className, onClick }: ArrowBtnProps) {
-  return (
-    <S.StyledArrowBtn className={className} onClick={onClick}>
-      <ArrowForwardRoundedIcon htmlColor="var(--gray-300)" />
-    </S.StyledArrowBtn>
-  );
-}
-
-function PrevArrowBtn({ className, onClick }: ArrowBtnProps) {
-  return (
-    <S.StyledArrowBtn className={className} onClick={onClick}>
-      <ArrowBackRoundedIcon htmlColor="var(--gray-300)" />
-    </S.StyledArrowBtn>
-  );
-}
-
 export default function MonthlyWineSection() {
+  const [recommendedList, setRecommendedList] = useState<RecommendWines[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const settings = {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 5,
     slidesToScroll: 1,
+    variableWidth: true,
     nextArrow: <NextArrowBtn />, // 화살표 버튼을 커스텀해서 사용
     prevArrow: currentIndex > 0 ? <PrevArrowBtn /> : undefined, // 인덱스가 0보다 클 때만 prev 버튼 렌더링
     beforeChange: (oldIndex: number, newIndex: number) =>
       setCurrentIndex(newIndex), // 인덱스 업데이트
   };
+
+  useEffect(() => {
+    const getRecommendedWines = async () => {
+      try {
+        const wines: RecommendWines[] = await fetchRecommendedWines(10); // limit 값을 전달
+        //TODO: 테스트를 위한 코드 수정 필요
+        //setRecommendedList(wines || []);
+        setRecommendedList([...wines, ...wines, ...wines]);
+      } catch (error) {
+        console.error('추천와인 불러오기 에러:', error);
+      }
+    };
+
+    getRecommendedWines();
+  }, []);
+
   return (
     <section className="container">
       <S.MonthlyWineContainer>
         <S.WinesPageSectionTitle>이번 달 추천 와인</S.WinesPageSectionTitle>
         <S.MonthlyWineCardContainer>
           <S.StyledSlider {...settings}>
-            <S.MonthlyWineCard key={0}>
-              <S.MonthlyWineCardContent>
-                <S.CardThumbnail>
-                  <S.ImageWrapper>
-                    <Image
-                      priority
-                      src={sample}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      alt="와인이미지"
-                      sizes="(min-width: 768px) 44px, 38px"
-                    />
-                  </S.ImageWrapper>
-                </S.CardThumbnail>
-                <S.MonthlyWineCardInfo>
-                  <p>4.8</p>
-                  <S.CustomRating
-                    name="size-small"
-                    defaultValue={Math.floor(4.8)}
-                    size="small"
-                    readOnly
-                    emptyIcon={
-                      <StarIcon
-                        style={{ fill: `var(--gray-300)` }}
-                        fontSize="inherit"
+            {recommendedList.map((item, idx) => (
+              <S.MonthlyWineCard key={idx}>
+                <S.MonthlyWineCardContent>
+                  <S.CardThumbnail>
+                    <S.ImageWrapper>
+                      <Image
+                        priority
+                        src={item.image}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        alt="와인이미지"
+                        sizes="(min-width: 768px) 100vw"
                       />
-                    }
-                  />
-
-                  <S.MonthlyWineCardInfoText>
-                    <span>Sentinel</span>
-                    <span>Carrot</span>
-                    <span>Say 2016</span>
-                  </S.MonthlyWineCardInfoText>
-                </S.MonthlyWineCardInfo>
-              </S.MonthlyWineCardContent>
-            </S.MonthlyWineCard>
-            <S.MonthlyWineCard key={1}>
-              <S.MonthlyWineCardContent>
-                <S.CardThumbnail>
-                  <S.ImageWrapper>
-                    <Image
-                      priority
-                      src={sample}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      alt="와인이미지"
-                      sizes="(min-width: 768px) 44px, 38px"
+                    </S.ImageWrapper>
+                  </S.CardThumbnail>
+                  <S.MonthlyWineCardInfo>
+                    {/* NOTE: 정수일 때, 소수점 처리 */}
+                    <p>{toDecimalFormat(item.avgRating)}</p>
+                    <S.CustomRating
+                      name="size-small"
+                      defaultValue={Math.floor(item.avgRating)}
+                      size="small"
+                      readOnly
+                      emptyIcon={
+                        <StarIcon
+                          style={{ fill: `var(--gray-300)` }}
+                          fontSize="inherit"
+                        />
+                      }
                     />
-                  </S.ImageWrapper>
-                </S.CardThumbnail>
-                <S.MonthlyWineCardInfo>
-                  <p>4.8</p>
-                  <S.CustomRating
-                    name="size-small"
-                    defaultValue={Math.floor(4.8)}
-                    size="small"
-                    readOnly
-                    emptyIcon={
-                      <StarIcon
-                        style={{ fill: `var(--gray-300)` }}
-                        fontSize="inherit"
-                      />
-                    }
-                  />
 
-                  <S.MonthlyWineCardInfoText>
-                    <span>Sentinel</span>
-                    <span>Carrot</span>
-                    <span>Say 2016</span>
-                  </S.MonthlyWineCardInfoText>
-                </S.MonthlyWineCardInfo>
-              </S.MonthlyWineCardContent>
-            </S.MonthlyWineCard>
-            <S.MonthlyWineCard key={2}>
-              <S.MonthlyWineCardContent>
-                <S.CardThumbnail>
-                  <S.ImageWrapper>
-                    <Image
-                      priority
-                      src={sample}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      alt="와인이미지"
-                      sizes="(min-width: 768px) 44px, 38px"
-                    />
-                  </S.ImageWrapper>
-                </S.CardThumbnail>
-                <S.MonthlyWineCardInfo>
-                  <p>4.8</p>
-                  <S.CustomRating
-                    name="size-small"
-                    defaultValue={Math.floor(4.8)}
-                    size="small"
-                    readOnly
-                    emptyIcon={
-                      <StarIcon
-                        style={{ fill: `var(--gray-300)` }}
-                        fontSize="inherit"
-                      />
-                    }
-                  />
-
-                  <S.MonthlyWineCardInfoText>
-                    <span>Sentinel</span>
-                    <span>Carrot</span>
-                    <span>Say 2016</span>
-                  </S.MonthlyWineCardInfoText>
-                </S.MonthlyWineCardInfo>
-              </S.MonthlyWineCardContent>
-            </S.MonthlyWineCard>
-            <S.MonthlyWineCard key={3}>
-              <S.MonthlyWineCardContent>
-                <S.CardThumbnail>
-                  <S.ImageWrapper>
-                    <Image
-                      priority
-                      src={sample}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      alt="와인이미지"
-                      sizes="(min-width: 768px) 44px, 38px"
-                    />
-                  </S.ImageWrapper>
-                </S.CardThumbnail>
-                <S.MonthlyWineCardInfo>
-                  <p>4.8</p>
-                  <S.CustomRating
-                    name="size-small"
-                    defaultValue={Math.floor(4.8)}
-                    size="small"
-                    readOnly
-                    emptyIcon={
-                      <StarIcon
-                        style={{ fill: `var(--gray-300)` }}
-                        fontSize="inherit"
-                      />
-                    }
-                  />
-
-                  <S.MonthlyWineCardInfoText>
-                    <span>Sentinel</span>
-                    <span>Carrot</span>
-                    <span>Say 2016</span>
-                  </S.MonthlyWineCardInfoText>
-                </S.MonthlyWineCardInfo>
-              </S.MonthlyWineCardContent>
-            </S.MonthlyWineCard>
-            <S.MonthlyWineCard key={3}>
-              <S.MonthlyWineCardContent>
-                <S.CardThumbnail>
-                  <S.ImageWrapper>
-                    <Image
-                      priority
-                      src={sample}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      alt="와인이미지"
-                      sizes="(min-width: 768px) 44px, 38px"
-                    />
-                  </S.ImageWrapper>
-                </S.CardThumbnail>
-                <S.MonthlyWineCardInfo>
-                  <p>4.8</p>
-                  <S.CustomRating
-                    name="size-small"
-                    defaultValue={Math.floor(4.8)}
-                    size="small"
-                    readOnly
-                    emptyIcon={
-                      <StarIcon
-                        style={{ fill: `var(--gray-300)` }}
-                        fontSize="inherit"
-                      />
-                    }
-                  />
-
-                  <S.MonthlyWineCardInfoText>
-                    <span>Sentinel</span>
-                    <span>Carrot</span>
-                    <span>Say 2016</span>
-                  </S.MonthlyWineCardInfoText>
-                </S.MonthlyWineCardInfo>
-              </S.MonthlyWineCardContent>
-            </S.MonthlyWineCard>
-            <S.MonthlyWineCard key={3}>
-              <S.MonthlyWineCardContent>
-                <S.CardThumbnail>
-                  <S.ImageWrapper>
-                    <Image
-                      priority
-                      src={sample}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      alt="와인이미지"
-                      sizes="(min-width: 768px) 44px, 38px"
-                    />
-                  </S.ImageWrapper>
-                </S.CardThumbnail>
-                <S.MonthlyWineCardInfo>
-                  <p>4.8</p>
-                  <S.CustomRating
-                    name="size-small"
-                    defaultValue={Math.floor(4.8)}
-                    size="small"
-                    readOnly
-                    emptyIcon={
-                      <StarIcon
-                        style={{ fill: `var(--gray-300)` }}
-                        fontSize="inherit"
-                      />
-                    }
-                  />
-
-                  <S.MonthlyWineCardInfoText>
-                    <span>Sentinel</span>
-                    <span>Carrot</span>
-                    <span>Say 2016</span>
-                  </S.MonthlyWineCardInfoText>
-                </S.MonthlyWineCardInfo>
-              </S.MonthlyWineCardContent>
-            </S.MonthlyWineCard>
+                    <S.MonthlyWineCardInfoText>
+                      <span>{item.name}</span>
+                    </S.MonthlyWineCardInfoText>
+                  </S.MonthlyWineCardInfo>
+                </S.MonthlyWineCardContent>
+              </S.MonthlyWineCard>
+            ))}
           </S.StyledSlider>
         </S.MonthlyWineCardContainer>
       </S.MonthlyWineContainer>
