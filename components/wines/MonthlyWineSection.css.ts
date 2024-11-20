@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import Rating, { RatingProps } from '@mui/material/Rating';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 export const WinesPageSectionTitle = styled.h2`
   color: var(--gray-800);
@@ -31,10 +29,8 @@ export const MonthlyWineCard = styled.div`
   background-color: var(--white);
   border-radius: 12px;
   flex: 0 0 auto;
-  width: 232px;
+  width: 232px !important;
   height: 185px;
-  display: flex;
-  justify-content: center;
   overflow: hidden;
 `;
 
@@ -97,7 +93,7 @@ export const StyledSlider = styled(Slider)`
 
   .slick-list {
     margin: 0 auto;
-    height: 185px; 
+    height: 185px;
   }
 
   .slick-slide {
@@ -135,13 +131,4 @@ export const StyledSlider = styled(Slider)`
       display: none;
     }
   }
-`;
-
-export const StyledArrowBtn = styled.div`
-  width: 48px;
-  height: 48px;
-  background-color: #fff;
-  border: 1px solid var(--gray-300);
-  border-radius: 50%;
-  z-index: 10;
 `;
