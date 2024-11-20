@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import Rating, { RatingProps } from '@mui/material/Rating';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 export const WinesPageSectionTitle = styled.h2`
   color: var(--gray-800);
@@ -12,7 +15,7 @@ export const MonthlyWineContainer = styled.div`
   background-color: var(--gray-100);
   border-radius: 16px;
   margin-top: 20px;
-  padding: 30px;
+  padding: 30px 0 30px 30px;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -20,11 +23,9 @@ export const MonthlyWineContainer = styled.div`
 `;
 
 export const MonthlyWineCardContainer = styled.div`
-  width: 100%; 
   gap: 15px;
   position: relative;
-  display: flex;
-  `
+`;
 
 export const MonthlyWineCard = styled.div`
   background-color: var(--white);
@@ -44,6 +45,7 @@ export const MonthlyWineCardContent = styled.div`
   height: 161px;
   display: flex;
   justify-content: space-between;
+  margin-left: 30px;
 `;
 
 export const ImageWrapper = styled.div`
@@ -81,4 +83,65 @@ export const MonthlyWineCardInfoText = styled.span`
 
 export const CustomRating = styled(Rating)<RatingProps>`
   color: var(--purple-100);
+`;
+
+export const StyledSlider = styled(Slider)`
+  .slick-prev:before,
+  .slick-next:before {
+    display: none; /* 초기화: 비활성화된 버튼 숨기기 */
+  }
+
+  .slick-arrow.slick-disabled {
+    visibility: hidden; /* 초기화: 비활성화된 버튼 숨기기 */
+  }
+
+  .slick-list {
+    margin: 0 auto;
+    height: 185px; 
+  }
+
+  .slick-slide {
+    overflow: visible;
+    margin-right: 15px;
+  }
+
+  .slick-arrow.slick-next {
+    right: 20px;
+  }
+
+  .slick-arrow.slick-prev {
+    left: -10px;
+  }
+
+  .slick-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slick-prev:hover,
+  .slick-prev:focus,
+  .slick-next:hover,
+  .slick-next:focus {
+    background-color: #fff;
+    color: var(--gray-300);
+    filter: drop-shadow(0 2px 20px rgba(0, 0, 0, 0.04));
+  }
+
+  button.slick-arrow {
+    display: none;
+
+    &:hover {
+      display: none;
+    }
+  }
+`;
+
+export const StyledArrowBtn = styled.div`
+  width: 48px;
+  height: 48px;
+  background-color: #fff;
+  border: 1px solid var(--gray-300);
+  border-radius: 50%;
+  z-index: 10;
 `;
