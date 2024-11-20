@@ -45,6 +45,12 @@ const GlobalStyle = createGlobalStyle`
     color: var(--gray-800);
     word-break: keep-all;
     font-family: "Pretendard", sans-serif;
+    box-sizing: border-box;
+  }
+
+  .container {
+    max-width: calc(100% - 780px); /* 100%에서 좌우 여백(390px * 2)을 뺀 넓이 */
+    margin: 0 auto; 
   }
 `;
 
