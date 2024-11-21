@@ -3,7 +3,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
 import { fetchRecommendedWines } from '@/apis/wineListApi';
-import { RecommendWines } from '@/types/wineListTypes';
+import { Wine } from '@/types/wineListTypes';
 import { useEffect, useState } from 'react';
 import * as S from './MonthlyWineSection.css';
 import { NextArrowBtn, PrevArrowBtn } from './SliderArrowButtons';
@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import CustomRating from '../common/CustomRating';
 
 export default function MonthlyWineSection() {
-  const [recommendedList, setRecommendedList] = useState<RecommendWines[]>([]);
+  const [recommendedList, setRecommendedList] = useState<Wine[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const router = useRouter();
 
@@ -30,7 +30,7 @@ export default function MonthlyWineSection() {
   useEffect(() => {
     const getRecommendedWines = async () => {
       try {
-        const wines: RecommendWines[] = await fetchRecommendedWines(10); // limit 값을 전달
+        const wines: Wine[] = await fetchRecommendedWines(10); // limit 값을 전달
         //TODO: 테스트를 위한 코드, 수정 필요 --> 아래코드로 fast reload 경고 발생했었다.
         // setRecommendedList([...wines, ...wines, ...wines]);
         setRecommendedList(wines || []);
@@ -80,7 +80,6 @@ export default function MonthlyWineSection() {
                       size="small"
                       readOnly
                     />
-
                     <S.MonthlyWineCardInfoText>
                       <span>{item.name}</span>
                     </S.MonthlyWineCardInfoText>
