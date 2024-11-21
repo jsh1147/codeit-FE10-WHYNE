@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Rating, { RatingProps } from '@mui/material/Rating';
 import Slider from 'react-slick';
 
 export const WinesPageSectionTitle = styled.h2`
@@ -78,9 +77,7 @@ export const MonthlyWineCardInfoText = styled.span`
   }
 `;
 
-export const CustomRating = styled(Rating)<RatingProps>`
-  color: var(--purple-100);
-`;
+
 
 export const StyledSlider = styled(Slider)`
   .slick-prev:before,

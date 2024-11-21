@@ -4,11 +4,11 @@ import 'slick-carousel/slick/slick.css';
 
 import { fetchRecommendedWines } from '@/apis/wineListApi';
 import { RecommendWines } from '@/types/wineListTypes';
-import StarIcon from '@mui/icons-material/Star';
 import { useEffect, useState } from 'react';
 import * as S from './MonthlyWineSection.css';
 import { NextArrowBtn, PrevArrowBtn } from './SliderArrowButtons';
 import { useRouter } from 'next/router';
+import CustomRating from '../common/CustomRating';
 
 export default function MonthlyWineSection() {
   const [recommendedList, setRecommendedList] = useState<RecommendWines[]>([]);
@@ -68,24 +68,17 @@ export default function MonthlyWineSection() {
                         fill
                         style={{ objectFit: 'cover' }}
                         alt="와인이미지"
-                        sizes="(min-width: 768px) 100vw"
+                        sizes="(min-width: 1200px) 50vw, 25vw"
                       />
                     </S.ImageWrapper>
                   </S.CardThumbnail>
                   <S.MonthlyWineCardInfo>
                     {/* NOTE: 정수일 때, 소수점 처리 */}
                     <p>{item.avgRating.toFixed(1)}</p>
-                    <S.CustomRating
-                      name="size-small"
-                      defaultValue={Math.floor(item.avgRating)}
+                    <CustomRating
+                      defaultValue={item.avgRating}
                       size="small"
                       readOnly
-                      emptyIcon={
-                        <StarIcon
-                          style={{ fill: `var(--gray-300)` }}
-                          fontSize="inherit"
-                        />
-                      }
                     />
 
                     <S.MonthlyWineCardInfoText>
