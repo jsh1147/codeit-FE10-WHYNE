@@ -8,10 +8,13 @@ import StarIcon from '@mui/icons-material/Star';
 import { useEffect, useState } from 'react';
 import * as S from './MonthlyWineSection.css';
 import { NextArrowBtn, PrevArrowBtn } from './SliderArrowButtons';
+import { useRouter } from 'next/router';
 
 export default function MonthlyWineSection() {
   const [recommendedList, setRecommendedList] = useState<RecommendWines[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const router = useRouter();
+
   const settings = {
     dots: false,
     infinite: false,
@@ -39,6 +42,12 @@ export default function MonthlyWineSection() {
     getRecommendedWines();
   }, []);
 
+  const handleWineClick = (wineId: number) => {
+    router.push({
+      pathname: `wines/${wineId}`,
+    });
+  };
+
   return (
     <section className="container">
       <S.MonthlyWineContainer>
@@ -46,7 +55,10 @@ export default function MonthlyWineSection() {
         <S.MonthlyWineCardContainer>
           <S.StyledSlider {...settings}>
             {recommendedList.map((item, idx) => (
-              <S.MonthlyWineCard key={idx}>
+              <S.MonthlyWineCard
+                onClick={() => handleWineClick(item.id)}
+                key={idx}
+              >
                 <S.MonthlyWineCardContent>
                   <S.CardThumbnail>
                     <S.ImageWrapper>

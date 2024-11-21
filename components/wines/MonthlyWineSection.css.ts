@@ -32,6 +32,7 @@ export const MonthlyWineCard = styled.div`
   width: 232px !important;
   height: 185px;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 export const MonthlyWineCardContent = styled.div`
