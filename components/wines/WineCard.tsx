@@ -1,11 +1,11 @@
-import Image from 'next/image';
-import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
-import * as S from './WineCard.css';
-import sample from '@/public/images/sample.png';
-import CustomRating from '../common/CustomRating';
+import { WineDetails } from '@/types/wineListTypes';
 import { toNumberFormatOfKor } from '@/utils/toNumberFormatOfKor';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import Image from 'next/image';
+import CustomRating from '../common/CustomRating';
+import * as S from './WineCard.css';
 
-export default function WineCard() {
+export default function WineCard({ wine }: { wine: WineDetails }) {
   return (
     <S.WineCardContainer className="container">
       <S.WineInfoWrapper>
@@ -13,7 +13,7 @@ export default function WineCard() {
           <S.ImageWrapper>
             <Image
               priority
-              src={sample}
+              src={wine.image}
               fill
               style={{ objectFit: 'cover' }}
               alt="와인이미지"
@@ -24,23 +24,21 @@ export default function WineCard() {
         <S.WineInfoSection>
           <S.WineInfoSectionWrapper>
             <div>
-              <S.WineInfoTitle>
-                Sentinel Carbernet Sauvignon 2016
-              </S.WineInfoTitle>
-              <S.WineInfoText>Western Cape, South Africa</S.WineInfoText>
+              <S.WineInfoTitle>{wine.name}</S.WineInfoTitle>
+              <S.WineInfoText>{wine.region}</S.WineInfoText>
             </div>
             <S.WineInfoReviewBox>
               <div aria-label="평점">
-                <strong>4.8</strong>
+                <strong>{wine.avgRating}</strong>
               </div>
               <CustomRating defaultValue={4.8} size="medium" readOnly />
               <S.WineInfoText $fontSize={'14px'} $lineHeight={'24px'}>
-                17개의 후기
+                {wine.reviewCount}개의 후기
               </S.WineInfoText>
             </S.WineInfoReviewBox>
           </S.WineInfoSectionWrapper>
           <aside>
-            <S.PriceButton>{toNumberFormatOfKor(64900)}</S.PriceButton>
+            <S.PriceButton>{toNumberFormatOfKor(wine.price)}</S.PriceButton>
             <ArrowForwardRoundedIcon htmlColor="var(--gray-300)" />
           </aside>
         </S.WineInfoSection>
@@ -49,9 +47,7 @@ export default function WineCard() {
         <S.RecentReviewWrapper>
           <h3>최신 후기</h3>
           <S.WineInfoText>
-            맛이 좋습니다 맛이 좋습니다 맛이 좋습니다맛이 좋습니다 맛이 좋습니다
-            맛이 좋습니다맛이 좋습니다맛이 좋습니다맛이 좋습니다맛이
-            좋습니다맛이 좋습니다
+            {wine.recentReview?.content || '아직 후기가 없습니다.'}
           </S.WineInfoText>
         </S.RecentReviewWrapper>
       </S.RecentReviewSection>

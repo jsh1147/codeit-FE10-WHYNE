@@ -13,7 +13,7 @@ export const PriceButton = styled.button`
 
 export const WineCardContainer = styled.section`
   max-width: 800px;
-  height: 375px;
+  /* height: 375px; */
   border: 1px solid var(--gray-300);
   border-radius: 16px;
 `;
@@ -62,6 +62,7 @@ export const WineInfoSectionWrapper = styled.div`
 export const RecentReviewSection = styled.section`
   border-top: 1px solid var(--gray-300);
   width: 100%;
+  height: 127px;
 `;
 
 export const RecentReviewWrapper = styled.div`
@@ -80,6 +81,14 @@ export const WineInfoTitle = styled.h2`
   color: var(--gray-800);
   font-weight: 600;
   margin-bottom: 20px;
+  width: 300px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
 `;
 
 export const WineInfoText = styled.p<{
@@ -91,6 +100,15 @@ export const WineInfoText = styled.p<{
   font-size: ${(props) => props.$fontSize || '16px'};
   color: var(--gray-500);
   line-height: ${(props) => props.$lineHeight || '26px'};
+  height: 52px;
+  
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
 `;
 
 export const WineInfoReviewBox = styled.div`
