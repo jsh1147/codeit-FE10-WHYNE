@@ -3,6 +3,11 @@ import { reset } from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
+
+  *, *::before, *::after {
+  box-sizing: border-box;
+}
+
   :root {
     --gray-800: #2D3034;
     --gray-500: #9FACBD;
@@ -45,7 +50,6 @@ const GlobalStyle = createGlobalStyle`
     color: var(--gray-800);
     word-break: keep-all;
     font-family: "Pretendard", sans-serif;
-    box-sizing: border-box;
   }
 
   .container {
