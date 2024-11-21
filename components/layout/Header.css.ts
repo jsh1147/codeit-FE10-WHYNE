@@ -3,10 +3,13 @@ import media from '@/styles/mediaQuery';
 import Image from 'next/image';
 
 export const Header = styled.header`
+  position: fixed;
+  inset: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px 0;
+  background-color: white;
 
   ${media.tablet`
     padding: 24px 20px;
@@ -17,7 +20,8 @@ export const Header = styled.header`
   `}
 `;
 
-export const ContainerDiv = styled.div`
+export const HeaderContainer = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -38,12 +42,12 @@ export const ContainerDiv = styled.div`
   `}
 `;
 
-export const LogoImage = styled(Image)`
+export const Logo = styled(Image)`
   width: 49px;
   height: 15px;
 `;
 
-export const AccountDiv = styled.div`
+export const AccountBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;

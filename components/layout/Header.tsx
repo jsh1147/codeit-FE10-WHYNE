@@ -9,20 +9,20 @@ export default function Header() {
 
   return (
     <S.Header>
-      <S.ContainerDiv>
+      <S.HeaderContainer>
         <Link href="/" aria-label="메인 페이지 바로가기">
-          <S.LogoImage src={whiteLogo} alt="WINE 로고" />
+          <S.Logo src={whiteLogo} alt="WINE 로고" />
         </Link>
         {!isLoading &&
           (user ? (
             <Profile />
           ) : (
-            <S.AccountDiv>
+            <S.AccountBox>
               <Link href="/login">로그인</Link>
               <Link href="/signup">회원가입</Link>
-            </S.AccountDiv>
+            </S.AccountBox>
           ))}
-      </S.ContainerDiv>
+      </S.HeaderContainer>
     </S.Header>
   );
 }

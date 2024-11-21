@@ -26,6 +26,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button, input, textarea, select {
+    margin: 0;
+    padding: 0;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
