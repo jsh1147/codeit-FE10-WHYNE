@@ -4,11 +4,10 @@ import 'slick-carousel/slick/slick.css';
 
 import { fetchRecommendedWines } from '@/apis/wineListApi';
 import { RecommendWines } from '@/types/wineListTypes';
-import { toDecimalFormat } from '@/utils/toDecimalFormat';
 import StarIcon from '@mui/icons-material/Star';
 import { useEffect, useState } from 'react';
-import { NextArrowBtn, PrevArrowBtn } from './SliderArrowButtons';
 import * as S from './MonthlyWineSection.css';
+import { NextArrowBtn, PrevArrowBtn } from './SliderArrowButtons';
 
 export default function MonthlyWineSection() {
   const [recommendedList, setRecommendedList] = useState<RecommendWines[]>([]);
@@ -29,9 +28,9 @@ export default function MonthlyWineSection() {
     const getRecommendedWines = async () => {
       try {
         const wines: RecommendWines[] = await fetchRecommendedWines(10); // limit 값을 전달
-        //TODO: 테스트를 위한 코드 수정 필요
-        //setRecommendedList(wines || []);
-        setRecommendedList([...wines, ...wines, ...wines]);
+        //TODO: 테스트를 위한 코드, 수정 필요 --> 아래코드로 fast reload 경고 발생했었다.
+        // setRecommendedList([...wines, ...wines, ...wines]);
+        setRecommendedList(wines || []);
       } catch (error) {
         console.error('추천와인 불러오기 에러:', error);
       }
@@ -63,7 +62,7 @@ export default function MonthlyWineSection() {
                   </S.CardThumbnail>
                   <S.MonthlyWineCardInfo>
                     {/* NOTE: 정수일 때, 소수점 처리 */}
-                    <p>{toDecimalFormat(item.avgRating)}</p>
+                    <p>{item.avgRating.toFixed(1)}</p>
                     <S.CustomRating
                       name="size-small"
                       defaultValue={Math.floor(item.avgRating)}
