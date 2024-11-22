@@ -3,17 +3,19 @@ import WineCard from './WineCard';
 import * as S from './WineCardList.css';
 
 interface WineCardListProps {
-  allWineList: WineDetails[];
+  wineList: WineDetails[];
 }
 
 export default function WineCardList(props: WineCardListProps) {
-  console.log(props.allWineList);
+  const { wineList } = props;
 
   return (
-    <S.WineCardListContainer>
-      {props.allWineList.map((wine) => (
-        <WineCard key={wine.id} wine={wine} />
-      ))}
-    </S.WineCardListContainer>
+    <>
+      <S.WineCardListContainer>
+        {wineList.map((wine) => (
+          <WineCard key={wine.id} wine={wine} />
+        ))}
+      </S.WineCardListContainer>
+    </>
   );
 }

@@ -4,4 +4,5 @@ export const WineCardListContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 62px;
+  margin-top: 62px;
 `;

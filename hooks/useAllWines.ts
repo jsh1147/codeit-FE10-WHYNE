@@ -1,6 +1,6 @@
 import { fetchAllWines } from '@/apis/wineListApi';
 import { WineDetails } from '@/types/wineListTypes';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 export interface UseAllWinesProps {
   cursor?: number;
@@ -11,13 +11,21 @@ export interface UseAllWinesProps {
   name?: string;
 }
 
-export const useAllWines = (props: UseAllWinesProps) => {
+type UseAllWinesReturnType = [
+  WineDetails[], // allWineList
+  UseAllWinesProps, // condition
+  Dispatch<SetStateAction<UseAllWinesProps>>, // setCondition
+];
+
+export const useAllWines = (props: UseAllWinesProps): UseAllWinesReturnType => {
+  const [condition, setCondition] = useState<UseAllWinesProps>(props);
   const [allWineList, setAllWineList] = useState<WineDetails[]>([]);
 
   useEffect(() => {
     const fetchWines = async () => {
       try {
-        const wines = await fetchAllWines({ limit: 10, ...props });
+        const wines = await fetchAllWines({ limit: 10, ...condition });
+        console.log('모든 와인 불러오기:', wines);
         setAllWineList(wines || []);
       } catch (error) {
         console.error('모든 와인 불러오기 에러:', error);
@@ -25,7 +33,7 @@ export const useAllWines = (props: UseAllWinesProps) => {
     };
 
     fetchWines();
-  }, [props]);
+  }, [condition]);
 
-  return allWineList;
+  return [allWineList, condition, setCondition];
 };
