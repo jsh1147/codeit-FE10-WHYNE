@@ -1,19 +1,19 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
-import * as S from './MonthlyWineSection.css';
 import { fetchRecommendedWines } from '@/apis/wineListApi';
+import { useWineNavigation } from '@/hooks/useWineNavigation';
 import { Wine } from '@/types/wineListTypes';
-import { NextArrowBtn, PrevArrowBtn } from './SliderArrowButtons';
 import CustomRating from '../common/CustomRating';
+import * as S from './MonthlyWineSection.css';
+import { NextArrowBtn, PrevArrowBtn } from './SliderArrowButtons';
 
 export default function MonthlyWineSection() {
   const [recommendedList, setRecommendedList] = useState<Wine[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const router = useRouter();
+  const navigateToWine = useWineNavigation();
 
   const settings = {
     dots: false,
@@ -42,12 +42,6 @@ export default function MonthlyWineSection() {
     getRecommendedWines();
   }, []);
 
-  const handleWineClick = (wineId: number) => {
-    router.push({
-      pathname: `wines/${wineId}`,
-    });
-  };
-
   return (
     <section className="container">
       <S.MonthlyWineContainer>
@@ -56,7 +50,7 @@ export default function MonthlyWineSection() {
           <S.StyledSlider {...settings}>
             {recommendedList.map((item, idx) => (
               <S.MonthlyWineCard
-                onClick={() => handleWineClick(item.id)}
+                onClick={() => navigateToWine(item.id)}
                 key={idx}
               >
                 <S.MonthlyWineCardContent>

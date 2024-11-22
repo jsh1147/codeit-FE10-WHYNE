@@ -1,21 +1,17 @@
+import { useWineNavigation } from '@/hooks/useWineNavigation';
 import { WineDetails } from '@/types/wineListTypes';
 import { toNumberFormatOfKor } from '@/utils/toNumberFormatOfKor';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import Image from 'next/image';
 import CustomRating from '../common/CustomRating';
 import * as S from './WineCard.css';
-import { useRouter } from 'next/router';
 
 export default function WineCard({ wine }: { wine: WineDetails }) {
-  const router = useRouter();
+  
+  const navigateToWine = useWineNavigation();
 
-  const handleWineClick = (wineId: number) => {
-    router.push({
-      pathname: `wines/${wineId}`,
-    });
-  };
   return (
-    <S.WineCardContainer onClick={() => handleWineClick(wine.id)}>
+    <S.WineCardContainer onClick={() => navigateToWine(wine.id)}>
       <S.WineInfoWrapper>
         <S.WineImageThumbnail>
           <S.ImageWrapper>
