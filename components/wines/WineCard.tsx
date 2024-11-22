@@ -4,10 +4,18 @@ import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import Image from 'next/image';
 import CustomRating from '../common/CustomRating';
 import * as S from './WineCard.css';
+import { useRouter } from 'next/router';
 
 export default function WineCard({ wine }: { wine: WineDetails }) {
+  const router = useRouter();
+
+  const handleWineClick = (wineId: number) => {
+    router.push({
+      pathname: `wines/${wineId}`,
+    });
+  };
   return (
-    <S.WineCardContainer className="container">
+    <S.WineCardContainer onClick={() => handleWineClick(wine.id)}>
       <S.WineInfoWrapper>
         <S.WineImageThumbnail>
           <S.ImageWrapper>
@@ -29,9 +37,13 @@ export default function WineCard({ wine }: { wine: WineDetails }) {
             </div>
             <S.WineInfoReviewBox>
               <div aria-label="평점">
-                <strong>{wine.avgRating}</strong>
+                <strong>{wine.avgRating.toFixed(1)}</strong>
               </div>
-              <CustomRating defaultValue={4.8} size="medium" readOnly />
+              <CustomRating
+                defaultValue={wine.avgRating}
+                size="medium"
+                readOnly
+              />
               <S.WineInfoText $fontSize={'14px'} $lineHeight={'24px'}>
                 {wine.reviewCount}개의 후기
               </S.WineInfoText>

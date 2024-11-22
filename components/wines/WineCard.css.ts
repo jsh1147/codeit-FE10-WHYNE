@@ -13,14 +13,13 @@ export const PriceButton = styled.button`
 
 export const WineCardContainer = styled.section`
   max-width: 800px;
-  /* height: 375px; */
   border: 1px solid var(--gray-300);
   border-radius: 16px;
+  cursor: pointer;
 `;
 
 export const WineImageThumbnail = styled.figure`
   width: 60px;
-  height: 208px;
   margin-top: 40px;
   margin-left: 60px;
   overflow-y: hidden;
@@ -101,7 +100,7 @@ export const WineInfoText = styled.p<{
   color: var(--gray-500);
   line-height: ${(props) => props.$lineHeight || '26px'};
   height: 52px;
-  
+
   text-overflow: ellipsis;
   overflow: hidden;
 
