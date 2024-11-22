@@ -25,7 +25,7 @@ interface fetchAllWinesProps {
   name?: string;
 }
 
-export const fetchAllWines = async (
+export const fetchWineList = async (
   props: fetchAllWinesProps,
 ): Promise<WineDetails[]> => {
   // 기본값 설정

@@ -1,16 +1,17 @@
 // import MonthlyWineSection from '@/components/wines/MonthlyWineSection';
 import SearchBar from '@/components/wines/SearchBar';
-import WineCardList from '@/components/wines/WineCardList';
-import { useAllWines } from '@/hooks/useAllWines';
+import WineCardList, {
+  WineCardListProps,
+} from '@/components/wines/WineCardList';
+import { useState } from 'react';
 
 export default function WineListPage(): React.ReactElement {
-  const [allWineList, condition, setCondition] = useAllWines({ cursor: 0 });
+  const [filterOptions, setFilterOptions] = useState<WineCardListProps>({});
 
   const searchByKeyword = (keyword: string) => {
-    console.log('WineListPage:searchKeyword:', keyword);
-    const newCondition = { ...condition };
-    newCondition.name = keyword;
-    setCondition(newCondition);
+    const newFilterOptions = { ...filterOptions };
+    newFilterOptions.name = keyword;
+    setFilterOptions(newFilterOptions);
   };
 
   return (
@@ -18,7 +19,7 @@ export default function WineListPage(): React.ReactElement {
       {/* <MonthlyWineSection /> */}
       <SearchBar searchByKeyword={searchByKeyword} />
 
-      <WineCardList wineList={allWineList} />
+      <WineCardList {...filterOptions} />
     </>
   );
 }
