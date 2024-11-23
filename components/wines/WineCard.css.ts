@@ -16,6 +16,7 @@ export const WineCardContainer = styled.section`
   border: 1px solid var(--gray-300);
   border-radius: 16px;
   cursor: pointer;
+  margin-top: 42px;
 `;
 
 export const WineImageThumbnail = styled.figure`

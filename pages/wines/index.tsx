@@ -18,7 +18,6 @@ export default function WineListPage(): React.ReactElement {
     <>
       {/* <MonthlyWineSection /> */}
       <SearchBar searchByKeyword={searchByKeyword} />
-
       <WineCardList {...filterOptions} />
     </>
   );
