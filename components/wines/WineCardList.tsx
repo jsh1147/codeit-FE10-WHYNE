@@ -1,4 +1,4 @@
-import { useWineList } from '@/hooks/useAllWines';
+import { useWineList } from '@/hooks/useWineList';
 import { WineDetails } from '@/types/wineListTypes';
 import { useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -16,43 +16,28 @@ export interface WineCardListProps {
 export default function WineCardList(props: WineCardListProps) {
   const [wines, setWines] = useState<WineDetails[]>([]);
   const cursorRef = useRef<number>();
-  const [wineList, setOptions] = useWineList({
+  const [wineList, nextCursor, setOptions] = useWineList({
     ...props,
     cursor: cursorRef.current,
   });
+  const [hasMore, setHasMore] = useState(true);
 
   const fetchMoreWines = async () => {
-    console.log('fetchMoreWines', cursorRef.current);
-
     setOptions((prev) => ({
       ...prev,
       cursor: cursorRef.current,
     }));
   };
 
-  const [hasMore, setHasMore] = useState(true);
-
   useEffect(() => {
-    if (wineList.length === 0) {
-      setHasMore(false);
-    } else {
-      setHasMore(true);
-    }
+    setHasMore(nextCursor !== null)
+    setWines((prevWines) => {
+      const wineIds = new Set(prevWines.map((w) => w.id)); // 현재 상태의 ID를 Set으로 만듦
+      const newWines = wineList.filter((wine) => !wineIds.has(wine.id)); // 중복 제거
+      cursorRef.current = nextCursor;
 
-    const newWines = [];
-    for (const wine of wineList) {
-      if (!wines.find((w) => w.id === wine.id)) {
-        newWines.push(wine);
-      }
-    }
-
-    if (newWines.length === 0) {
-    } else {
-      cursorRef.current = newWines[newWines.length - 1].id;
-      setWines([...wines, ...newWines]);
-    }
-
-    console.log('wines', wines);
+      return [...prevWines, ...newWines];
+    });
   }, [wineList]);
 
   return (

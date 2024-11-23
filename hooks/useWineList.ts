@@ -2,7 +2,7 @@ import { fetchWineList } from '@/apis/wineListApi';
 import { WineDetails } from '@/types/wineListTypes';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-export interface FetchAllWinesOptions {
+interface useWineListProps {
   cursor?: number;
   type?: 'RED' | 'WHITE' | 'SPARKLING';
   minPrice?: number;
@@ -13,21 +13,24 @@ export interface FetchAllWinesOptions {
 
 type UseWineListReturnType = [
   WineDetails[], // allWineList
-  Dispatch<SetStateAction<FetchAllWinesOptions>>, // setCondition
+  number | undefined, // nextCursor
+  Dispatch<SetStateAction<useWineListProps>>, // setCondition
 ];
 
 export const useWineList = (
-  props: FetchAllWinesOptions,
+  props: useWineListProps,
 ): UseWineListReturnType => {
-  const [options, setOptions] = useState<FetchAllWinesOptions>(props);
+  const [options, setOptions] = useState<useWineListProps>(props);
   const [wineList, setWineList] = useState<WineDetails[]>([]);
+  const [nextCursor, setNextCursor] = useState<number>();
 
   useEffect(() => {
     const fetchWines = async () => {
       try {
-        const wines = await fetchWineList({ limit: 10, ...options });
-        console.log('모든 와인 불러오기:', wines);
-        setWineList(wines || []);
+        const data = await fetchWineList({ limit: 10, ...options });
+        console.log('모든 와인 불러오기:', data);
+        setWineList(data.list || []);
+        setNextCursor(data.nextCursor);
       } catch (error) {
         console.error('모든 와인 불러오기 에러:', error);
       }
@@ -36,5 +39,5 @@ export const useWineList = (
     fetchWines();
   }, [options]);
 
-  return [wineList, setOptions];
+  return [wineList, nextCursor, setOptions];
 };
