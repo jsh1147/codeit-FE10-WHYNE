@@ -1,4 +1,4 @@
-import { FormControlLabel, Radio, Slider } from '@mui/material';
+import { Slider } from '@mui/material';
 import styled from 'styled-components';
 
 export const FilterOptionTitle = styled.h3`
@@ -91,36 +91,5 @@ export const FilterPriceSlider = styled(Slider)`
     &:before {
       display: none;
     }
-  }
-`;
-
-export const StyledFormControlLabel = styled(FormControlLabel)`
-  .Mui-checked {
-    color: var(--purple-100);
-  }
-
-  .MuiSvgIcon-root {
-    fill: var(--purple-100);
-    border-radius: 6px;
-  }
-  
-`;
-
-export const StyledRadio = styled(Radio)`
-  .MuiRadio-root {
-    border-radius: 0; /* 네모 모양으로 변경 */
-    border: 2px solid var(--purple-100); /* 테두리 색상 */
-    padding: 4px; /* 테두리가 표시되도록 공간 확보 */
-  }
-
-  .MuiSvgIcon-root {
-    width: 18px;
-    height: 18px;
-    border-radius: 0; /* SVG 아이콘도 네모 모양으로 변경 */
-  }
-
-  &.Mui-checked {
-    background-color: var(--purple-100); /* 체크된 상태 색상 */
-    border: 2px solid var(--purple-100); /* 체크된 상태 테두리 색상 */
   }
 `;

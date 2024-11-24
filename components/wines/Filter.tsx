@@ -1,5 +1,5 @@
 import { toNumberFormatOfKor } from '@/utils/toNumberFormatOfKor';
-import { Radio, RadioGroup } from '@mui/material';
+import CustomizedRadios from './CustomRadio';
 import * as S from './Filter.css';
 
 export default function Filter() {
@@ -37,33 +37,7 @@ export default function Filter() {
         </S.FilterPriceSliderWrapper>
       </S.FilterPriceContainer>
       <S.FilterOptionTitle>RATING</S.FilterOptionTitle>
-      <RadioGroup name="use-radio-group" defaultValue="4.5 - 4.0">
-        <S.StyledFormControlLabel
-          value="전체"
-          label="전체"
-          control={<Radio />}
-        />
-        <S.StyledFormControlLabel
-          value="5.0 - 4.5"
-          label="5.0 - 4.5"
-          control={<S.StyledRadio />}
-        />
-        <S.StyledFormControlLabel
-          value="4.5 - 4.0"
-          label="4.5 - 4.0"
-          control={<Radio />}
-        />
-        <S.StyledFormControlLabel
-          value="4.0 - 3.5"
-          label="4.0 - 3.5"
-          control={<Radio />}
-        />
-        <S.StyledFormControlLabel
-          value="3.5 - 3.0"
-          label="3.5 - 3.0"
-          control={<Radio />}
-        />
-      </RadioGroup>
+      <CustomizedRadios />
     </S.FilterContainer>
   );
 }
