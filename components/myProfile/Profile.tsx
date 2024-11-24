@@ -60,15 +60,18 @@ export default function Profile() {
                 <S.ContainerTitleWrapper>
                     <S.ContainerTitle>닉네임</S.ContainerTitle>
                 </S.ContainerTitleWrapper>
-                <S.NameEdit
-                    name="nickname"
-                    value={nickname}
-                    onChange={handleNicknameChange}
-                    placeholder="닉네임"
-                />
-                <S.EditButtonWrapper>
-                    <S.EditButton onClick={handleNicknameUpdate}>변경하기</S.EditButton>
+                <S.NameEditWrapper>
+                    <S.NameEdit
+                        name="nickname"
+                        value={nickname}
+                        onChange={handleNicknameChange}
+                        placeholder="닉네임"
+                    />
+                    <S.EditButtonWrapper>
+                        <S.EditButton onClick={handleNicknameUpdate}>변경하기</S.EditButton>
                 </S.EditButtonWrapper>
+                </S.NameEditWrapper>
+                
             </S.NameEditContainer>
         </S.ProfileContainer>
     );

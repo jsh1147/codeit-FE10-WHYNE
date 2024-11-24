@@ -6,10 +6,8 @@ export default function index() {
     return (
         <S.MyProfilePageContainer>
             <S.MyProfileContainer>
-                {/* header */}
                 <S.MyPageContentContainer>
-                    <Profile />
-                    
+                    <Profile />        
                 </S.MyPageContentContainer>
             </S.MyProfileContainer>
         </S.MyProfilePageContainer>

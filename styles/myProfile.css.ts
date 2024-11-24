@@ -17,7 +17,7 @@ export const MyProfileContainer = styled.div`
         max-width:704px;
     `}
     ${media.mobile`
-        max-width:303px;
+        max-width:343px;
     `}
 `;
 export const MyPageContentContainer = styled.div`
