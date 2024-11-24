@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import * as S from './Profile.css';
 import ProfileImage from '@/public/images/profileimg_example.png';
 import { getMe } from '@/apis/user';
+import { patchNickname } from '@/apis/myProfileApi';
 
 export default function Profile() {
     const [userInfo, setUserInfo] = useState({
         image: '',
         nickname: '',
-        name: '',
         email: '',
     });
     const [nickname, setNickname] = useState('');
@@ -15,6 +15,14 @@ export default function Profile() {
     const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNickname(event.target.value);
     };
+    const handleNicknameUpdate = async () => {
+        try {
+            await patchNickname({ nickname });
+            setUserInfo((prev) => ({ ...prev, nickname })); 
+        } catch (error) {
+            console.log('닉네임 변경중 오류 발생:', error)
+        }
+    }
 
     useEffect(() => {
         const getUserProfile = async () => {
@@ -22,14 +30,13 @@ export default function Profile() {
               const response = await getMe();
               setUserInfo({
                 image: response.image || '',
-                nickname: response.nickname || '',
-                email: 'user@example.com', // 
+                nickname: response.nickname,
+                email: 'user@example.com', //이메일 받아오는 방법 수정필요
               });
             } catch (error) {
               console.error('유저 정보 불러오기 에러:', error);
             }
         };
-
         getUserProfile(); 
     }, []);
 
@@ -60,7 +67,7 @@ export default function Profile() {
                     placeholder="닉네임"
                 />
                 <S.EditButtonWrapper>
-                    <S.EditButton>변경하기</S.EditButton>
+                    <S.EditButton onClick={handleNicknameUpdate}>변경하기</S.EditButton>
                 </S.EditButtonWrapper>
             </S.NameEditContainer>
         </S.ProfileContainer>
