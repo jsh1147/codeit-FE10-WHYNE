@@ -130,7 +130,7 @@ export const NameEdit = styled.input`
     border-radius: 16px;
     border: 1px solid var(--gray-300);
     &::placeholder {
-        color: var(--gray500);
+        color: var(--gray-500);
         font-size: 16px;
         font-weight: 400;
         line-height: 26px; 
@@ -147,12 +147,13 @@ export const NameEdit = styled.input`
     `}
 `;
 export const NameEditWrapper = styled.div`
+    display:flex;
+    flex-direction: column;
+    gap: 8px;
     ${media.tablet`
-        display:flex;
         gap:24px;
     `}
     ${media.mobile`
-        display:flex;
         flex-direction:column;
         gap:6px;
     `}
