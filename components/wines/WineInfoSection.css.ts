@@ -117,8 +117,6 @@ export const WinePrice = styled.div`
   border-radius: 12px;
   justify-content: center;
   align-items: center;
-  // color: var(--main);
-  // background-color: var(--main-10);
   width: 114px;
   height: 37px;
   margin-top: 20px;
