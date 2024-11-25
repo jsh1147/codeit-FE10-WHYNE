@@ -45,7 +45,6 @@ export default function MyReviews() {
             if (observerRef.current) {
                 observerRef.current.disconnect();
             }
-
             observerRef.current = new IntersectionObserver(
                 ([entry]) => {
                     if (entry.isIntersecting) {
@@ -53,7 +52,6 @@ export default function MyReviews() {
                     }
                 },
             );
-
             if (node) {
                 observerRef.current.observe(node);
             }
@@ -68,6 +66,7 @@ export default function MyReviews() {
 
     return (
         <S.ReviewListContainer>
+            <S.TotalCount>총 {totalCount}개</S.TotalCount>
             {reviews.map((review: Review) => (
                 <S.ReviewItem key={review.id}>
                     <S.ReviewItemTopWrapper>

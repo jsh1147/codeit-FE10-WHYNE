@@ -18,6 +18,9 @@ export const ReviewItem = styled.div`
     border-radius: 16px;
     border: 1px solid var(--gray-300);
     background: var(--white);
+    ${media.mobile`
+        padding: 16px 20px;
+    `}
 `;
 
 export const ReviewItemTopWrapper = styled.div`
@@ -35,6 +38,9 @@ export const TimeText = styled.div`
     font-size: 16px;
     font-weight: 400;
     line-height: 26px; 
+    ${media.mobile`
+        font-size:14px;
+    `}
 `;
 export const KebapIcon = styled(Image)`
     width:20px;
@@ -49,12 +55,18 @@ export const WineName = styled.div`
     font-size: 16px;
     font-weight: 500;
     line-height: 26px; 
+    ${media.mobile`
+        font-size:14px;
+    `}
 `;
 export const WineReview = styled.div`
     color: var(--gray-800);
     font-size: 16px;
     font-weight: 400;
     line-height: 26px;
+    ${media.mobile`
+        font-size:14px;
+    `}
 `;
 export const StarWrapper = styled.div`
     display: flex;
@@ -67,10 +79,29 @@ export const StarWrapper = styled.div`
 export const StarIcon = styled(Image)`
     width: 20px;
     height: 20px;
+    ${media.mobile`
+        width: 16px;
+        height:16px;
+    `}
 `;
 export const StarText = styled.div`
     color: var(--purple-100);
     font-size: 18px;
     font-weight: 700;
     line-height: 26px; 
+    ${media.mobile`
+        font-size:14px;
+    `}
+`;
+export const TotalCount = styled.div`
+    position:relative;
+    bottom:30px;
+    color: var(--purple-100);
+    text-align: right;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    ${media.mobile`
+        font-size: 12px;
+    `}
 `;

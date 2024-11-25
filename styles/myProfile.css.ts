@@ -24,7 +24,9 @@ export const MyProfileContentWrapper = styled.div`
     width:800px;
     display:flex;
     flex-direction: column;
-    gap:22px;
+    ${media.tablet`
+        width:100%;
+    `}
 `;
 export const MyProfileHeader = styled.div`
     display: flex;
@@ -38,9 +40,23 @@ export const MyProfileHeaderItem = styled.div`
     font-size: 20px;
     font-weight: 700;
     line-height: 32px;
+    ${media.tablet`
+        font-size:18px;
+    `}
+    ${media.mobile`
+        font-size:16px;
+    `}
 `;
-export const MyPageContentContainer = styled.div`
+export const MyProfileContentContainer = styled.div`
     display: flex;
     margin-top: 147px;
     gap: 60px;
+    ${media.tablet`
+        flex-direction:column;
+        margin-top:117px;
+    `}
+    ${media.mobile`
+        margin-top:105px;
+    `}
 `;
+
