@@ -24,7 +24,7 @@ const WineInfoHeader: React.FC<WineInfoProps> = ({
     currency: 'KRW',
   }).format(price);
 
-  let formattedPriceWithSpaces = formattedPrice.replace('₩', '₩ ');
+  const formattedPriceWithSpaces = formattedPrice.replace('₩', '₩ ');
 
   return (
     <S.WineInfoContainer>

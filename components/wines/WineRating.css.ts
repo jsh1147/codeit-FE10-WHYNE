@@ -18,12 +18,12 @@ export const StarLabel = styled.span`
 
 export const Bar = styled.div`
   flex: 1;
-  background-color: #e0e0e0;
+  background-color: #f2f4f8;
   margin: 0 10px;
 `;
 
 export const FilledBar = styled.div<{ percentage: number }>`
   width: ${(props) => props.percentage}%;
-  background-color: #ffc107;
+  background-color: #6a42db;
   height: 10px;
 `;

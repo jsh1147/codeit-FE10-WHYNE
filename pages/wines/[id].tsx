@@ -4,7 +4,7 @@ import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { WineDetailTypes, ReviewsType } from '@/types/wineDetailTypes';
 import { ReviewList } from '../../components/wines/ReviewList';
 import { instance } from '@/apis/instance';
-import { WineDetailInfo } from '../../components/wines/WineDetailInfo';
+import { WineInfo } from '../../components/wines/WineInfoSection';
 import { WineRating } from '../../components/wines/WineRating';
 import * as S from '../../components/wines/WineDetail.css';
 
@@ -65,13 +65,13 @@ export default function WineDetail() {
   useEffect(() => {
     if (!wineId || !hasMore) return;
     getWineReviews(wineId, wineReviews.length);
-  }, [wineId, hasMore]);
+  }, [wineId, hasMore, wineReviews.length]);
 
   if (!wine) return null;
 
   return (
     <S.WineDetailContainer>
-      <WineDetailInfo
+      <WineInfo
         id={wine.id}
         name={wine.name}
         region={wine.region}
@@ -84,9 +84,7 @@ export default function WineDetail() {
         avgRatings={wine.avgRatings}
       />
       <ReviewList reviews={wineReviews} />
-      <div ref={loadMoreRef} style={{ textAlign: 'center', padding: '20px' }}>
-        로딩 중...
-      </div>
+      <div ref={loadMoreRef}></div>
     </S.WineDetailContainer>
   );
 }

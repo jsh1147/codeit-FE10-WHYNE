@@ -1,5 +1,8 @@
 import React from 'react';
 import * as S from './WineRating.css';
+import Image from 'next/image';
+import Star from '@/public/images/icons/star.svg';
+import EmptyStar from '@/public/images/icons/emptyStar.svg';
 
 interface WineRatingProps {
   avgRating: number;
@@ -21,38 +24,39 @@ export const WineRating: React.FC<WineRatingProps> = ({
   }
 
   const fullStars = Math.floor(avgRating);
-  const halfStar = avgRating % 1 >= 0.5;
-  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+  const emptyStars = 5 - fullStars;
 
   return (
     <S.WineRatingContainer>
       <h2>{avgRating.toFixed(1)}</h2>
       <div>
         {[...Array(fullStars)].map((_, index) => (
-          <img key={`full-${index}`} src="/images/star-full.png" alt="Star" />
+          <Image
+            key={`full-${index}`}
+            src={Star}
+            alt="Star"
+            width={24}
+            height={24}
+          />
         ))}
-        {halfStar && <img src="/images/star-half.png" alt="Half Star" />}
         {[...Array(emptyStars)].map((_, index) => (
-          <img
+          <Image
             key={`empty-${index}`}
-            src="/images/star-empty.png"
+            src={EmptyStar}
             alt="Empty Star"
+            width={24}
+            height={24}
           />
         ))}
       </div>
       <p>{reviewCount}개의 후기</p>
-      <p>5점 {ratingCounts[4]}</p>
-      <p>4점 {ratingCounts[3]}</p>
-      <p>3점 {ratingCounts[2]}</p>
-      <p>2점 {ratingCounts[1]}</p>
-      <p>1점 {ratingCounts[0]}</p>
       <div>
         {[5, 4, 3, 2, 1].map((star) => {
           const count = ratingCounts[star - 1];
           const percentage = reviewCount ? (count / reviewCount) * 100 : 0;
           return (
             <S.RatingRow key={star}>
-              <S.StarLabel>{star} Stars</S.StarLabel>
+              <S.StarLabel>{star}점</S.StarLabel>
               <S.Bar>
                 <S.FilledBar percentage={percentage} />
               </S.Bar>
