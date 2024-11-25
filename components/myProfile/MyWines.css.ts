@@ -15,11 +15,16 @@ export const WineItemWrapper = styled.div`
     display:flex;
     align-items: flex-end;
 `;
+export const ItemWrapper = styled.div`
+    display: flex;
+    gap: 40px;
+`;
 export const WineItem = styled.div`
     width:100%;
     height: 228px;
-    padding: 24px 40px 30px 40px;
+    padding: 30px 40px 30px 40px;
     align-items: flex-start;
+    justify-content: space-between;
     gap: 40px;
     flex-shrink: 0;
     border-radius: 16px;
@@ -43,12 +48,18 @@ export const TotalCount = styled.div`
         font-size: 12px;
     `}
 `;
-export const WineImage = styled(Image)`
+export const ImageWrapper = styled.div`
     width:76px;
     height:270px;
     position:relative;
     bottom: 65px;
-`
+`;
+export const WineImage = styled(Image)`
+    width:76px;
+    height:270px;
+    object-fit: cover;
+    
+`;
 export const WineInfoWrapper = styled.div`
     width:300px;
     display: flex;
