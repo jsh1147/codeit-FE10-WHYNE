@@ -19,12 +19,20 @@ const GlobalStyle = createGlobalStyle`
     --white: #FFFFFF;
   }
 
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+  }
+
   a {
     text-decoration: none;
     color: inherit;
   }
 
   button, input, textarea, select {
+    margin: 0;
+    padding: 0;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
@@ -47,6 +55,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    min-width: 375px;
     color: var(--gray-800);
     word-break: keep-all;
     font-family: "Pretendard", sans-serif;
