@@ -7,9 +7,14 @@ export default function Filter() {
     <S.FilterContainer>
       <S.FilterOptionTitle>WINE TYPES</S.FilterOptionTitle>
       <S.FilterOptionBtnBox>
-        <S.FilterOptionBtn>Red</S.FilterOptionBtn>
-        <S.FilterOptionBtn>White</S.FilterOptionBtn>
-        <S.FilterOptionBtn>Sparkling</S.FilterOptionBtn>
+        <input type="radio" id="red" name="filter" defaultChecked />
+        <label htmlFor="red">Red</label>
+
+        <input type="radio" id="white" name="filter" />
+        <label htmlFor="white">White</label>
+
+        <input type="radio" id="sparkling" name="filter" />
+        <label htmlFor="sparkling">Sparkling</label>
       </S.FilterOptionBtnBox>
       <S.FilterPriceContainer>
         <S.FilterOptionTitle>PRICE</S.FilterOptionTitle>

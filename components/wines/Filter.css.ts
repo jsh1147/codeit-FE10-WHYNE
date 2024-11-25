@@ -39,9 +39,30 @@ export const FilterPriceSliderWrapper = styled.div`
 
 export const FilterOptionBtnBox = styled.div`
   display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  margin-top: 12px;
+  gap: 10px;
+
+  input {
+    display: none;
+  }
+
+  label {
+    padding: 10px 20px;
+    border-radius: 180px;
+    background-color: #fff;
+    border: 1px solid var(--gray-300);
+    color: #000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: var(--purple-10);
+    }
+  }
+
+  input:checked + label {
+    background-color: var(--purple-100);
+    color: white;
+  }
 `;
 
 export const FilterPriceContainer = styled.div`
