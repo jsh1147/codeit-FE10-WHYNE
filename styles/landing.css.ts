@@ -6,17 +6,17 @@ export const Main = styled.main`
   flex-direction: column;
   align-items: center;
   gap: 120px;
-  margin-top: calc(70px + 24px * 2);
+  margin: calc(70px + 24px * 2) 0 96px;
 
   ${media.tablet`
     gap: 80px;
-    margin-top: calc(60px + 24px * 2);
+    margin: calc(60px + 24px * 2) 0 72px;
     padding: 0 20px;
   `}
 
   ${media.mobile`
     gap: 40px;
-    margin-top: calc(50px + 24px * 2);
+    margin: calc(50px + 24px * 2) 0 64px;
     padding: 0 16px;
   `}
 `;
