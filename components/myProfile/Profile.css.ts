@@ -151,6 +151,7 @@ export const NameEditWrapper = styled.div`
     flex-direction: column;
     gap: 8px;
     ${media.tablet`
+        flex-direction:row;
         gap:24px;
     `}
     ${media.mobile`
