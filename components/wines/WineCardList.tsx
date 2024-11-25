@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import WineCard from './WineCard';
 import * as S from './WineCardList.css';
 
-export interface WineCardListProps {
+export class WineFilterOptions {
   type?: 'RED' | 'WHITE' | 'SPARKLING';
   minPrice?: number;
   maxPrice?: number;
@@ -13,16 +13,22 @@ export interface WineCardListProps {
   name?: string;
 }
 
+interface WineCardListProps {
+  filterOptions: WineFilterOptions;
+}
+
 export default function WineCardList(props: WineCardListProps) {
+  const { filterOptions } = props;
   const [wines, setWines] = useState<WineDetails[]>([]);
   const cursorRef = useRef<number>();
   const [wineList, nextCursor, setOptions] = useWineList({
-    ...props,
+    ...filterOptions,
     cursor: cursorRef.current,
   });
   const [hasMore, setHasMore] = useState(true);
 
   const fetchMoreWines = async () => {
+    console.log('fetchMoreWines');
     setOptions((prev) => ({
       ...prev,
       cursor: cursorRef.current,
@@ -30,15 +36,30 @@ export default function WineCardList(props: WineCardListProps) {
   };
 
   useEffect(() => {
+    console.log('useEffect-filterOptions');
+    cursorRef.current = undefined;
+    setOptions(filterOptions);
+  }, [filterOptions]);
+
+  useEffect(() => {
+    console.log('useEffect-wineList');
     setHasMore(nextCursor !== null);
-    setWines((prevWines) => {
-      const wineIds = new Set(prevWines.map((w) => w.id)); // 현재 상태의 ID를 Set으로 만듦
-      const newWines = wineList.filter((wine) => !wineIds.has(wine.id)); // 중복 제거
+
+    const prevWines = [...wines];
+    const newWines = [];
+    if (cursorRef.current === undefined) {
       cursorRef.current = nextCursor;
 
-      return [...prevWines, ...newWines];
-    });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      newWines.push(...wineList);
+    } else {
+      cursorRef.current = nextCursor;
+      const wineIds = new Set(prevWines.map((w) => w.id)); // 현재 상태의 ID를 Set으로 만듦
+      const wines = wineList.filter((wine) => !wineIds.has(wine.id)); // 중복 제거
+
+      newWines.push(...prevWines, ...wines);
+    }
+
+    setWines(newWines);
   }, [wineList]);
 
   return (

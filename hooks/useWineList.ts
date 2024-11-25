@@ -17,18 +17,16 @@ type UseWineListReturnType = [
   Dispatch<SetStateAction<useWineListProps>>, // setCondition
 ];
 
-export const useWineList = (
-  props: useWineListProps,
-): UseWineListReturnType => {
+export const useWineList = (props: useWineListProps): UseWineListReturnType => {
   const [options, setOptions] = useState<useWineListProps>(props);
   const [wineList, setWineList] = useState<WineDetails[]>([]);
   const [nextCursor, setNextCursor] = useState<number>();
 
   useEffect(() => {
+    console.log('options:', options);
     const fetchWines = async () => {
       try {
         const data = await fetchWineList({ limit: 10, ...options });
-        console.log('모든 와인 불러오기:', data);
         setWineList(data.list || []);
         setNextCursor(data.nextCursor);
       } catch (error) {

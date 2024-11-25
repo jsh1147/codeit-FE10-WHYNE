@@ -27,10 +27,10 @@ export default function WineCard({ wine }: { wine: WineDetails }) {
         </S.WineImageThumbnail>
         <S.WineInfoSection>
           <S.WineInfoSectionWrapper>
-            <div>
+            <S.WineDesc>
               <S.WineInfoTitle>{wine.name}</S.WineInfoTitle>
               <S.WineInfoText>{wine.region}</S.WineInfoText>
-            </div>
+            </S.WineDesc>
             <S.WineInfoReviewBox>
               <div aria-label="평점">
                 <strong>{wine.avgRating.toFixed(1)}</strong>

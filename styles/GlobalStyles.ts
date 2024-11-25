@@ -53,7 +53,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .container {
-    max-width: calc(100% - 780px); /* 100%에서 좌우 여백(390px * 2)을 뺀 넓이 */
+    max-width: calc(100vw - 780px); /* 100%에서 좌우 여백(390px * 2)을 뺀 넓이 */
     margin: 0 auto; 
   }
 `;

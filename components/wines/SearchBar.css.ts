@@ -8,7 +8,7 @@ export const Container = styled.div`
   border-radius: 50px;
   background-color: #fff;
   padding: 11px 20px;
-  max-width: 800px;
+  /* max-width: 800px; */
 `;
 
 export const SearchBarInput = styled.input`

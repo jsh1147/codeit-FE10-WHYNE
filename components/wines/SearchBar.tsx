@@ -2,6 +2,7 @@ import SearchIcon from '@/public/icons/search.svg';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import * as S from './SearchBar.css';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 interface SearchBarProps {
   searchByKeyword: (keyword: string) => void;
@@ -25,12 +26,6 @@ export default function SearchBar({ searchByKeyword }: SearchBarProps) {
     if (e.key === 'Enter') {
       const searchKeyword = keyword.trim();
       setKeyword(searchKeyword);
-
-      if (searchKeyword.length === 0) {
-        alert('값을 입력해 주세요');
-        return;
-      }
-
       searchByKeyword(searchKeyword);
     }
   };
@@ -43,6 +38,13 @@ export default function SearchBar({ searchByKeyword }: SearchBarProps) {
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         placeholder="검색할 키워드를 입력해 주세요"
+      />
+      <CancelIcon
+        style={{
+          visibility: keyword === '' ? 'hidden' : 'visible',
+          fill: `var(--gray-300)`,
+        }}
+        onClick={() => setKeyword('')}
       />
     </S.Container>
   );

@@ -12,7 +12,7 @@ export const PriceButton = styled.button`
 `;
 
 export const WineCardContainer = styled.section`
-  max-width: 800px;
+  /* max-width: 800px; */
   border: 1px solid var(--gray-300);
   border-radius: 16px;
   cursor: pointer;
@@ -37,7 +37,7 @@ export const WineInfoSection = styled.section`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  width: 549px;
+  flex: 1;
   margin: 36.5px 50px 23.5px 0;
 `;
 
@@ -50,6 +50,12 @@ export const WineInfoWrapper = styled.div`
     display: flex;
     justify-content: space-between;
   }
+`;
+
+export const WineDesc = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 `;
 
 export const WineInfoSectionWrapper = styled.div`
@@ -81,7 +87,7 @@ export const WineInfoTitle = styled.h2`
   color: var(--gray-800);
   font-weight: 600;
   margin-bottom: 20px;
-  width: 300px;
+  flex: 1;
   text-overflow: ellipsis;
   overflow: hidden;
 

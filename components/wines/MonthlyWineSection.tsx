@@ -43,7 +43,7 @@ export default function MonthlyWineSection() {
   }, []);
 
   return (
-    <section className="container">
+    <section>
       <S.MonthlyWineContainer>
         <S.WinesPageSectionTitle>이번 달 추천 와인</S.WinesPageSectionTitle>
         <S.MonthlyWineCardContainer>
