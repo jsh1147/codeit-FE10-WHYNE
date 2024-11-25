@@ -51,7 +51,7 @@ export const patchNickname = async (data:PatchNicknameReq) => {
         throw error;
     }
 }
-export const getReviews = async(limit=10, cursor=0) => {
+export const getReviews = async(limit:number, cursor:number) => {
     try{
         const response = await instance.get<GetReviews>('users/me/reviews',{
             params: { limit,cursor }})
