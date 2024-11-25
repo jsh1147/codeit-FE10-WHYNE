@@ -1,6 +1,18 @@
 import { Slider } from '@mui/material';
 import styled from 'styled-components';
 
+export const FilterTypesWrapper = styled.div`
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+`;
+
+export const FilterRatingWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+`;
+
 export const FilterOptionTitle = styled.h3`
   font-size: 20px;
   color: var(--gray-800);
@@ -31,6 +43,10 @@ export const FilterOptionBtn = styled.button`
 
 export const FilterContainer = styled.section`
   width: 284px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  justify-content: space-between;
 `;
 
 export const FilterPriceSliderWrapper = styled.div`
@@ -39,6 +55,7 @@ export const FilterPriceSliderWrapper = styled.div`
 
 export const FilterOptionBtnBox = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: 10px;
 
   input {

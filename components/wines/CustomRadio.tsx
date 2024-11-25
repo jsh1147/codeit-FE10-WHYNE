@@ -19,8 +19,12 @@ export default function CustomizedRadios() {
   return (
     <RadioGroup name="use-radio-group" defaultValue="4.5 - 4.0">
       <FormControl>
-        <RadioGroup name="use-radio-group" defaultValue="4.5 - 4.0">
-          <S.StyledFormControlLabel control={<BpRadio />} value="전체" label="전체" />
+        <S.StyledRadioGroup name="use-radio-group" defaultValue="4.5 - 4.0">
+          <S.StyledFormControlLabel
+            control={<BpRadio />}
+            value="전체"
+            label="전체"
+          />
           <S.StyledFormControlLabel
             value="5.0 - 4.5"
             label="5.0 - 4.5"
@@ -41,7 +45,7 @@ export default function CustomizedRadios() {
             label="3.5 - 3.0"
             control={<BpRadio />}
           />
-        </RadioGroup>
+        </S.StyledRadioGroup>
       </FormControl>
     </RadioGroup>
   );

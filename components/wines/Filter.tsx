@@ -5,23 +5,25 @@ import * as S from './Filter.css';
 export default function Filter() {
   return (
     <S.FilterContainer>
-      <S.FilterOptionTitle>WINE TYPES</S.FilterOptionTitle>
-      <S.FilterOptionBtnBox>
-        <input type="radio" id="red" name="filter" defaultChecked />
-        <label htmlFor="red">Red</label>
+      <S.FilterTypesWrapper>
+        <S.FilterOptionTitle>WINE TYPES</S.FilterOptionTitle>
+        <S.FilterOptionBtnBox>
+          <input type="radio" id="red" name="filter" defaultChecked />
+          <label htmlFor="red">Red</label>
 
-        <input type="radio" id="white" name="filter" />
-        <label htmlFor="white">White</label>
+          <input type="radio" id="white" name="filter" />
+          <label htmlFor="white">White</label>
 
-        <input type="radio" id="sparkling" name="filter" />
-        <label htmlFor="sparkling">Sparkling</label>
-      </S.FilterOptionBtnBox>
+          <input type="radio" id="sparkling" name="filter" />
+          <label htmlFor="sparkling">Sparkling</label>
+        </S.FilterOptionBtnBox>
+      </S.FilterTypesWrapper>
       <S.FilterPriceContainer>
         <S.FilterOptionTitle>PRICE</S.FilterOptionTitle>
         <S.FilterPriceSliderWrapper>
           <S.FilterPriceSlider
             getAriaLabel={() => '금액 범위'}
-            max={74000}
+            max={100000}
             defaultValue={[0, 74000]}
             valueLabelFormat={(value) => toNumberFormatOfKor(value)}
             valueLabelDisplay={'on'}
@@ -41,8 +43,10 @@ export default function Filter() {
           />
         </S.FilterPriceSliderWrapper>
       </S.FilterPriceContainer>
-      <S.FilterOptionTitle>RATING</S.FilterOptionTitle>
-      <CustomizedRadios />
+      <S.FilterRatingWrapper>
+        <S.FilterOptionTitle>RATING</S.FilterOptionTitle>
+        <CustomizedRadios />
+      </S.FilterRatingWrapper>
     </S.FilterContainer>
   );
 }
