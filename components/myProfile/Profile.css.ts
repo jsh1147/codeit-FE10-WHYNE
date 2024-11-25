@@ -169,7 +169,7 @@ export const EditButtonWrapper = styled.div`
         width:100%;
     `}
 `;
-export const EditButton = styled.div`
+export const EditButton = styled.button`
     display: flex;
     width: 96px;
     height: 42px;
