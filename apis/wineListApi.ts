@@ -1,13 +1,11 @@
-import { axiosInstance } from '@/apis/axiosInstance';
+import { instance } from '@/apis/instance';
 import { WineDetails, Wine } from '@/types/wineListTypes';
 
 export const fetchRecommendedWines = async (
   limit: number = 10,
 ): Promise<Wine[]> => {
   try {
-    const response = await axiosInstance.get(
-      `/wines/recommended?limit=${limit}`,
-    );
+    const response = await instance.get(`/wines/recommended?limit=${limit}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching recommended wines:', error);
@@ -41,7 +39,7 @@ export const fetchWineList = async (
   if (props.name !== undefined) options += `&name=${props.name}`;
 
   try {
-    const response = await axiosInstance.get(`/wines?${options}`);
+    const response = await instance.get(`/wines?${options}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching all wines:', error);

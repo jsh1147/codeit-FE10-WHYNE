@@ -57,22 +57,24 @@ export default function WineListPage(): React.ReactElement {
 
   return (
     <div className="container">
-      <MonthlyWineSection />
-      <S.GridWrapper>
-        <S.SearchBarWrapper>
-          <SearchBar searchByKeyword={searchByKeyword} />
-        </S.SearchBarWrapper>
-        <S.WineCardListWrapper>
-          <WineCardList filterOptions={debouncedOptions} />
-        </S.WineCardListWrapper>
-        <S.FilterWrapper>
-          <Filter
-            changeWineType={changeWineType}
-            changePriceRange={changePriceRange}
-            changeRating={changeRating}
-          />
-        </S.FilterWrapper>
-      </S.GridWrapper>
+      <S.WinesPageContainer>
+        <MonthlyWineSection />
+        <S.GridWrapper>
+          <S.SearchBarWrapper>
+            <SearchBar searchByKeyword={searchByKeyword} />
+          </S.SearchBarWrapper>
+          <S.WineCardListWrapper>
+            <WineCardList filterOptions={debouncedOptions} />
+          </S.WineCardListWrapper>
+          <S.FilterWrapper>
+            <Filter
+              changeWineType={changeWineType}
+              changePriceRange={changePriceRange}
+              changeRating={changeRating}
+            />
+          </S.FilterWrapper>
+        </S.GridWrapper>
+      </S.WinesPageContainer>
     </div>
   );
 }

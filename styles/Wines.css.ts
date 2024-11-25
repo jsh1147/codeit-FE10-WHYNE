@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const WinesPageContainer = styled.div`
+  margin-top: 130px;
+`;
+
 export const GridWrapper = styled.div`
   display: grid;
   grid-template-rows: 48px 1fr;
