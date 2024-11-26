@@ -34,6 +34,7 @@ export const WineRatingContainer = styled.div`
     width: min(766px, 100%);
     height: 233px;
     padding: 0 20px;
+    justify-content: space-around;
     display: grid;
     grid-template-areas: 
       'group1 group1 group1 group2'
