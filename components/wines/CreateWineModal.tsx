@@ -64,7 +64,9 @@ export default function CreateWineModal({
           if (uploadImageUrl) {
             imageUrl = uploadImageUrl;
           } else {
-            alert('이미지 업로드에 실패했습니다.');
+            alert(
+              '이미지 업로드에 실패했습니다. 5MB 이하의 이미지를 업로드해주세요.',
+            );
             return;
           }
         }

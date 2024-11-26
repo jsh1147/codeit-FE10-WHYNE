@@ -34,14 +34,7 @@ const useImageUpload = () => {
       const formData = new FormData();
       formData.append('image', file);
 
-      const access = localStorage.getItem('accessToken');
-
-      const res = await instance.post('/images/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${access}`,
-        },
-      });
+      const res = await instance.post('/images/upload', formData);
       console.log('이미지 업로드 성공!', res.data.url);
       return res.data.url;
     } catch (error) {
@@ -49,6 +42,7 @@ const useImageUpload = () => {
       return null;
     }
   };
+  
   return { previewImageSrc, handleImagePreview, uploadImage, imageFile };
 };
 
