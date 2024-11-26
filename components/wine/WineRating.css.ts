@@ -114,7 +114,7 @@ export const StarRating = styled.div`
 `;
 
 export const ReviewCount = styled.p`
-  margin-left: 3px;
+  margin-left: 2px;
   color: var(--gray-500);
   ${TextReviewCount};
 
@@ -185,7 +185,10 @@ export const FilledBar = styled.div<{ percentage: number }>`
 `;
 
 export const ReviewButton = styled.button`
-  width: 133px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 113px;
   height: 42px;
   background-color: var(--purple-100);
   color: var(--white);
