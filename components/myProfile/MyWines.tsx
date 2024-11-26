@@ -56,7 +56,7 @@ export default function MyWines() {
         <S.WineListContainer>
             <S.TotalCount>총 {totalCount}개</S.TotalCount>
             {wines.map((wine: Wine) => (
-            <S.WineItemWrapper>
+            <S.WineItemWrapper key={wine.id}>
                 <S.WineItem>
                     <S.ItemWrapper>
                         <S.ImageWrapper>

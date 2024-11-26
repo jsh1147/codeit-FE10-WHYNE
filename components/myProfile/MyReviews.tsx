@@ -38,7 +38,7 @@ export default function MyReviews() {
         } catch (error) {
             console.error('리뷰 불러오기 오류:', error);
         }
-    }, [cursor, reviews.length, totalCount]);
+    }, [cursor]);
 
     const setupObserver = useCallback(
         (node: HTMLDivElement) => {

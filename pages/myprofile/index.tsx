@@ -4,7 +4,7 @@ import MyWines from '@/components/myProfile/MyWines';
 import Profile from '@/components/myProfile/Profile';
 import * as S from '@/styles/myProfile.css';
 
-export default function index() {
+export default function MyProfile() {
     const [activeTab, setActiveTab] = useState<'reviews' | 'wines'>('reviews'); 
     console.log(activeTab);
     return (
