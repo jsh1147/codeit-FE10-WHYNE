@@ -51,6 +51,7 @@ export const FilterContainer = styled.section`
 
 export const FilterPriceSliderWrapper = styled.div`
   margin-top: 20px;
+  width: 263px;
 `;
 
 export const FilterOptionBtnBox = styled.div`
@@ -93,6 +94,7 @@ export const FilterPriceSlider = styled(Slider)`
   color: var(--purple-100);
   height: 5px;
   padding: 15px 0;
+  margin-left: 16px;
 
   &:focus,
   &:hover,
