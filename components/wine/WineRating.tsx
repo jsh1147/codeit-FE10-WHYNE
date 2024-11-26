@@ -1,8 +1,5 @@
 import React from 'react';
 import * as S from './WineRating.css';
-import Image from 'next/image';
-import Star from '@/public/images/icons/star.svg';
-import EmptyStar from '@/public/images/icons/emptyStar.svg';
 
 interface WineRatingProps {
   avgRating: number;
@@ -28,29 +25,21 @@ export const WineRating: React.FC<WineRatingProps> = ({
 
   return (
     <S.WineRatingContainer>
-      <h2>{avgRating.toFixed(1)}</h2>
-      <div>
-        {[...Array(fullStars)].map((_, index) => (
-          <Image
-            key={`full-${index}`}
-            src={Star}
-            alt="Star"
-            width={24}
-            height={24}
-          />
-        ))}
-        {[...Array(emptyStars)].map((_, index) => (
-          <Image
-            key={`empty-${index}`}
-            src={EmptyStar}
-            alt="Empty Star"
-            width={24}
-            height={24}
-          />
-        ))}
-      </div>
-      <p>{reviewCount}개의 후기</p>
-      <div>
+      <S.Group1>
+        <S.AvgRating>{avgRating.toFixed(1)}</S.AvgRating>
+        <S.Group1_2>
+          <S.StarRating>
+            {[...Array(fullStars)].map((_, index) => (
+              <S.StarImage key={`full-${index}`} alt="Star" fill />
+            ))}
+            {[...Array(emptyStars)].map((_, index) => (
+              <S.EmptyStarImage key={`empty-${index}`} alt="EmptyStar" />
+            ))}
+          </S.StarRating>
+          <S.ReviewCount>{reviewCount}개의 후기</S.ReviewCount>
+        </S.Group1_2>
+      </S.Group1>
+      <S.RatingCount>
         {[5, 4, 3, 2, 1].map((star) => {
           const count = ratingCounts[star - 1];
           const percentage = reviewCount ? (count / reviewCount) * 100 : 0;
@@ -60,12 +49,15 @@ export const WineRating: React.FC<WineRatingProps> = ({
               <S.Bar>
                 <S.FilledBar percentage={percentage} />
               </S.Bar>
-              <span>{count}</span>
             </S.RatingRow>
           );
         })}
-      </div>
-      <button>리뷰 남기기</button>
+      </S.RatingCount>
+      <S.buttonBox>
+        <S.ReviewButton>
+          <button>리뷰 남기기</button>
+        </S.ReviewButton>
+      </S.buttonBox>
     </S.WineRatingContainer>
   );
 };
