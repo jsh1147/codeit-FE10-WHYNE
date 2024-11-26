@@ -19,13 +19,6 @@ const WineInfoHeader: React.FC<WineInfoProps> = ({
 }) => {
   if (!id) return null;
 
-  const formattedPrice = new Intl.NumberFormat('ko-KR', {
-    style: 'currency',
-    currency: 'KRW',
-  }).format(price);
-
-  const formattedPriceWithSpaces = formattedPrice.replace('₩', '₩ ');
-
   return (
     <S.WineInfoContainer>
       <S.WineContainer>
@@ -40,7 +33,7 @@ const WineInfoHeader: React.FC<WineInfoProps> = ({
             <p>{region}</p>
           </S.WineRegion>
           <S.WinePrice>
-            <p>{formattedPriceWithSpaces}</p>
+            <p>₩ {price.toLocaleString()}</p>
           </S.WinePrice>
         </S.WineInfo>
       </S.WineContainer>

@@ -7,7 +7,7 @@ import {
   Text2lgBold,
   TextLgBold,
   TextMdRegular,
-} from '../../public/fonts/FontStyles';
+} from '@/styles/FontStyles';
 
 export const WineInfoContainer = styled.div`
   margin: 0 auto;
