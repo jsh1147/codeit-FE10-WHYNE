@@ -49,7 +49,7 @@ export const Group1 = styled.div`
   margin-bottom: 20px;
 
   ${media.tablet`
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 0px;
     grid-area: group1;
   `}
@@ -195,13 +195,11 @@ export const ReviewButton = styled.button`
 
   ${media.tablet`
     margin-top: 0px;
-    margin-bottom: 20px;
     grid-area: group2;
   `}
 
   ${media.mobile`
     margin-left: 75px;
-    margin-bottom: 0px;
     width: 100px;
     height: 42px;
   `}
