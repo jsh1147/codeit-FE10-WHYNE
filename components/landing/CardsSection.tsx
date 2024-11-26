@@ -7,7 +7,7 @@ import * as S from './CardsSection.css';
 export default function CardsSection() {
   return (
     <S.Section>
-      <S.Card>
+      <S.Card rightGradient>
         <S.TextBox>
           <S.CardTitle>
             매달 새롭게 만나는
@@ -17,11 +17,8 @@ export default function CardsSection() {
           <S.CardDescription>
             매달 다양한 인기 와인을 만나보세요.
           </S.CardDescription>
-          <S.RecommendImage
-            src={recommendImage}
-            alt="이달의 추천 와인 이미지"
-          />
         </S.TextBox>
+        <S.RecommendImage src={recommendImage} alt="이달의 추천 와인 이미지" />
       </S.Card>
       <S.Card>
         <S.TextBox>
@@ -34,9 +31,9 @@ export default function CardsSection() {
             <br />
             나에게 맞는 와인을 쉽게 검색해요.
           </S.CardDescription>
-          <S.WindImage src={wineImage} alt="와인 이미지" />
-          <S.FilterImage src={filterImage} alt="필터 이미지" />
         </S.TextBox>
+        <S.WindImage src={wineImage} alt="와인 이미지" />
+        <S.FilterImage src={filterImage} alt="필터 이미지" />
       </S.Card>
       <S.Card>
         <S.TextBox>
@@ -50,8 +47,8 @@ export default function CardsSection() {
             <br />
             쉽고 빠르게 와인 리뷰를 살펴보세요.
           </S.CardDescription>
-          <S.ReviewImage src={reviewImage} alt="리뷰 이미지" />
         </S.TextBox>
+        <S.ReviewImage src={reviewImage} alt="리뷰 이미지" />
       </S.Card>
     </S.Section>
   );

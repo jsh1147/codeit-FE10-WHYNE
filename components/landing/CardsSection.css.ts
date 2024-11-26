@@ -14,7 +14,7 @@ export const Section = styled.section`
   `};
 `;
 
-export const Card = styled.div`
+export const Card = styled.div<{ rightGradient?: boolean }>`
   position: relative;
   width: min(640px, 100%);
   height: 320px;
@@ -32,9 +32,18 @@ export const Card = styled.div`
   &:after {
     content: '';
     position: absolute;
-    inset: auto 0 0;
-    height: 32px;
-    background-image: linear-gradient(0, #ebeef4ff, #ebeef400);
+    ${({ rightGradient }) =>
+      rightGradient
+        ? `
+        inset: 0 0 0 auto;
+        width: 32px;
+        background-image: linear-gradient(270deg, #ebeef4ff, #ebeef400);
+      `
+        : `
+        inset: auto 0 0;
+        height: 32px;
+        background-image: linear-gradient(0, #ebeef4ff, #ebeef400);
+      `}
   }
 `;
 
