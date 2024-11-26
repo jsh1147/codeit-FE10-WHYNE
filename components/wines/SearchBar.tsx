@@ -1,11 +1,11 @@
 import SearchIcon from '@/public/icons/search.svg';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import * as S from './SearchBar.css';
-import CancelIcon from '@mui/icons-material/Cancel';
 
 interface SearchBarProps {
-  searchByKeyword: (keyword: string) => void;
+  searchByKeyword: (keyword?: string) => void;
 }
 
 export default function SearchBar({ searchByKeyword }: SearchBarProps) {
@@ -30,6 +30,11 @@ export default function SearchBar({ searchByKeyword }: SearchBarProps) {
     }
   };
 
+  const handleCancelButton = () => {
+    setKeyword('');
+    searchByKeyword();
+  };
+
   return (
     <S.Container>
       <SearchIcon alt="검색" />
@@ -44,7 +49,7 @@ export default function SearchBar({ searchByKeyword }: SearchBarProps) {
           visibility: keyword === '' ? 'hidden' : 'visible',
           fill: `var(--gray-300)`,
         }}
-        onClick={() => setKeyword('')}
+        onClick={handleCancelButton}
       />
     </S.Container>
   );

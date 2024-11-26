@@ -65,7 +65,7 @@ export default function WineCardList(props: WineCardListProps) {
   return (
     <S.StyledInfiniteScroll>
       <InfiniteScroll
-        height={670}
+        height={670 + 50} // 기존 필터높이 + 버튼높이 + 버튼의 마진
         dataLength={wines.length}
         next={fetchMoreWines}
         hasMore={hasMore}
