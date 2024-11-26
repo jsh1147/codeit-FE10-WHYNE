@@ -10,6 +10,7 @@ import {
 } from 'react';
 
 interface UserProps {
+  email: string;
   nickname: string;
   image: string | null;
 }
@@ -27,13 +28,14 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserProps>();
 
   useEffect(() => {
+    const email = localStorage.getItem('email');
     const access = localStorage.getItem('accessToken');
     const refresh = localStorage.getItem('refreshToken');
-    if (access || refresh)
+    if (access || refresh || email)
       getMe()
         .then((data) => {
           const { nickname, image } = data;
-          setUser({ nickname, image });
+          setUser({ email: email as string, nickname, image });
         })
         .catch(() => {})
         .finally(() => {

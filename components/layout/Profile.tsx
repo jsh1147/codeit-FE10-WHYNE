@@ -18,6 +18,7 @@ export default function Profile() {
   };
 
   const handleLogoutClick = () => {
+    localStorage.removeItem('email');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     if (setUser) setUser(undefined);
