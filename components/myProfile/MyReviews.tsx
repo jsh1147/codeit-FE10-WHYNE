@@ -1,6 +1,5 @@
 import * as S from './MyReviews.css';
 import StarIcon from '@/public/icons/icon_star.svg';
-import KebapIcon from '@/public/icons/icon_kebap.svg';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { getReviews, GetReviews, Review } from '@/apis/myProfileApi';
 
@@ -77,7 +76,7 @@ export default function MyReviews() {
                             </S.StarWrapper>
                             <S.TimeText>{formatTime(review.updatedAt)}</S.TimeText>
                         </S.StarTimeWrapper>
-                        <S.KebapIcon src={KebapIcon} alt="더보기" />
+                        <S.KebapIcon alt="수정삭제 드롭다운 버튼" />
                     </S.ReviewItemTopWrapper>
                     <S.ReviewTextWrapper>
                         <S.WineName>{review.wine.name}</S.WineName>

@@ -45,7 +45,7 @@ export default function Profile() {
             <S.InfoContainer>
                 <S.ProfileImageWrapper>
                     <S.ProfileImage
-                        src={ProfileImage}
+                        src={userInfo.image}
                         alt="프로필 이미지"
                         width={164}
                         height={164}

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 import media from '@/styles/mediaQuery';
+import Icon from '@/public/icons/icon_kebap.svg';
 
 export const ReviewListContainer = styled.div`
     width:100%;
@@ -42,7 +43,7 @@ export const TimeText = styled.div`
         font-size:14px;
     `}
 `;
-export const KebapIcon = styled(Image)`
+export const KebapIcon = styled(Icon)`
     width:20px;
     height:20px;
 `;

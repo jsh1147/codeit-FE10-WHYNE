@@ -1,5 +1,4 @@
 import * as S from './MyWines.css';
-import KebapIcon from '@/public/icons/icon_kebap.svg';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { getWines, GetWines, Wine } from '@/apis/myProfileApi';
 
@@ -76,7 +75,7 @@ export default function MyWines() {
                         </S.Price>
                     </S.WineInfoWrapper>
                     </S.ItemWrapper>
-                    <S.KebapIcon src={KebapIcon} alt="더보기" />
+                    <S.KebapIcon aria-label="수정삭제 드롭다운 버튼" />
                 </S.WineItem>
             </S.WineItemWrapper>
         ))}

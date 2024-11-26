@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 import media from '@/styles/mediaQuery';
+import Icon from '@/public/icons/icon_kebap.svg';
 
 export const WineListContainer = styled.div`
     width:100%;
@@ -140,7 +141,7 @@ export const PriceText = styled.div`
         padding:4px 10px;
     `}
 `;
-export const KebapIcon = styled(Image)`
+export const KebapIcon = styled(Icon)`
     width:20px;
     height:20px;
 `;
