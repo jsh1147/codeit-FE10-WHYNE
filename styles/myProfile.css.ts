@@ -35,18 +35,23 @@ export const MyProfileHeaderItemWrapper = styled.div`
     display: flex;
     gap:32px;
 `;
-export const MyProfileHeaderItem = styled.div`
-    color: var(--gray-800);
+export const MyProfileHeaderItem = styled.button<{ $active: boolean }>`
+    color: ${({ $active }) => ($active ? 'var(--black)' : 'var(--gray-500)')};
     font-size: 20px;
     font-weight: 700;
     line-height: 32px;
+    cursor: pointer;
+    &:hover {
+        color: ${({ $active }) => ($active ? 'var(--black)' : '#000')};
+    }
     ${media.tablet`
-        font-size:18px;
+        font-size: 18px;
     `}
     ${media.mobile`
-        font-size:16px;
+        font-size: 16px;
     `}
 `;
+
 export const MyProfileContentContainer = styled.div`
     display: flex;
     margin-top: 147px;
@@ -59,4 +64,8 @@ export const MyProfileContentContainer = styled.div`
         margin-top:105px;
     `}
 `;
-
+export const TabContent = styled.div<{ $active: boolean }>`
+    opacity: ${({ $active }) => ($active ? 1 : 0)};
+    transform: ${({ $active }) => ($active ? 'translateY(0)' : 'translateY(10px)')};
+    transition: opacity 0.3s ease, transform 0.3s ease;
+`;

@@ -1,6 +1,4 @@
 import * as S from './MyReviews.css';
-import StarIcon from '@/public/icons/icon_star.svg';
-import KebapIcon from '@/public/icons/icon_kebap.svg';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { getReviews, GetReviews, Review } from '@/apis/myProfileApi';
 
@@ -72,12 +70,12 @@ export default function MyReviews() {
                     <S.ReviewItemTopWrapper>
                         <S.StarTimeWrapper>
                             <S.StarWrapper>
-                                <S.StarIcon src={StarIcon} alt="별점 아이콘" />
+                                <S.StarIcon aria-label="별점 아이콘" />
                                 <S.StarText>{review.rating}.0</S.StarText>
                             </S.StarWrapper>
                             <S.TimeText>{formatTime(review.updatedAt)}</S.TimeText>
                         </S.StarTimeWrapper>
-                        <S.KebapIcon src={KebapIcon} alt="더보기" />
+                        <S.KebapIcon aria-label="수정삭제 드롭다운 버튼" />
                     </S.ReviewItemTopWrapper>
                     <S.ReviewTextWrapper>
                         <S.WineName>{review.wine.name}</S.WineName>

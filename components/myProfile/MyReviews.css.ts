@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Image from "next/image";
 import media from '@/styles/mediaQuery';
-
+import Icon from '@/public/icons/icon_kebap.svg';
+import Star from '@/public/icons/icon_star.svg';
 export const ReviewListContainer = styled.div`
     width:100%;
     display:flex;
@@ -42,7 +42,7 @@ export const TimeText = styled.div`
         font-size:14px;
     `}
 `;
-export const KebapIcon = styled(Image)`
+export const KebapIcon = styled(Icon)`
     width:20px;
     height:20px;
 `;
@@ -76,7 +76,7 @@ export const StarWrapper = styled.div`
     border-radius: 12px;
     background: var(--purple-10, #F1EDFC);
 `;
-export const StarIcon = styled(Image)`
+export const StarIcon = styled(Star)`
     width: 20px;
     height: 20px;
     ${media.mobile`

@@ -26,7 +26,7 @@ export interface Review {
     wine:Wine;
 }
 
-interface Wine {
+export interface Wine {
     id:number;
     name:string;
     region:string;
@@ -41,6 +41,13 @@ interface User {
     nickname:string;
     image:string;
 }
+
+export interface GetWines {
+    totalCount: number;
+    nextCursor: number;
+    list: Wine[];
+}
+
 
 export const patchNickname = async (data:PatchNicknameReq) => {
     try {
@@ -58,5 +65,14 @@ export const getReviews = async(limit:number, cursor:number) => {
         return response.data;
     }catch(error){
         console.log('리뷰 불러오기 오류')
+    }
+}
+export const getWines = async(limit:number, cursor:number) => {
+    try{
+        const response = await instance.get<GetWines>('users/me/wines',{
+            params: { limit,cursor }})
+        return response.data;
+    }catch(error){
+        console.log('와인 불러오기 오류')
     }
 }
