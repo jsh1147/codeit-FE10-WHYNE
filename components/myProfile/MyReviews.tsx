@@ -37,7 +37,7 @@ export default function MyReviews() {
         } catch (error) {
             console.error('리뷰 불러오기 오류:', error);
         }
-    }, [cursor]);
+    }, [cursor, reviews.length, totalCount]);
 
     const setupObserver = useCallback(
         (node: HTMLDivElement) => {
@@ -71,12 +71,12 @@ export default function MyReviews() {
                     <S.ReviewItemTopWrapper>
                         <S.StarTimeWrapper>
                             <S.StarWrapper>
-                                <S.StarIcon src={StarIcon} alt="별점 아이콘" />
+                                <S.StarIcon aria-label="별점 아이콘" />
                                 <S.StarText>{review.rating}.0</S.StarText>
                             </S.StarWrapper>
                             <S.TimeText>{formatTime(review.updatedAt)}</S.TimeText>
                         </S.StarTimeWrapper>
-                        <S.KebapIcon alt="수정삭제 드롭다운 버튼" />
+                        <S.KebapIcon aria-label="수정삭제 드롭다운 버튼" />
                     </S.ReviewItemTopWrapper>
                     <S.ReviewTextWrapper>
                         <S.WineName>{review.wine.name}</S.WineName>

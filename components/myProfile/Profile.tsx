@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './Profile.css';
-import ProfileImage from '@/public/images/profileimg_example.png';
 import { getMe } from '@/apis/user';
 import { patchNickname } from '@/apis/myProfileApi';
 
