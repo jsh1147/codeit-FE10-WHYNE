@@ -5,6 +5,7 @@ import Image from 'next/image';
 export const Header = styled.header`
   position: fixed;
   inset: 0 0 auto;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,6 +31,7 @@ export const HeaderContainer = styled.div`
   padding: 0 60px;
   border-radius: 16px;
   background-color: var(--black);
+  transition: 0.2s;
 
   ${media.tablet`
     height: 60px;

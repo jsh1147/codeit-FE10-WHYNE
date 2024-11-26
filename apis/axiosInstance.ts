@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-export const axiosInstance = axios.create({
+export const instance = axios.create({
   baseURL: 'https://winereview-api.vercel.app/10-2/',
 });

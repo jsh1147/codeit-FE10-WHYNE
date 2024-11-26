@@ -11,8 +11,8 @@ export const ProfileContainer = styled.div`
     gap:48px;
     flex-direction: column;
     border-radius: 16px;
-    border: 1px solid var(--gray-gray300, #CFDBEA);
-    background: var(--white-white, #FFF);
+    border: 1px solid var(--gray-300, #CFDBEA);
+    background: var(--white, #FFF);
     box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.04);
 
      ${media.tablet`
@@ -179,7 +179,7 @@ export const EditButton = styled.button`
     justify-content: center;
     align-items: center;
     border-radius: 12px;
-    background: var(--main-main, #6A42DB);
+    background: var(--purple-100);
 
     color: var(--white);
     text-align: center;

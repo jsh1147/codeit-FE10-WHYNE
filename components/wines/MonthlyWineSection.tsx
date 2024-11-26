@@ -1,17 +1,20 @@
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
 import { fetchRecommendedWines } from '@/apis/wineListApi';
-import { RecommendWines } from '@/types/wineListTypes';
-import StarIcon from '@mui/icons-material/Star';
-import { useEffect, useState } from 'react';
+import { useWineNavigation } from '@/hooks/useWineNavigation';
+import { Wine } from '@/types/wineListTypes';
+import CustomRating from '../common/CustomRating';
 import * as S from './MonthlyWineSection.css';
 import { NextArrowBtn, PrevArrowBtn } from './SliderArrowButtons';
 
 export default function MonthlyWineSection() {
-  const [recommendedList, setRecommendedList] = useState<RecommendWines[]>([]);
+  const [recommendedList, setRecommendedList] = useState<Wine[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigateToWine = useWineNavigation();
+
   const settings = {
     dots: false,
     infinite: false,
@@ -27,7 +30,7 @@ export default function MonthlyWineSection() {
   useEffect(() => {
     const getRecommendedWines = async () => {
       try {
-        const wines: RecommendWines[] = await fetchRecommendedWines(10); // limit 값을 전달
+        const wines: Wine[] = await fetchRecommendedWines(10); // limit 값을 전달
         //TODO: 테스트를 위한 코드, 수정 필요 --> 아래코드로 fast reload 경고 발생했었다.
         // setRecommendedList([...wines, ...wines, ...wines]);
         setRecommendedList(wines || []);
@@ -40,13 +43,16 @@ export default function MonthlyWineSection() {
   }, []);
 
   return (
-    <section className="container">
+    <section>
       <S.MonthlyWineContainer>
         <S.WinesPageSectionTitle>이번 달 추천 와인</S.WinesPageSectionTitle>
         <S.MonthlyWineCardContainer>
           <S.StyledSlider {...settings}>
             {recommendedList.map((item, idx) => (
-              <S.MonthlyWineCard key={idx}>
+              <S.MonthlyWineCard
+                onClick={() => navigateToWine(item.id)}
+                key={idx}
+              >
                 <S.MonthlyWineCardContent>
                   <S.CardThumbnail>
                     <S.ImageWrapper>
@@ -56,26 +62,18 @@ export default function MonthlyWineSection() {
                         fill
                         style={{ objectFit: 'cover' }}
                         alt="와인이미지"
-                        sizes="(min-width: 768px) 100vw"
+                        sizes="(min-width: 1200px) 50vw, 25vw"
                       />
                     </S.ImageWrapper>
                   </S.CardThumbnail>
                   <S.MonthlyWineCardInfo>
                     {/* NOTE: 정수일 때, 소수점 처리 */}
                     <p>{item.avgRating.toFixed(1)}</p>
-                    <S.CustomRating
-                      name="size-small"
-                      defaultValue={Math.floor(item.avgRating)}
+                    <CustomRating
+                      defaultValue={item.avgRating}
                       size="small"
                       readOnly
-                      emptyIcon={
-                        <StarIcon
-                          style={{ fill: `var(--gray-300)` }}
-                          fontSize="inherit"
-                        />
-                      }
                     />
-
                     <S.MonthlyWineCardInfoText>
                       <span>{item.name}</span>
                     </S.MonthlyWineCardInfoText>

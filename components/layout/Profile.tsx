@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useUser } from '@/store/UserContext';
-import sampleImage from '@/public/meta/opengraph.png';
+import defaultImage from '@/public/icons/profile_default.svg';
 import * as S from './Profile.css';
 
 export default function Profile() {
@@ -18,6 +18,7 @@ export default function Profile() {
   };
 
   const handleLogoutClick = () => {
+    localStorage.removeItem('email');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     if (setUser) setUser(undefined);
@@ -28,7 +29,7 @@ export default function Profile() {
     <>
       <button type="button" onClick={handleProfileClick}>
         <S.ProfileImage
-          src={user?.image ? user.image : sampleImage}
+          src={user?.image ? user.image : defaultImage}
           alt="프로필 이미지"
         />
       </button>
