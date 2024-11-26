@@ -51,6 +51,7 @@ export const MyProfileHeaderItem = styled.button<{ $active: boolean }>`
         font-size: 16px;
     `}
 `;
+
 export const MyProfileContentContainer = styled.div`
     display: flex;
     margin-top: 147px;

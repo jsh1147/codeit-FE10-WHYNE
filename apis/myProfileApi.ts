@@ -26,7 +26,7 @@ export interface Review {
     wine:Wine;
 }
 
-interface Wine {
+export interface Wine {
     id:number;
     name:string;
     region:string;

@@ -1,9 +1,6 @@
 import * as S from './MyWines.css';
-import StarIcon from '@/public/icons/icon_star.svg';
 import KebapIcon from '@/public/icons/icon_kebap.svg';
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { TotalCount } from './MyReviews.css';
-import WineImage from '@/public/images/wineimg_example.png';
 import { getWines, GetWines, Wine } from '@/apis/myProfileApi';
 
 export default function MyWines() {

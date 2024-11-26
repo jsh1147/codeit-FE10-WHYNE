@@ -140,6 +140,7 @@ export const NameEdit = styled.input`
     `}
     ${media.mobile`
         height:42px;
+        border-radius:12px;
         &::placeholder {
             font-size:14px;
             color: var(--gray-500);
