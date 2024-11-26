@@ -34,7 +34,6 @@ export const WineRatingContainer = styled.div`
     width: min(766px, 100%);
     height: 233px;
     padding: 0 20px;
-    justify-content: space-around;
     display: grid;
     grid-template-areas: 
       'group1 group1 group1 group2'
@@ -169,7 +168,7 @@ export const EmptyStarImage = styled(EmptyStar)`
 
 export const Bar = styled.div`
   flex: 1;
-  background-color: var(--white);
+  background-color: var(--gray-100);
   margin: 0 10px;
   width: 100px;
 `;
