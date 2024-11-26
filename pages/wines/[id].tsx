@@ -5,7 +5,7 @@ import { WineDetailTypes, ReviewsType } from '@/types/wineDetailTypes';
 import { ReviewList } from '../../components/wines/ReviewList';
 import { instance } from '@/apis/instance';
 import { WineInfo } from '../../components/wines/WineInfoSection';
-import { WineRating } from '../../components/wines/WineRating';
+import { WineRating } from '../../components/wine/WineRating';
 import * as S from '../../components/wines/WineDetail.css';
 
 export default function WineDetail() {
