@@ -8,7 +8,7 @@ export interface BasicButtonPropsType {
   $hoverFontColor?: string;
   $hoverBgColor?: string;
   $width?: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function BasicButton({
