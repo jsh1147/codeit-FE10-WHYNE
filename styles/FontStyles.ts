@@ -179,3 +179,27 @@ export const TextWineDetailNameMobile = css`
   line-height: 23.87px;
   font-weight: 600;
 `;
+
+export const TextWineAvgRating = css`
+  font-size: 54px;
+  line-height: 64.44px;
+  font-weight: 800;
+`;
+
+export const TextWineAvgRatingMobile = css`
+  font-size: 36px;
+  line-height: 42.96px;
+  font-weight: 800;
+`;
+
+export const TextReviewCount = css`
+  font-size: 14px;
+  line-height: 16.71px;
+  font-weight: 400;
+`;
+
+export const TextReviewCountTablet = css`
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 400;
+`;
