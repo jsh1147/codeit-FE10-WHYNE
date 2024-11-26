@@ -68,7 +68,11 @@ export default function MyWines() {
                             <S.WineRegionText>{wine.region}</S.WineRegionText>
                         </S.WineNameWrapper>
                         <S.Price>
-                            <S.PriceText>₩ {wine.price}</S.PriceText>
+                            <S.PriceText>{new Intl.NumberFormat('ko-KR', {
+                                  style: 'currency',
+                                  currency: 'KRW',
+                                }).format(wine.price)}
+                            </S.PriceText>
                         </S.Price>
                     </S.WineInfoWrapper>
                     </S.ItemWrapper>
