@@ -19,8 +19,9 @@ export const WineRatingContainer = styled.div`
   margin: 0 auto;
 
   ${media.tablet`
-    width: 578px;
+    width: min(1199px, 100%);
     height: 162px;
+    padding: 0 85px;
     display: grid;
     grid-template-areas: 
      'group1 group1 group3 group3'
@@ -30,8 +31,9 @@ export const WineRatingContainer = styled.div`
   `}
 
   ${media.mobile`
-    width: 343px;
+    width: min(766px, 100%);
     height: 233px;
+    padding: 0 20px;
     display: grid;
     grid-template-areas: 
       'group1 group1 group1 group2'
@@ -49,13 +51,14 @@ export const Group1 = styled.div`
   margin-bottom: 20px;
 
   ${media.tablet`
+    width: 100%;
     margin-top: 10px;
     margin-bottom: 0px;
     grid-area: group1;
   `}
 
-  ${media.mobile`
-    width: 162px;
+  ${media.mobile` 
+    width: 100%;
     height: 47px;
     margin-top: 0px;
     margin-bottom: 24px;
@@ -74,14 +77,14 @@ export const Group1_2 = styled.div`
   gap: 5px;
 
   ${media.tablet`
-    width: 112px;
+    width: 100%;
     height: 55px; 
     margin-top: 6px;
     gap: 2px;
   `}
 
   ${media.mobile`
-    width: 90px;
+    width: 100%;
     height: 47px;
     margin-top: 0px;
     margin-left: 15px;
@@ -101,14 +104,9 @@ export const AvgRating = styled.h2`
 export const StarRating = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  align-content: left;
-  width: 110px;
   height: 24px;
 
   ${media.mobile`
-    width: 90px;
     height: 50px;
   `}
 `;
@@ -131,12 +129,9 @@ export const RatingCount = styled.div`
   height: 155px;
 
   ${media.tablet`
+    width: 100%;
     height: 162px;
     grid-area: group3;
-  `}
-
-  ${media.mobile`
-    width: 343px;
   `}
 `;
 
@@ -175,6 +170,7 @@ export const Bar = styled.div`
   flex: 1;
   background-color: var(--white);
   margin: 0 10px;
+  width: 100px;
 `;
 
 export const FilledBar = styled.div<{ percentage: number }>`
@@ -198,12 +194,24 @@ export const ReviewButton = styled.button`
 
   ${media.tablet`
     margin-top: 0px;
+  `}
+
+  ${media.mobile`
+    width: 100px;
+    height: 42px;
+  `}
+`;
+
+export const buttonBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+
+  ${media.tablet`
     grid-area: group2;
   `}
 
   ${media.mobile`
-    margin-left: 75px;
-    width: 100px;
-    height: 42px;
+    justify-content: end;
   `}
 `;

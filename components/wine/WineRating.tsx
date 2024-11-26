@@ -53,9 +53,11 @@ export const WineRating: React.FC<WineRatingProps> = ({
           );
         })}
       </S.RatingCount>
-      <S.ReviewButton>
-        <button>리뷰 남기기</button>
-      </S.ReviewButton>
+      <S.buttonBox>
+        <S.ReviewButton>
+          <button>리뷰 남기기</button>
+        </S.ReviewButton>
+      </S.buttonBox>
     </S.WineRatingContainer>
   );
 };
