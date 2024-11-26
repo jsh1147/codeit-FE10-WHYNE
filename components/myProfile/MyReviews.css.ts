@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Image from "next/image";
 import media from '@/styles/mediaQuery';
 import Icon from '@/public/icons/icon_kebap.svg';
 import Star from '@/public/icons/icon_star.svg';

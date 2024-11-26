@@ -1,5 +1,4 @@
 import * as S from './MyReviews.css';
-import StarIcon from '@/public/icons/icon_star.svg';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { getReviews, GetReviews, Review } from '@/apis/myProfileApi';
 
