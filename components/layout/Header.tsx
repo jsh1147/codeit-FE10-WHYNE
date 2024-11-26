@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useUser } from '@/store/UserContext';
 import Profile from './Profile';
-import whiteLogo from '@/public/icons/logo_white.svg';
 import * as S from './Header.css';
 
 export default function Header() {
@@ -21,7 +20,7 @@ export default function Header() {
           onClick={handleLogoClick}
           aria-label="메인 페이지 바로가기"
         >
-          <S.Logo src={whiteLogo} alt="WINE 로고" />
+          <S.Logo aria-label="WINE 로고" />
         </Link>
         {!isLoading &&
           (user ? (
