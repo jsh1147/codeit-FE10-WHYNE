@@ -21,6 +21,16 @@ export const Main = styled.main`
   `}
 `;
 
+export const HiddenH1 = styled.h1`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: rect(0 0 0 0);
+`;
+
 export const MoveButton = styled.button`
   width: 256px;
   height: 48px;

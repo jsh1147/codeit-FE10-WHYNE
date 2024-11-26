@@ -14,7 +14,7 @@ export const Section = styled.section`
   `};
 `;
 
-export const Card = styled.div<{ rightGradient?: boolean }>`
+export const Card = styled.div<{ $rightGradient?: boolean }>`
   position: relative;
   width: min(640px, 100%);
   height: 320px;
@@ -32,8 +32,8 @@ export const Card = styled.div<{ rightGradient?: boolean }>`
   &:after {
     content: '';
     position: absolute;
-    ${({ rightGradient }) =>
-      rightGradient
+    ${({ $rightGradient }) =>
+      $rightGradient
         ? `
         inset: 0 0 0 auto;
         width: 32px;
