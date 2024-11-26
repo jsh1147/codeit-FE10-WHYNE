@@ -25,6 +25,7 @@ export const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 `;
 
 export const ModalContent = styled.div`
@@ -65,7 +66,7 @@ export const ModalButtonWrapper = styled.div`
   width: 100%;
 
   button:first-child {
-    width: 108px; 
+    width: 108px;
   }
 
   button:nth-child(2) {
@@ -106,7 +107,7 @@ export const SelectWrapper = styled.div`
   height: 48px;
 `;
 
-export const IconWrapper = styled(ArrowDropDownIcon)`
+export const ArrowIcon = styled(ArrowDropDownIcon)`
   position: absolute;
   top: 50%;
   right: 20px;

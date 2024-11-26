@@ -11,10 +11,9 @@ import * as S from '@/styles/Wines.css';
 import { useEffect, useState } from 'react';
 
 export default function WineListPage(): React.ReactElement {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState(false);
 
-  // 모달 닫기
   const closeModal = () => {
     setIsModalOpen(false);
   };
