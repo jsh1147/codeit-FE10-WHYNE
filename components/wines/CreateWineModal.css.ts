@@ -80,7 +80,7 @@ export const ModalContentLayoutBox = styled.div`
   gap: 16px;
 `;
 
-// 지피티
+// TODO: <option> 태그가 커스텀이 안되서 드롭다운 스타일 수정 필요
 export const Label = styled.label`
   display: block;
   margin-bottom: 0.5rem;
@@ -119,7 +119,8 @@ export const StyledFileUpload = styled.label`
   > input[type='file'] {
     display: none;
   }
-  // Custom file upload button
+
+  // 와인 사진 업로드 가능한 박스
   display: inline-block;
   cursor: pointer;
   width: 140px;

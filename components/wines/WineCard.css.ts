@@ -12,7 +12,6 @@ export const PriceButton = styled.button`
 `;
 
 export const WineCardContainer = styled.section`
-  /* max-width: 800px; */
   border: 1px solid var(--gray-300);
   border-radius: 16px;
   cursor: pointer;
