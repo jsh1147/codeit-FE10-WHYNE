@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { WineDetailTypes, ReviewsType } from '@/types/wineDetailTypes';
-import { ReviewList } from '../../components/wines/ReviewList';
+import { ReviewList } from '../../components/wineList/ReviewList';
 import { instance } from '@/apis/instance';
-import { WineInfo } from '../../components/wines/WineInfoSection';
+import { WineInfo } from '../../components/wineList/WineInfoSection';
 import { WineRating } from '../../components/wine/WineRating';
-import * as S from '../../components/wines/WineDetail.css';
+import * as S from '../../components/wineList/WineDetail.css';
 
 export default function WineDetail() {
   const [wine, setWine] = useState<WineDetailTypes | null>(null);

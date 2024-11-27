@@ -11,7 +11,7 @@ export const WinesPageSectionTitle = styled.h2`
 export const MonthlyWineContainer = styled.div`
   background-color: var(--gray-100);
   border-radius: 16px;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   padding: 30px 0 30px 30px;
   display: flex;
   flex-direction: column;

@@ -1,11 +1,11 @@
-import BasicButton from '@/components/wines/BasicButton';
-import CreateWineModal from '@/components/wines/CreateWineModal';
-import Filter from '@/components/wines/Filter';
-import MonthlyWineSection from '@/components/wines/MonthlyWineSection';
-import SearchBar from '@/components/wines/SearchBar';
+import BasicButton from '@/components/wineList/BasicButton';
+import CreateWineModal from '@/components/wineList/CreateWineModal';
+import Filter from '@/components/wineList/Filter';
+import MonthlyWineSection from '@/components/wineList/MonthlyWineSection';
+import SearchBar from '@/components/wineList/SearchBar';
 import WineCardList, {
   WineFilterOptions,
-} from '@/components/wines/WineCardList';
+} from '@/components/wineList/WineCardList';
 import useDebounce from '@/hooks/useDebounce';
 import * as S from '@/styles/Wines.css';
 import { useEffect, useState } from 'react';
@@ -19,7 +19,7 @@ export default function WineListPage(): React.ReactElement {
   };
 
   const [debouncedOptions, options, setOptions] =
-    useDebounce<WineFilterOptions>({}, 500);
+    useDebounce<WineFilterOptions>({}, 100);
 
   const searchByKeyword = (newKeyword?: string) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -83,7 +83,7 @@ export default function WineListPage(): React.ReactElement {
   }, []);
 
   return (
-    <div className="container">
+    <S.WinPageLayout>
       <S.WinesPageContainer>
         <MonthlyWineSection />
         <S.GridWrapper>
@@ -108,6 +108,6 @@ export default function WineListPage(): React.ReactElement {
         </S.GridWrapper>
         {isModalOpen && <CreateWineModal closeModal={closeModal} />}
       </S.WinesPageContainer>
-    </div>
+    </S.WinPageLayout>
   );
 }

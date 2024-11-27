@@ -1,7 +1,26 @@
 import styled from 'styled-components';
+import media from '@/styles/mediaQuery';
+
+export const WinPageLayout = styled.div`
+  /* width: 100%; */
+  /* overflow-x: hidden; */
+`;
 
 export const WinesPageContainer = styled.div`
-  margin-top: 130px;
+  width: min(1140px, 100%);
+  margin: 118px auto auto;
+
+  ${media.tablet`
+    margin: 108px auto auto;
+    width: min(1140px, 100% - 20px);
+
+  `}
+
+  ${media.mobile`
+    margin: 98px auto auto;
+    width: min(1140px, 100% - 32px);
+    
+  `}
 `;
 
 export const GridWrapper = styled.div`
@@ -11,6 +30,10 @@ export const GridWrapper = styled.div`
   grid-row-gap: 20px;
   grid-column-gap: 60px;
   margin-top: 40px;
+
+  ${media.tablet`
+    
+  `}
 `;
 
 export const SearchBarWrapper = styled.div`
