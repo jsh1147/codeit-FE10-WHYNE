@@ -30,10 +30,10 @@ export const WineRating: React.FC<WineRatingProps> = ({
         <S.Group1_2>
           <S.StarRating>
             {[...Array(fullStars)].map((_, index) => (
-              <S.StarImage key={`full-${index}`} alt="Star" fill />
+              <S.StarImage key={`full-${index}`} aria-label="Star" />
             ))}
             {[...Array(emptyStars)].map((_, index) => (
-              <S.EmptyStarImage key={`empty-${index}`} alt="EmptyStar" />
+              <S.EmptyStarImage key={`empty-${index}`} aria-label="EmptyStar" />
             ))}
           </S.StarRating>
           <S.ReviewCount>{reviewCount}개의 후기</S.ReviewCount>

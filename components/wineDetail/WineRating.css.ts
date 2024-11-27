@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import EmptyStar from '@/public/icons/emptyStar.svg';
 import Star from '@/public/icons/star.svg';
+import EmptyStar from '@/public/icons/emptyStar.svg';
+
 import {
   TextLgBold,
   TextReviewCount,
