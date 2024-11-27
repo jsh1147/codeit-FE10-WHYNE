@@ -9,10 +9,27 @@ import WineCardList, {
 import useDebounce from '@/hooks/useDebounce';
 import * as S from '@/styles/Wines.css';
 import { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
+import { IconButton } from '@mui/material';
 
 export default function WineListPage(): React.ReactElement {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState(false);
+
+  const [isTablet, setIsTablet] = useState(false);
+  const [isPC, setIsPC] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const tabletQuery = useMediaQuery({ query: '(max-width: 1199px)' });
+  const mobileQuery = useMediaQuery({ query: '(max-width: 767px)' });
+  const pcQuery = useMediaQuery({ query: '(min-width: 1200px)' });
+
+  useEffect(() => {
+    setIsTablet(tabletQuery);
+    setIsMobile(mobileQuery);
+    setIsPC(pcQuery);
+  }, [isTablet, isPC, isMobile, tabletQuery, mobileQuery, pcQuery]);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -85,27 +102,62 @@ export default function WineListPage(): React.ReactElement {
   return (
     <S.WinesPageContainer>
       <MonthlyWineSection />
-      <S.GridWrapper>
-        <S.SearchBarWrapper>
-          <SearchBar searchByKeyword={searchByKeyword} />
-        </S.SearchBarWrapper>
-        <S.WineCardListWrapper>
-          <WineCardList filterOptions={debouncedOptions} />
-        </S.WineCardListWrapper>
-        <S.FilterWrapper>
-          <Filter
-            changeWineType={changeWineType}
-            changePriceRange={changePriceRange}
-            changeRating={changeRating}
-          />
-          {isLogin && (
-            <BasicButton onClick={() => setIsModalOpen(true)} $width="100%">
-              와인 등록하기
-            </BasicButton>
-          )}
-        </S.FilterWrapper>
-      </S.GridWrapper>
+      {isPC && (
+        <>
+          <S.GridWrapper>
+            <S.SearchBarWrapper isLogin={isLogin}>
+              <SearchBar searchByKeyword={searchByKeyword} />
+            </S.SearchBarWrapper>
+
+            <S.WineCardListWrapper>
+              <WineCardList filterOptions={debouncedOptions} />
+            </S.WineCardListWrapper>
+            <S.FilterWrapper>
+              <Filter
+                changeWineType={changeWineType}
+                changePriceRange={changePriceRange}
+                changeRating={changeRating}
+              />
+              {isLogin && (
+                <BasicButton onClick={() => setIsModalOpen(true)} $width="100%">
+                  와인 등록하기
+                </BasicButton>
+              )}
+            </S.FilterWrapper>
+          </S.GridWrapper>
+        </>
+      )}
       {isModalOpen && <CreateWineModal closeModal={closeModal} />}
+
+      {isTablet && (
+        <>
+          <S.TopActionWrapper>
+            <IconButton
+              sx={{
+                backgroundColor: '#fff',
+                width: 48,
+                height: 48,
+                border: '1px solid var(--gray-300)',
+                borderRadius: '8px',
+                '&:hover': { backgroundColor: 'transparent' },
+              }}
+            >
+              <TuneRoundedIcon sx={{ color: 'var(--gray-300)' }} />
+            </IconButton>
+            <S.SearchBarWrapper>
+              <SearchBar searchByKeyword={searchByKeyword} />
+            </S.SearchBarWrapper>
+            {isLogin && (
+              <BasicButton onClick={() => setIsModalOpen(true)} $width="220px">
+                와인 등록하기
+              </BasicButton>
+            )}
+          </S.TopActionWrapper>
+          <S.WineCardListWrapper>
+            <WineCardList filterOptions={debouncedOptions} />
+          </S.WineCardListWrapper>
+        </>
+      )}
     </S.WinesPageContainer>
   );
 }

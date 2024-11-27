@@ -39,6 +39,7 @@ export default function WineCardList(props: WineCardListProps) {
     console.log('useEffect-filterOptions');
     cursorRef.current = undefined;
     setOptions(filterOptions);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterOptions]);
 
   useEffect(() => {
@@ -60,6 +61,7 @@ export default function WineCardList(props: WineCardListProps) {
     }
 
     setWines(newWines);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wineList]);
 
   return (

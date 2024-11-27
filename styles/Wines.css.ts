@@ -26,14 +26,21 @@ export const GridWrapper = styled.div`
   grid-column-gap: 60px;
   margin-top: 40px;
 
-  ${media.tablet`
-    
-  `}
+  /* ${media.tablet`
+    display: block;
+  `} */
 `;
 
-export const SearchBarWrapper = styled.div`
+export const SearchBarWrapper = styled.div<{ isLogin: boolean }>`
   grid-row: 1;
   grid-column: 2;
+
+  ${(props) =>
+    media.tablet`
+      flex: 1;
+      margin-left: 24px;
+      margin-right: ${props.isLogin ? '16px' : '0'};
+    `}
 `;
 
 export const FilterWrapper = styled.div`
@@ -49,4 +56,12 @@ export const FilterWrapper = styled.div`
 export const WineCardListWrapper = styled.div`
   grid-row: 2;
   grid-column: 2;
+`;
+
+// Tablet UI
+export const TopActionWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  margin-bottom: 32px;
 `;

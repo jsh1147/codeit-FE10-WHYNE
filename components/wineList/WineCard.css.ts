@@ -1,3 +1,4 @@
+import media from '@/styles/mediaQuery';
 import styled from 'styled-components';
 
 export const PriceButton = styled.button`
@@ -23,6 +24,10 @@ export const WineImageThumbnail = styled.figure`
   margin-top: 40px;
   margin-left: 60px;
   overflow-y: hidden;
+
+  ${media.tablet`
+    width: 74px;
+  `}
 `;
 
 export const ImageWrapper = styled.div`
@@ -94,6 +99,10 @@ export const WineInfoTitle = styled.h2`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   white-space: normal;
+
+  ${media.tablet`
+  width: 300px;
+  `}
 `;
 
 export const WineInfoText = styled.p<{
@@ -114,6 +123,10 @@ export const WineInfoText = styled.p<{
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   white-space: normal;
+
+  ${media.tablet`
+    height: 26px;
+  `}
 `;
 
 export const WineInfoReviewBox = styled.div`
