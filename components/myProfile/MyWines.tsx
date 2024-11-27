@@ -1,13 +1,29 @@
 import * as S from './MyWines.css';
 import { useEffect, useState, useRef, useCallback } from 'react';
+import { useRouter } from 'next/router';
 import { getWines, GetWines, Wine } from '@/apis/myProfileApi';
 
+
 export default function MyWines() {
+    const { pathname, push, reload } = useRouter();
     const [wines, setWines] = useState<GetWines['list']>([]);
     const [cursor, setCursor] = useState<number>(0);
     const [totalCount, setTotalCount] = useState<number | null>(null);
     const observerRef = useRef<IntersectionObserver | null>(null);
-
+    const [activeDropdown, setActiveDropdown] = useState<number | null>(null); 
+    
+    const handleDeleteClick = () => {
+    
+      };
+    
+    const handleEditClick = () => {
+    
+        if (pathname === '/') reload();
+        else push('/');
+      };
+    const toggleDropdown = (id: number) => {
+        setActiveDropdown(prev => (prev === id ? null : id));
+    };
     const fetchWines = useCallback(async () => {
         if (totalCount !== null && wines.length >= totalCount) return;
 
@@ -47,8 +63,7 @@ export default function MyWines() {
 
     useEffect(() => {
         fetchWines();
-        console.log(wines)
-    },[]); 
+    },[fetchWines]); 
 
 
     return (
@@ -58,9 +73,12 @@ export default function MyWines() {
             <S.WineItemWrapper key={wine.id}>
                 <S.WineItem>
                     <S.ItemWrapper>
-                        <S.ImageWrapper>
-                            <S.WineImage src={wine.image} alt="와인이미지" layout='fill' />
-                        </S.ImageWrapper>
+                        <S.WineImageWrapper>
+                            <S.ImageWrapper>
+                                <S.WineImage src={wine.image} alt="와인이미지" layout='fill' />
+                            </S.ImageWrapper>
+                        </S.WineImageWrapper>
+                        
                     <S.WineInfoWrapper>
                         <S.WineNameWrapper>
                             <S.WineNameText>{wine.name}</S.WineNameText>
@@ -75,7 +93,27 @@ export default function MyWines() {
                         </S.Price>
                     </S.WineInfoWrapper>
                     </S.ItemWrapper>
-                    <S.KebapIcon aria-label="수정삭제 드롭다운 버튼" />
+                    <S.KebapIcon
+                            aria-label="수정삭제 드롭다운 버튼"
+                            data-dropdown
+                            onClick={() => toggleDropdown(wine.id)}
+                        />
+                        {activeDropdown === wine.id && (
+                            <S.DropdownList>
+                            <ul>
+                              <li>
+                                <S.DropdownItem onClick={handleEditClick}>
+                                  수정하기
+                                </S.DropdownItem>
+                              </li>
+                              <li>
+                                <S.DropdownItem onClick={handleDeleteClick} >
+                                  삭제하기
+                                </S.DropdownItem>
+                              </li>
+                            </ul>
+                          </S.DropdownList>
+                        )}
                 </S.WineItem>
             </S.WineItemWrapper>
         ))}

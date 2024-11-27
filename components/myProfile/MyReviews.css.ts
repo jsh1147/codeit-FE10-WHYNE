@@ -27,6 +27,7 @@ export const ReviewItemTopWrapper = styled.div`
     width:100%;
     display: flex;
     justify-content: space-between;
+    position:relative;
 `;
 export const StarTimeWrapper = styled.div`
     display:flex;
@@ -44,7 +45,7 @@ export const TimeText = styled.div`
 `;
 export const KebapIcon = styled(Icon)`
     width:20px;
-    height:20px;
+    height:27px;
 `;
 export const ReviewTextWrapper = styled.div`
     display:flex;
@@ -104,4 +105,41 @@ export const TotalCount = styled.div`
     ${media.mobile`
         font-size: 12px;
     `}
+`;
+
+export const DropdownList = styled.div`
+  position: absolute;
+  inset: 35px 5px auto auto;
+  border-radius: 16px;
+  border: 1px solid var(--gray-300);
+  background-color: white;
+
+  ${media.tablet`
+    top: 35px;
+  `}
+
+  ${media.mobile`
+    inset: 35px 5px auto auto;
+  `};
+`;
+
+export const DropdownItem = styled.button`
+  width: 120px;
+  height: 48px;
+  margin: 4px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--gray-800);
+
+  ${media.mobile`
+    width: 96px;
+    height: 40px;
+    font-size: 14px;
+  `};
+
+  &:hover {
+    background-color: var(--purple-10);
+    color: var(--purple-100);
+  }
 `;

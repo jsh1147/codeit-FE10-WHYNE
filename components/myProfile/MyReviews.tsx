@@ -14,12 +14,19 @@ function formatTime(date: string): string {
     return `${diffInHours}시간 전`;
 }
 
-export default function MyReviews() {
+interface MyReviewsProps {
+    openDeleteModal: (reviewId:number) => void;
+}
+
+export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
     const [reviews, setReviews] = useState<GetReviews['list']>([]);
     const [cursor, setCursor] = useState<number>(0);
     const [totalCount, setTotalCount] = useState<number | null>(null);
+    const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
     const observerRef = useRef<IntersectionObserver | null>(null);
-
+    const handleDeleteClick = (reviewId: number) => {
+        openDeleteModal(reviewId); 
+    };
     const fetchReviews = useCallback(async () => {
         if (totalCount !== null && reviews.length >= totalCount) return;
 
@@ -59,31 +66,69 @@ export default function MyReviews() {
 
     useEffect(() => {
         fetchReviews();
-        console.log(reviews)
-    }, [reviews]); 
+    }, [fetchReviews]);
+
+    const toggleDropdown = (id: number) => {
+        setActiveDropdown(prev => (prev === id ? null : id));
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (!(event.target as HTMLElement).closest('[data-dropdown]')) {
+                setActiveDropdown(null);
+            }
+        };
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, []);
+
 
     return (
-        <S.ReviewListContainer>
-            <S.TotalCount>총 {totalCount}개</S.TotalCount>
-            {reviews.map((review: Review) => (
-                <S.ReviewItem key={review.id}>
-                    <S.ReviewItemTopWrapper>
-                        <S.StarTimeWrapper>
-                            <S.StarWrapper>
-                                <S.StarIcon aria-label="별점 아이콘" />
-                                <S.StarText>{review.rating}.0</S.StarText>
-                            </S.StarWrapper>
-                            <S.TimeText>{formatTime(review.updatedAt)}</S.TimeText>
-                        </S.StarTimeWrapper>
-                        <S.KebapIcon aria-label="수정삭제 드롭다운 버튼" />
-                    </S.ReviewItemTopWrapper>
-                    <S.ReviewTextWrapper>
-                        <S.WineName>{review.wine.name}</S.WineName>
-                        <S.WineReview>{review.content}</S.WineReview>
-                    </S.ReviewTextWrapper>
-                </S.ReviewItem>
-            ))}
-            <div ref={setupObserver}></div>
-        </S.ReviewListContainer>
+        <>
+            <S.ReviewListContainer>
+                <S.TotalCount>총 {totalCount}개</S.TotalCount>
+                {reviews.map((review: Review) => (
+                    <S.ReviewItem key={review.id}>
+                        <S.ReviewItemTopWrapper>
+                            <S.StarTimeWrapper>
+                                <S.StarWrapper>
+                                    <S.StarIcon aria-label="별점 아이콘" />
+                                    <S.StarText>{review.rating}.0</S.StarText>
+                                </S.StarWrapper>
+                                <S.TimeText>{formatTime(review.updatedAt)}</S.TimeText>
+                            </S.StarTimeWrapper>
+                            <S.KebapIcon
+                                aria-label="수정삭제 드롭다운 버튼"
+                                data-dropdown
+                                onClick={() => toggleDropdown(review.id)}
+                            />
+                            {activeDropdown === review.id && (
+                                <S.DropdownList>
+                                    <ul>
+                                        <li>
+                                            <S.DropdownItem >
+                                                수정하기
+                                            </S.DropdownItem>
+                                        </li>
+                                        <li>
+                                            <S.DropdownItem onClick={() => handleDeleteClick(review.id)}>
+                                                삭제하기
+                                            </S.DropdownItem>
+                                        </li>
+                                    </ul>
+                                </S.DropdownList>
+                            )}
+                        </S.ReviewItemTopWrapper>
+                        <S.ReviewTextWrapper>
+                            <S.WineName>{review.wine.name}</S.WineName>
+                            <S.WineReview>{review.content}</S.WineReview>
+                        </S.ReviewTextWrapper>
+                    </S.ReviewItem>
+                ))}
+                <div ref={setupObserver}></div>
+            </S.ReviewListContainer>
+
+   
+        </>
     );
 }
