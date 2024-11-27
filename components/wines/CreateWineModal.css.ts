@@ -25,7 +25,7 @@ export const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 101; // header가 100 이여서 101로 설정
 `;
 
 export const ModalContent = styled.div`
