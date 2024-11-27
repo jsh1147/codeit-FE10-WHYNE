@@ -11,7 +11,7 @@ export default function LogIn() {
   const { isLoading, user } = useUser();
 
   useEffect(() => {
-    if (user) replace('/');
+    if (user) replace('/wines');
   }, [user, replace]);
 
   return (
