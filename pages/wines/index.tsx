@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import BasicButton from '@/components/wineList/BasicButton';
 import CreateWineModal from '@/components/wineList/CreateWineModal';
 import Filter from '@/components/wineList/Filter';
@@ -8,8 +10,6 @@ import WineCardList, {
 } from '@/components/wineList/WineCardList';
 import useDebounce from '@/hooks/useDebounce';
 import * as S from '@/styles/Wines.css';
-import { useEffect, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import { IconButton } from '@mui/material';
 
@@ -77,7 +77,6 @@ export default function WineListPage(): React.ReactElement {
   };
 
   const changeRating = (newRating?: number) => {
-    console.log('changeRating - ' + 'newRating: ' + newRating);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { rating, ...others } = options;
     if (newRating === undefined) {
@@ -144,7 +143,7 @@ export default function WineListPage(): React.ReactElement {
             >
               <TuneRoundedIcon sx={{ color: 'var(--gray-300)' }} />
             </IconButton>
-            <S.SearchBarWrapper>
+            <S.SearchBarWrapper isLogin={isLogin}>
               <SearchBar searchByKeyword={searchByKeyword} />
             </S.SearchBarWrapper>
             {isLogin && (

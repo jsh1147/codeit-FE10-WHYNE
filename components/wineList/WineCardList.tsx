@@ -28,7 +28,6 @@ export default function WineCardList(props: WineCardListProps) {
   const [hasMore, setHasMore] = useState(true);
 
   const fetchMoreWines = async () => {
-    console.log('fetchMoreWines');
     setOptions((prev) => ({
       ...prev,
       cursor: cursorRef.current,
@@ -36,14 +35,12 @@ export default function WineCardList(props: WineCardListProps) {
   };
 
   useEffect(() => {
-    console.log('useEffect-filterOptions');
     cursorRef.current = undefined;
     setOptions(filterOptions);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterOptions]);
 
   useEffect(() => {
-    console.log('useEffect-wineList');
     setHasMore(nextCursor !== null);
 
     const prevWines = [...wines];

@@ -81,7 +81,6 @@ export default function CreateWineModal({
 
         if (res.status === HttpStatusCode.Created) {
           alert('와인이 등록되었습니다.');
-          console.log(res.data);
           router.push(`/wines/${res.data.id}`);
         } else {
           alert('게시글 등록에 실패했습니다.');
