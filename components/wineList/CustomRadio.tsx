@@ -80,30 +80,35 @@ export default function CustomizedRadios(props: CustomizedRadiosProps) {
             value={RATING_ALL}
             label="전체"
             checked={rating === RATING_ALL}
+            sx={{ marginLeft: '-9px' }} // label의 패딩값만큼 왼쪽으로 이동
           />
           <S.StyledFormControlLabel
             value={RATING_45_50}
             label="4.5 - 5.0"
             control={<BpRadio />}
             checked={rating === RATING_45_50}
+            sx={{ marginLeft: '-9px' }}
           />
           <S.StyledFormControlLabel
             value={RATING_40_45}
             label="4.0 - 4.5"
             control={<BpRadio />}
             checked={rating === RATING_40_45}
+            sx={{ marginLeft: '-9px' }}
           />
           <S.StyledFormControlLabel
             value={RATING_35_40}
             label="3.5 - 4.0"
             control={<BpRadio />}
             checked={rating === RATING_35_40}
+            sx={{ marginLeft: '-9px' }}
           />
           <S.StyledFormControlLabel
             value={RATING_30_35}
             label="3.0 - 3.5"
             control={<BpRadio />}
             checked={rating === RATING_30_35}
+            sx={{ marginLeft: '-9px' }}
           />
         </S.StyledRadioGroup>
       </FormControl>

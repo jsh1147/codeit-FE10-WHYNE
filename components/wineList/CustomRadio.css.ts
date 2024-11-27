@@ -33,6 +33,10 @@ export const BpCheckedIcon = styled(BpIcon)`
 `;
 
 export const StyledFormControlLabel = styled(FormControlLabel)`
+  .MuiFormControlLabel-root {
+    margin: 0 !important;
+  }
+
   > span {
     font-family: 'Pretendard', sans-serif;
     color: var(--gray-800);

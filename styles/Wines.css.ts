@@ -1,24 +1,19 @@
 import styled from 'styled-components';
 import media from '@/styles/mediaQuery';
 
-export const WinPageLayout = styled.div`
-  /* width: 100%; */
-  /* overflow-x: hidden; */
-`;
-
 export const WinesPageContainer = styled.div`
   width: min(1140px, 100%);
   margin: 118px auto auto;
 
   ${media.tablet`
     margin: 108px auto auto;
-    width: min(1140px, 100% - 20px);
+    width: min(1140px, 100% - 40px);
 
   `}
 
   ${media.mobile`
-    margin: 98px auto auto;
-    width: min(1140px, 100% - 32px);
+    margin: 99px auto auto;
+    width: calc(100% - 32px);
     
   `}
 `;

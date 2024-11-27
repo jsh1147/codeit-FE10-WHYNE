@@ -51,7 +51,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    min-width: 375px;
+    /* min-width: 375px; */
     overflow-y: scroll;
     color: var(--gray-800);
     word-break: keep-all;

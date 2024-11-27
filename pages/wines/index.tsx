@@ -83,31 +83,29 @@ export default function WineListPage(): React.ReactElement {
   }, []);
 
   return (
-    <S.WinPageLayout>
-      <S.WinesPageContainer>
-        <MonthlyWineSection />
-        <S.GridWrapper>
-          <S.SearchBarWrapper>
-            <SearchBar searchByKeyword={searchByKeyword} />
-          </S.SearchBarWrapper>
-          <S.WineCardListWrapper>
-            <WineCardList filterOptions={debouncedOptions} />
-          </S.WineCardListWrapper>
-          <S.FilterWrapper>
-            <Filter
-              changeWineType={changeWineType}
-              changePriceRange={changePriceRange}
-              changeRating={changeRating}
-            />
-            {isLogin && (
-              <BasicButton onClick={() => setIsModalOpen(true)} $width="100%">
-                와인 등록하기
-              </BasicButton>
-            )}
-          </S.FilterWrapper>
-        </S.GridWrapper>
-        {isModalOpen && <CreateWineModal closeModal={closeModal} />}
-      </S.WinesPageContainer>
-    </S.WinPageLayout>
+    <S.WinesPageContainer>
+      <MonthlyWineSection />
+      <S.GridWrapper>
+        <S.SearchBarWrapper>
+          <SearchBar searchByKeyword={searchByKeyword} />
+        </S.SearchBarWrapper>
+        <S.WineCardListWrapper>
+          <WineCardList filterOptions={debouncedOptions} />
+        </S.WineCardListWrapper>
+        <S.FilterWrapper>
+          <Filter
+            changeWineType={changeWineType}
+            changePriceRange={changePriceRange}
+            changeRating={changeRating}
+          />
+          {isLogin && (
+            <BasicButton onClick={() => setIsModalOpen(true)} $width="100%">
+              와인 등록하기
+            </BasicButton>
+          )}
+        </S.FilterWrapper>
+      </S.GridWrapper>
+      {isModalOpen && <CreateWineModal closeModal={closeModal} />}
+    </S.WinesPageContainer>
   );
 }
