@@ -1,3 +1,5 @@
+import BasicButton from '@/components/wines/BasicButton';
+import CreateWineModal from '@/components/wines/CreateWineModal';
 import Filter from '@/components/wines/Filter';
 import MonthlyWineSection from '@/components/wines/MonthlyWineSection';
 import SearchBar from '@/components/wines/SearchBar';
@@ -6,22 +8,40 @@ import WineCardList, {
 } from '@/components/wines/WineCardList';
 import useDebounce from '@/hooks/useDebounce';
 import * as S from '@/styles/Wines.css';
+import { useEffect, useState } from 'react';
 
 export default function WineListPage(): React.ReactElement {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useState(false);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const [debouncedOptions, options, setOptions] =
     useDebounce<WineFilterOptions>({}, 500);
 
-  const searchByKeyword = (keyword: string) => {
-    setOptions((prev) => ({
-      ...prev,
-      name: keyword,
-    }));
+  const searchByKeyword = (newKeyword?: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { name, ...others } = options;
+
+    let newFilterOptions: WineFilterOptions;
+
+    if (newKeyword === undefined) {
+      newFilterOptions = { ...others };
+    } else {
+      newFilterOptions = { ...others, name: newKeyword };
+    }
+
+    setOptions(newFilterOptions);
   };
 
   const changeWineType = (newType?: 'RED' | 'WHITE' | 'SPARKLING') => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { type, ...others } = options;
+
     let newFilterOptions: WineFilterOptions;
+
     if (newType === undefined) {
       newFilterOptions = { ...others };
     } else {
@@ -55,6 +75,13 @@ export default function WineListPage(): React.ReactElement {
     }
   };
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('accessToken')) setIsLogin(true);
+      else setIsLogin(false);
+    }
+  }, []);
+
   return (
     <div className="container">
       <S.WinesPageContainer>
@@ -72,8 +99,14 @@ export default function WineListPage(): React.ReactElement {
               changePriceRange={changePriceRange}
               changeRating={changeRating}
             />
+            {isLogin && (
+              <BasicButton onClick={() => setIsModalOpen(true)} $width="100%">
+                와인 등록하기
+              </BasicButton>
+            )}
           </S.FilterWrapper>
         </S.GridWrapper>
+        {isModalOpen && <CreateWineModal closeModal={closeModal} />}
       </S.WinesPageContainer>
     </div>
   );
