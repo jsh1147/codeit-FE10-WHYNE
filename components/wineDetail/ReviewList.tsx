@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { instance } from '@/apis/instance';
 import { ReviewsType } from '@/types/wineDetailTypes';
 import { translateAroma } from './TranslateAroma';
@@ -14,16 +14,28 @@ const Slider: React.FC<{ value: number }> = ({ value }) => (
   <S.StyledSlider type="range" min={0} max={5} value={value} disabled />
 );
 
-export const ReviewList: React.FC<WineReviewsProps> = ({ reviews }) => {
+export const ReviewList: React.FC<WineReviewsProps> = ({
+  reviews: initialReviews,
+}) => {
+  const [reviews, setReviews] = useState(initialReviews);
   const [collapsedReviews, setCollapsedReviews] = useState(
-    reviews.map(() => false),
+    initialReviews.map(() => false),
   );
 
   const [likesState, setLikesState] = useState(
-    reviews.map((review) => review.isLiked),
+    initialReviews.map((review) => review.isLiked),
   );
 
-  const [isOpen, setIsOpen] = useState(Array(reviews.length).fill(false));
+  const [isOpen, setIsOpen] = useState(
+    Array(initialReviews.length).fill(false),
+  );
+
+  useEffect(() => {
+    setReviews(initialReviews);
+    setCollapsedReviews(initialReviews.map(() => false));
+    setLikesState(initialReviews.map((review) => review.isLiked));
+    setIsOpen(Array(initialReviews.length).fill(false));
+  }, [initialReviews]);
 
   const toggleDropdown = (index: number) => {
     setIsOpen((prev) => prev.map((open, i) => (i === index ? !open : false)));
@@ -45,7 +57,11 @@ export const ReviewList: React.FC<WineReviewsProps> = ({ reviews }) => {
         ),
       );
     } catch (error) {
-      console.error('좋아요 요청 중 오류 발생', error);
+      if (error instanceof AxiosError && error.response?.status === 403) {
+        alert('본인이 작성한 리뷰에는 좋아요를 할 수 없습니다.');
+      } else {
+        console.error('좋아요 요청 중 오류 발생', error);
+      }
     }
   };
 
@@ -67,13 +83,7 @@ export const ReviewList: React.FC<WineReviewsProps> = ({ reviews }) => {
     try {
       const response = await instance.delete(`reviews/${reviewId}`);
       console.log('리뷰 삭제 성공', response.data);
-      setCollapsedReviews((prev) =>
-        prev.filter((_, i) => reviews[i].id !== reviewId),
-      );
-      setLikesState((prev) =>
-        prev.filter((_, i) => reviews[i].id !== reviewId),
-      );
-      setIsOpen((prev) => prev.filter((_, i) => reviews[i].id !== reviewId));
+      setReviews((prev) => prev.filter((review) => review.id !== reviewId));
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === 403) {
         alert('리뷰 작성자만 삭제할 수 있습니다.');
