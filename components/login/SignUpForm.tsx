@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { AxiosError } from 'axios';
 import { postSignUp } from '@/apis/auth';
+import * as S from './AuthForm.css';
 
 interface SignUpFormData {
   email: string;
@@ -37,40 +38,40 @@ export default function SignUpForm() {
   };
 
   return (
-    <form method="post" onSubmit={handleSubmit(signUpSubmit)}>
-      <label htmlFor="email">이메일</label>
-      <input
+    <S.Form method="post" onSubmit={handleSubmit(signUpSubmit)}>
+      <S.Label htmlFor="email">이메일</S.Label>
+      <S.Input
         type="email"
         id="email"
         placeholder="wine@email.com"
         {...register('email')}
       />
-      <span>{errors.email?.message}</span>
-      <label htmlFor="nickname">닉네임</label>
-      <input
+      <S.ErrorText>{errors.email?.message}</S.ErrorText>
+      <S.Label htmlFor="nickname">닉네임</S.Label>
+      <S.Input
         type="text"
         id="nickname"
         placeholder="wine"
         {...register('nickname')}
       />
-      <span>{errors.nickname?.message}</span>
-      <label htmlFor="password">비밀번호</label>
-      <input
+      <S.ErrorText>{errors.nickname?.message}</S.ErrorText>
+      <S.Label htmlFor="password">비밀번호</S.Label>
+      <S.Input
         type="password"
         id="password"
         placeholder="영문, 숫자 포함 8자 이상"
         {...register('password')}
       />
-      <span>{errors.password?.message}</span>
-      <label htmlFor="passwordConfirmation">비밀번호 확인</label>
-      <input
-        type="email"
+      <S.ErrorText>{errors.password?.message}</S.ErrorText>
+      <S.Label htmlFor="passwordConfirmation">비밀번호 확인</S.Label>
+      <S.Input
+        type="password"
         id="passwordConfirmation"
         placeholder="비밀번호 확인"
         {...register('passwordConfirmation')}
       />
-      <span>{errors.passwordConfirmation?.message}</span>
-      <button type="submit">회원가입</button>
-    </form>
+      <S.ErrorText>{errors.passwordConfirmation?.message}</S.ErrorText>
+      <S.SubmitButton type="submit">회원가입</S.SubmitButton>
+    </S.Form>
   );
 }

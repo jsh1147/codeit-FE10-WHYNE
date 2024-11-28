@@ -2,6 +2,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { AxiosError } from 'axios';
 import { postLogIn } from '@/apis/auth';
 import { useUser } from '@/store/UserContext';
+import * as S from './AuthForm.css';
 
 interface LoginFormData {
   email: string;
@@ -40,24 +41,24 @@ export default function LogInForm() {
   };
 
   return (
-    <form method="post" onSubmit={handleSubmit(logInSubmit)}>
-      <label htmlFor="email">이메일</label>
-      <input
+    <S.Form method="post" onSubmit={handleSubmit(logInSubmit)}>
+      <S.Label htmlFor="email">이메일</S.Label>
+      <S.Input
         type="email"
         id="email"
         placeholder="이메일 입력"
         {...register('email')}
       />
-      <span>{errors.email?.message}</span>
-      <label htmlFor="password">비밀번호</label>
-      <input
+      <S.ErrorText>{errors.email?.message}</S.ErrorText>
+      <S.Label htmlFor="password">비밀번호</S.Label>
+      <S.Input
         type="password"
         id="password"
         placeholder="비밀번호 입력"
         {...register('password')}
       />
-      <span>{errors.password?.message}</span>
-      <button type="submit">로그인</button>
-    </form>
+      <S.ErrorText>{errors.password?.message}</S.ErrorText>
+      <S.SubmitButton type="submit">로그인</S.SubmitButton>
+    </S.Form>
   );
 }
