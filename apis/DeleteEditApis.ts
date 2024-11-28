@@ -9,3 +9,12 @@ export const deleteReview = async (reviewId: number) => {
         throw error;
     }
 };
+export const deleteWine = async (wineId: number) => {
+    try {
+        const response = await instance.delete(`/wines/${wineId}`);
+        return response.data;
+    } catch (error) {
+        console.error('와인 삭제 실패:', error);
+        throw error;
+    }
+};

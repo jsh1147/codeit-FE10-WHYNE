@@ -1,26 +1,22 @@
 import * as S from './MyWines.css';
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { useRouter } from 'next/router';
 import { getWines, GetWines, Wine } from '@/apis/myProfileApi';
 
+interface MyWineProps {
+    openDeleteModal: (wineId:number) => void;
+}
 
-export default function MyWines() {
-    const { pathname, push, reload } = useRouter();
+export default function MyWines({ openDeleteModal } : MyWineProps) {
     const [wines, setWines] = useState<GetWines['list']>([]);
     const [cursor, setCursor] = useState<number>(0);
     const [totalCount, setTotalCount] = useState<number | null>(null);
     const observerRef = useRef<IntersectionObserver | null>(null);
     const [activeDropdown, setActiveDropdown] = useState<number | null>(null); 
     
-    const handleDeleteClick = () => {
+    const handleDeleteClick = (wineId:number) => {
+        openDeleteModal(wineId);
+    };
     
-      };
-    
-    const handleEditClick = () => {
-    
-        if (pathname === '/') reload();
-        else push('/');
-      };
     const toggleDropdown = (id: number) => {
         setActiveDropdown(prev => (prev === id ? null : id));
     };
@@ -65,7 +61,15 @@ export default function MyWines() {
         fetchWines();
     },[fetchWines]); 
 
-
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (!(event.target as HTMLElement).closest('[data-dropdown]')) {
+                setActiveDropdown(null);
+            }
+        };
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, []);
     return (
         <S.WineListContainer>
             <S.TotalCount>총 {totalCount}개</S.TotalCount>
@@ -102,12 +106,12 @@ export default function MyWines() {
                             <S.DropdownList>
                             <ul>
                               <li>
-                                <S.DropdownItem onClick={handleEditClick}>
+                                <S.DropdownItem>
                                   수정하기
                                 </S.DropdownItem>
                               </li>
                               <li>
-                                <S.DropdownItem onClick={handleDeleteClick} >
+                                <S.DropdownItem onClick={() => handleDeleteClick(wine.id)} >
                                   삭제하기
                                 </S.DropdownItem>
                               </li>

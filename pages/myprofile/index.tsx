@@ -4,34 +4,43 @@ import MyWines from '@/components/myProfile/MyWines';
 import Profile from '@/components/myProfile/Profile';
 import DeleteModal from '@/components/common/DeleteModal'; 
 import * as S from '@/styles/myProfile.css';
-import { deleteReview } from '@/apis/ReviewDeleteEditApis';
+import { deleteReview } from '@/apis/DeleteEditApis';
+import { deleteWine } from '@/apis/DeleteEditApis';
 import { useRouter } from 'next/router';
+
 export default function MyProfile() {
     const router = useRouter();
     const [activeTab, setActiveTab] = useState<'reviews' | 'wines'>('reviews');
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false); 
-    const [deleteReviewId, setDeleteReviewId] = useState<number | null>(null);
-    const openDeleteModal = (reviewId: number) => {
-        setDeleteReviewId(reviewId);
+    const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
+    const [deleteTargetType, setDeleteTargetType] = useState<'review' | 'wine' | null>(null); // 삭제 대상 타입
+
+    const openDeleteModal = (id: number, type: 'review' | 'wine') => {
+        setDeleteTargetId(id);
+        setDeleteTargetType(type);
         setDeleteModalOpen(true);
     };
-
     const closeDeleteModal = () => {
-        setDeleteReviewId(null);
+        setDeleteTargetId(null);
+        setDeleteTargetType(null);
         setDeleteModalOpen(false);
     };
-    const handleDeleteReview = async () => {
-        if (deleteReviewId !== null) {
+
+    const handleDelete = async () => {
+        if (deleteTargetId !== null && deleteTargetType !== null) {
             try {
-                await deleteReview(deleteReviewId);
+                if (deleteTargetType === 'review') {
+                    await deleteReview(deleteTargetId);
+                } else if (deleteTargetType === 'wine') {
+                    await deleteWine(deleteTargetId);
+                }
                 setDeleteModalOpen(false); 
-                router.reload();
+                router.reload(); 
             } catch (error) {
-                console.error('리뷰 삭제 오류:', error);
+                console.error(`${deleteTargetType} 삭제 오류:`, error);
             }
         }
     };
-
 
     return (
         <S.MyProfilePageContainer>
@@ -56,10 +65,14 @@ export default function MyProfile() {
                             </S.MyProfileHeaderItemWrapper>
                         </S.MyProfileHeader>
                         <S.TabContent $active={activeTab === 'reviews'}>
-                            {activeTab === 'reviews' && <MyReviews openDeleteModal={openDeleteModal} />}
+                            {activeTab === 'reviews' && (
+                                <MyReviews openDeleteModal={(id) => openDeleteModal(id, 'review')} />
+                            )}
                         </S.TabContent>
                         <S.TabContent $active={activeTab === 'wines'}>
-                            {activeTab === 'wines' && <MyWines />}
+                            {activeTab === 'wines' && (
+                                <MyWines openDeleteModal={(id) => openDeleteModal(id, 'wine')} />
+                            )}
                         </S.TabContent>
                     </S.MyProfileContentWrapper>
                 </S.MyProfileContentContainer>
@@ -68,7 +81,7 @@ export default function MyProfile() {
             {isDeleteModalOpen && (
                 <DeleteModal 
                     onClose={closeDeleteModal}
-                    onDelete={handleDeleteReview} 
+                    onDelete={handleDelete} 
                 />
             )}
         </S.MyProfilePageContainer>

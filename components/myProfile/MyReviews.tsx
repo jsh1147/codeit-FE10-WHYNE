@@ -27,6 +27,9 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
     const handleDeleteClick = (reviewId: number) => {
         openDeleteModal(reviewId); 
     };
+    const toggleDropdown = (id: number) => {
+        setActiveDropdown(prev => (prev === id ? null : id));
+    };
     const fetchReviews = useCallback(async () => {
         if (totalCount !== null && reviews.length >= totalCount) return;
 
@@ -68,9 +71,7 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
         fetchReviews();
     }, [fetchReviews]);
 
-    const toggleDropdown = (id: number) => {
-        setActiveDropdown(prev => (prev === id ? null : id));
-    };
+   
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -84,7 +85,6 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
 
 
     return (
-        <>
             <S.ReviewListContainer>
                 <S.TotalCount>총 {totalCount}개</S.TotalCount>
                 {reviews.map((review: Review) => (
@@ -127,8 +127,5 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
                 ))}
                 <div ref={setupObserver}></div>
             </S.ReviewListContainer>
-
-   
-        </>
     );
 }
