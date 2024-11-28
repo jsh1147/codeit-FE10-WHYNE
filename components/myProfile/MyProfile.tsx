@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import * as S from './Profile.css';
+import * as S from './MyProfile.css';
 import { getMe } from '@/apis/user';
 import { patchNickname } from '@/apis/myProfileApi';
 
-export default function Profile() {
+
+export default function MyProfile() {
     const [userInfo, setUserInfo] = useState({
         image: '',
         nickname: '',
@@ -14,14 +15,15 @@ export default function Profile() {
     const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNickname(event.target.value);
     };
+
     const handleNicknameUpdate = async () => {
         try {
             await patchNickname({ nickname });
             setUserInfo((prev) => ({ ...prev, nickname })); 
         } catch (error) {
-            console.log('닉네임 변경중 오류 발생:', error)
+            console.error('닉네임 변경 중 오류 발생:', error);
         }
-    }
+    };
 
     useEffect(() => {
         const getUserProfile = async () => {
@@ -30,23 +32,30 @@ export default function Profile() {
               setUserInfo({
                 image: response.image || '',
                 nickname: response.nickname,
-                email: 'user@example.com', //이메일 받아오는 방법 수정필요
+                email: localStorage.getItem('email') || '', 
               });
+              
             } catch (error) {
               console.error('유저 정보 불러오기 에러:', error);
             }
         };
         getUserProfile(); 
-    }, []);
+        console.log(userInfo);
+    }, [userInfo]);
 
     return (
         <S.ProfileContainer>
             <S.InfoContainer>
                 <S.ProfileImageWrapper>
-                    <S.ProfileImage
-                        src={userInfo.image}
-                        alt="프로필 이미지"
-                    />
+                    {userInfo?.image ?
+                            (<S.ProfileImage
+                            src={userInfo.image}
+                            alt="프로필 이미지"  
+                            fill
+                            style={{borderRadius:100}}
+                        /> ) : (
+                        <S.DefaultProfileImage aria-label="프로필 이미지" />
+                    )}
                 </S.ProfileImageWrapper>
                 <S.UserInfoWrapper>
                     <S.UserName>{userInfo.nickname}</S.UserName>
@@ -62,13 +71,12 @@ export default function Profile() {
                         name="nickname"
                         value={nickname}
                         onChange={handleNicknameChange}
-                        placeholder="닉네임"
+                        placeholder={userInfo.nickname}
                     />
                     <S.EditButtonWrapper>
                         <S.EditButton onClick={handleNicknameUpdate}>변경하기</S.EditButton>
-                </S.EditButtonWrapper>
+                    </S.EditButtonWrapper>
                 </S.NameEditWrapper>
-                
             </S.NameEditContainer>
         </S.ProfileContainer>
     );

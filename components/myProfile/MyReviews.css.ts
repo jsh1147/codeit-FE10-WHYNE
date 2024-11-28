@@ -95,15 +95,21 @@ export const StarText = styled.div`
     `}
 `;
 export const TotalCount = styled.div`
-    position:relative;
+        position:relative;
+    width:40px;
     bottom:30px;
+    left:750px;
     color: var(--purple-100);
     text-align: right;
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
+    ${media.tablet`
+        left:660px;    
+    `}
     ${media.mobile`
         font-size: 12px;
+        left:290px;
     `}
 `;
 

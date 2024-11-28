@@ -83,9 +83,11 @@ export default function MyWines({ openDeleteModal, openEditWineModal } : MyWineP
                 <S.WineItem>
                     <S.ItemWrapper>
                         <S.WineImageWrapper>
+
                             <S.ImageWrapper>
                                 <S.WineImage src={wine.image} alt="와인이미지" layout='fill' />
                             </S.ImageWrapper>
+ 
                         </S.WineImageWrapper>
                         
                     <S.WineInfoWrapper>

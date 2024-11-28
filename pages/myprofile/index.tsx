@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import MyReviews from '@/components/myProfile/MyReviews';
 import MyWines from '@/components/myProfile/MyWines';
-import Profile from '@/components/myProfile/Profile';
+import ProfileCard from '@/components/myProfile/MyProfile';
 import DeleteModal from '@/components/common/DeleteModal'; 
-import EditWineModal from '@/components/myProfile/EditWineModal'; // 추가된 컴포넌트
+import EditWineModal from '@/components/myProfile/EditWineModal'; 
 import * as S from '@/styles/myProfile.css';
 import { deleteReview, deleteWine } from '@/apis/itemDeleteEditApis';
 import { useRouter } from 'next/router';
@@ -13,10 +13,10 @@ export default function MyProfile() {
     const [activeTab, setActiveTab] = useState<'reviews' | 'wines'>('reviews');
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false); 
     const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
-    const [deleteTargetType, setDeleteTargetType] = useState<'review' | 'wine' | null>(null); // 삭제 대상 타입
+    const [deleteTargetType, setDeleteTargetType] = useState<'review' | 'wine' | null>(null); 
 
-    const [isEditWineModalOpen, setEditWineModalOpen] = useState(false); // 수정 모달 상태
-    const [editWineId, setEditWineId] = useState<number | null>(null); // 수정 대상 와인 ID
+    const [isEditWineModalOpen, setEditWineModalOpen] = useState(false);
+    const [editWineId, setEditWineId] = useState<number | null>(null); 
 
     const openDeleteModal = (id: number, type: 'review' | 'wine') => {
         setDeleteTargetId(id);
@@ -58,7 +58,7 @@ export default function MyProfile() {
         <S.MyProfilePageContainer>
             <S.MyProfileContainer>
                 <S.MyProfileContentContainer>
-                    <Profile />
+                    <ProfileCard />
                     <S.MyProfileContentWrapper>
                         <S.MyProfileHeader>
                             <S.MyProfileHeaderItemWrapper>

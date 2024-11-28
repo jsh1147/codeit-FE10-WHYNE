@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 import media from '@/styles/mediaQuery';
+import DefaultImage from '@/public/icons/profile_default.svg';
 
 export const ProfileContainer = styled.div`
     width:283px;
@@ -55,7 +56,7 @@ export const UserInfoWrapper = styled.div`
 export const ProfileImageWrapper = styled.div`
     width: 164px;
     height: 164px;
-    overflow: hidden;
+    position: relative;
     border-radius: 50%;
     ${media.tablet`
         width:80px;
@@ -72,7 +73,11 @@ export const ProfileImage = styled(Image)`
     height: 100%;
     object-fit: cover;
 `;
-
+export const DefaultProfileImage = styled(DefaultImage)`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+`;
 export const UserName = styled.div`
     color: var(--gray-gray800);
     text-align: center;

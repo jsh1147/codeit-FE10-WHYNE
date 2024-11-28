@@ -103,7 +103,6 @@ export default function EditWineModal({
 
         alert('와인이 성공적으로 수정되었습니다.');
         router.reload();
-        router.push(`/myprofile`);
       }
     } catch (err) {
       console.error(err);

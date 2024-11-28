@@ -30,7 +30,7 @@ export default function Header() {
               <Link href="/login">로그인</Link>
               <Link href="/signup">회원가입</Link>
             </S.AccountBox>
-          ))}
+          ))} 
       </S.HeaderContainer>
     </S.Header>
   );
