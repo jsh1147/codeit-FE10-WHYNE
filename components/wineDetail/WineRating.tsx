@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from './WineRating.css';
 
 interface WineRatingProps {
-  avgRating: number;
+  avgRating: number | null;
   reviewCount: number;
   avgRatings: {
     [key: number]: number;
@@ -20,13 +20,15 @@ export const WineRating: React.FC<WineRatingProps> = ({
     ratingCounts[i - 1] = avgRatings[i] || 0;
   }
 
-  const fullStars = Math.floor(avgRating);
+  const fullStars = avgRating ? Math.floor(avgRating) : 0;
   const emptyStars = 5 - fullStars;
 
   return (
     <S.WineRatingContainer>
       <S.Group1>
-        <S.AvgRating>{avgRating.toFixed(1)}</S.AvgRating>
+        <S.AvgRating>
+          {avgRating !== null ? avgRating.toFixed(1) : '0'}
+        </S.AvgRating>
         <S.Group1_2>
           <S.StarRating>
             {[...Array(fullStars)].map((_, index) => (
@@ -54,9 +56,7 @@ export const WineRating: React.FC<WineRatingProps> = ({
         })}
       </S.RatingCount>
       <S.buttonBox>
-        <S.ReviewButton>
-          <button>리뷰 남기기</button>
-        </S.ReviewButton>
+        <S.ReviewButton>리뷰 남기기</S.ReviewButton>
       </S.buttonBox>
     </S.WineRatingContainer>
   );
