@@ -21,6 +21,7 @@ export const WineItemWrapper = styled.div`
     ${media.mobile`
         height:185px;
     `}
+  
 `;
 export const ItemWrapper = styled.div`
     display: flex;
@@ -33,6 +34,7 @@ export const ItemWrapper = styled.div`
 export const WineItem = styled.div`
     width:100%;
     height: 228px;
+    position:relative;
     padding: 30px 40px 30px 40px;
     align-items: flex-start;
     justify-content: space-between;
@@ -66,20 +68,37 @@ export const TotalCount = styled.div`
         font-size: 12px;
         left:290px;
     `}
+    
 `;
 export const ImageWrapper = styled.div`
     width:76px;
-    height:270px;
+    height:287px;
     position:relative;
-    bottom: 65px;
     ${media.mobile`
         width:53px;
-        height:185px;
+        height:200px;
     `}
+    overflow:hidden;
 `;
 export const WineImage = styled(Image)`
     object-fit: cover;
+    width: 100%;
+    height: 100%;
 `;
+
+export const WineImageWrapper = styled.div`
+    width: 76px; 
+    height: 270px; 
+    bottom:74px;
+    position: relative;
+    overflow: hidden;
+
+    ${media.mobile`
+        width: 53px;
+        height: 185px;
+        bottom: 72px;
+    `}
+`
 export const WineInfoWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -143,5 +162,42 @@ export const PriceText = styled.div`
 `;
 export const KebapIcon = styled(Icon)`
     width:20px;
-    height:20px;
+    height:25px;
+`;
+
+export const DropdownList = styled.div`
+  position: absolute;
+  inset: 65px 45px auto auto;
+  border-radius: 16px;
+  border: 1px solid var(--gray-300);
+  background-color: white;
+
+  ${media.tablet`
+    top: 65px;
+  `}
+
+  ${media.mobile`
+    inset: 50px 25px auto auto;
+  `};
+`;
+
+export const DropdownItem = styled.button`
+  width: 120px;
+  height: 48px;
+  margin: 4px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--gray-800);
+
+  ${media.mobile`
+    width: 96px;
+    height: 40px;
+    font-size: 14px;
+  `};
+
+  &:hover {
+    background-color: var(--purple-10);
+    color: var(--purple-100);
+  }
 `;
