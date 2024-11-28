@@ -1,5 +1,6 @@
 import { instance } from '@/apis/instance';
-import { WineDetails, Wine } from '@/types/wineListTypes';
+import { Wine, WineDetails } from '@/types/wineListTypes';
+import { WineType } from '@/types/wineType';
 
 export const fetchRecommendedWines = async (
   limit: number = 10,
@@ -16,7 +17,7 @@ export const fetchRecommendedWines = async (
 interface fetchWineListProps {
   limit?: number;
   cursor?: number;
-  type?: 'RED' | 'WHITE' | 'SPARKLING';
+  type?: WineType;
   minPrice?: number;
   maxPrice?: number;
   rating?: number;

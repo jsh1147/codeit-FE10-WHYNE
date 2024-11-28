@@ -6,25 +6,63 @@ import SearchBar from '@/components/wineList/SearchBar';
 import WineCardList, {
   WineFilterOptions,
 } from '@/components/wineList/WineCardList';
+import {
+  RATING_30_35,
+  RATING_35_40,
+  RATING_40_45,
+  RATING_45_50,
+  RATING_ALL,
+} from '@/constants/wineRating';
 import useDebounce from '@/hooks/useDebounce';
 import { PC, TABLET, useResponsiveQuery } from '@/hooks/useResponsiveQuery';
 import { useUser } from '@/store/UserContext';
 import * as S from '@/styles/Wines.css';
+import { RatingType } from '@/types/wineRatingType';
+import { WineType } from '@/types/wineType';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import { IconButton } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+export type FilterOptions = {
+  type?: WineType;
+  price: [number, number];
+  rating: RatingType;
+};
 
 export default function WineListPage(): React.ReactElement {
   const [isCreateButtonModalOpen, setIsModalOpen] = useState<boolean>(false);
   const responsiveQuery = useResponsiveQuery();
   const { user } = useUser();
 
+  const [filter, setFilter] = useState<FilterOptions>({
+    price: [0, 1000000],
+    rating: RATING_ALL,
+  });
+
+  const [modalFilter, setModalFilter] = useState<FilterOptions>({
+    price: [0, 1000000],
+    rating: RATING_ALL,
+  });
+
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
+  /** 필터 옵션 모달 상태 */
   const toggleFilter = () => {
+    // 모달을 열 때,
+    if (!isFilterOpen) {
+      // PC의 필터값을 모바일 필터로 복사
+      setModalFilter((prev) => ({ ...prev, ...filter }));
+    }
     setIsFilterOpen((prev) => !prev);
   };
 
+  useEffect(() => {
+    if (responsiveQuery === PC) {
+      setIsFilterOpen(false);
+    }
+  }, [responsiveQuery]);
+
+  /** 와인 등록 모달 상태 */
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -47,47 +85,38 @@ export default function WineListPage(): React.ReactElement {
     setOptions(newFilterOptions);
   };
 
-  const changeWineType = (newType?: 'RED' | 'WHITE' | 'SPARKLING') => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { type, ...others } = options;
+  useEffect(() => {
+    let newRating: number;
+    switch (filter.rating) {
+      case RATING_ALL:
+        // no action
+        break;
 
-    let newFilterOptions: WineFilterOptions;
+      case RATING_45_50:
+        newRating = 5;
+        break;
 
-    if (newType === undefined) {
-      newFilterOptions = { ...others };
-    } else {
-      newFilterOptions = { ...others, type: newType };
+      case RATING_40_45:
+        newRating = 4.5;
+        break;
+
+      case RATING_35_40:
+        newRating = 4;
+        break;
+
+      case RATING_30_35:
+        newRating = 3.5;
+        break;
     }
 
-    setOptions(newFilterOptions);
-  };
-
-  const changePriceRange = (minPrice: number, maxPrice: number) => {
     setOptions((prev) => ({
       ...prev,
-      minPrice: minPrice,
-      maxPrice: maxPrice,
+      type: filter.type,
+      minPrice: filter.price[0],
+      maxPrice: filter.price[1],
+      rating: newRating,
     }));
-  };
-
-  const changeRating = (newRating?: number) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { rating, ...others } = options;
-    if (newRating === undefined) {
-      setOptions({
-        ...others,
-      });
-    } else {
-      setOptions({
-        ...others,
-        rating: newRating,
-      });
-    }
-  };
-
-  // const changeTabletFilterOption = ({}) => {
-
-  // }
+  }, [filter, setOptions]);
 
   return (
     <S.WinesPageContainer>
@@ -104,10 +133,10 @@ export default function WineListPage(): React.ReactElement {
             </S.WineCardListWrapper>
             <S.FilterWrapper>
               <Filter
-                changeWineType={changeWineType}
-                changePriceRange={changePriceRange}
-                changeRating={changeRating}
-                toggleFilter={toggleFilter}
+                filter={filter}
+                setFilter={setFilter}
+                modalFilter={modalFilter}
+                setModalFilter={setModalFilter}
               />
               {user !== undefined && (
                 <BasicButton onClick={() => setIsModalOpen(true)} $width="100%">
@@ -139,10 +168,11 @@ export default function WineListPage(): React.ReactElement {
             {isFilterOpen && (
               <S.ModalOverlay>
                 <Filter
-                  changeWineType={changeWineType}
-                  changePriceRange={changePriceRange}
-                  changeRating={changeRating}
                   toggleFilter={toggleFilter}
+                  filter={filter}
+                  setFilter={setFilter}
+                  modalFilter={modalFilter}
+                  setModalFilter={setModalFilter}
                 />
               </S.ModalOverlay>
             )}
