@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './Profile.css';
-import ProfileImage from '@/public/images/profileimg_example.png';
 import { getMe } from '@/apis/user';
 import { patchNickname } from '@/apis/myProfileApi';
 
@@ -45,7 +44,7 @@ export default function Profile() {
             <S.InfoContainer>
                 <S.ProfileImageWrapper>
                     <S.ProfileImage
-                        src={ProfileImage}
+                        src={userInfo.image}
                         alt="프로필 이미지"
                     />
                 </S.ProfileImageWrapper>

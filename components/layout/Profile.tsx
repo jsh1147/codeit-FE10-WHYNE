@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useUser } from '@/store/UserContext';
-import defaultImage from '@/public/icons/profile_default.svg';
 import * as S from './Profile.css';
 
 export default function Profile() {
-  const { push } = useRouter();
+  const { pathname, push, reload } = useRouter();
   const { user, setUser } = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -14,24 +13,31 @@ export default function Profile() {
   };
 
   const handleMyPageClick = () => {
-    push('/myprofile');
+    setIsOpen((prev) => !prev);
+
+    if (pathname === '/myprofile') reload();
+    else push('/myprofile');
   };
 
   const handleLogoutClick = () => {
+    setIsOpen((prev) => !prev);
     localStorage.removeItem('email');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     if (setUser) setUser(undefined);
+
+    if (pathname === '/') reload();
     push('/');
   };
 
   return (
     <>
       <button type="button" onClick={handleProfileClick}>
-        <S.ProfileImage
-          src={user?.image ? user.image : defaultImage}
-          alt="프로필 이미지"
-        />
+        {user?.image ? (
+          <S.ProfileImage src={user.image} alt="프로필 이미지" />
+        ) : (
+          <S.DefaultProfileImage aria-label="프로필 이미지" />
+        )}
       </button>
       {isOpen && (
         <S.DropdownList>

@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import media from '@/styles/mediaQuery';
 import Image from 'next/image';
+import DefaultImage from '@/public/icons/profile_default.svg';
 
-export const ProfileImage = styled(Image)`
+const ImageCss = css`
   width: 40px;
   height: 40px;
   border-radius: 100%;
@@ -12,6 +13,14 @@ export const ProfileImage = styled(Image)`
     width: 30px;
     height: 30px;
   `};
+`;
+
+export const ProfileImage = styled(Image)`
+  ${ImageCss}
+`;
+
+export const DefaultProfileImage = styled(DefaultImage)`
+  ${ImageCss}
 `;
 
 export const DropdownList = styled.div`

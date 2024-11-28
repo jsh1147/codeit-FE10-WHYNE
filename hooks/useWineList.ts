@@ -23,7 +23,6 @@ export const useWineList = (props: useWineListProps): UseWineListReturnType => {
   const [nextCursor, setNextCursor] = useState<number>();
 
   useEffect(() => {
-    console.log('options:', options);
     const fetchWines = async () => {
       try {
         const data = await fetchWineList({ limit: 10, ...options });

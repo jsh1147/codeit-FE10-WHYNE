@@ -7,7 +7,7 @@ import * as S from './CardsSection.css';
 export default function CardsSection() {
   return (
     <S.Section>
-      <S.Card rightGradient>
+      <S.Card $rightGradient>
         <S.TextBox>
           <S.CardTitle>
             매달 새롭게 만나는

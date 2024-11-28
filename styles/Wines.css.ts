@@ -22,6 +22,10 @@ export const FilterWrapper = styled.div`
   margin-top: 42px;
   grid-row: 2;
   grid-column: 1;
+  gap: 46px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
 `;
 
 export const WineCardListWrapper = styled.div`

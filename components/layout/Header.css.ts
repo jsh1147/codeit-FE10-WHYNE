@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import media from '@/styles/mediaQuery';
-import Image from 'next/image';
+import WhiteLogo from '@/public/icons/logo_white.svg';
 
 export const Header = styled.header`
   position: fixed;
   inset: 0 0 auto;
-  z-index: 1;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,7 +44,7 @@ export const HeaderContainer = styled.div`
   `}
 `;
 
-export const Logo = styled(Image)`
+export const Logo = styled(WhiteLogo)`
   width: 49px;
   height: 15px;
 `;
