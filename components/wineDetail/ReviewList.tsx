@@ -4,6 +4,7 @@ import { ReviewsType } from '@/types/wineDetailTypes';
 import { translateAroma } from './TranslateAroma';
 import { formatRelativeTime } from './FormatRelativeTime';
 import * as S from './ReviewList.css';
+import { AxiosError } from 'axios';
 
 interface WineReviewsProps {
   reviews: ReviewsType[];
@@ -21,6 +22,12 @@ export const ReviewList: React.FC<WineReviewsProps> = ({ reviews }) => {
   const [likesState, setLikesState] = useState(
     reviews.map((review) => review.isLiked),
   );
+
+  const [isOpen, setIsOpen] = useState(Array(reviews.length).fill(false));
+
+  const toggleDropdown = (index: number) => {
+    setIsOpen((prev) => prev.map((open, i) => (i === index ? !open : false)));
+  };
 
   const toggleCollapse = (index: number) => {
     setCollapsedReviews((prev) =>
@@ -56,6 +63,26 @@ export const ReviewList: React.FC<WineReviewsProps> = ({ reviews }) => {
     }
   };
 
+  const deleteReview = async (reviewId: number) => {
+    try {
+      const response = await instance.delete(`reviews/${reviewId}`);
+      console.log('리뷰 삭제 성공', response.data);
+      setCollapsedReviews((prev) =>
+        prev.filter((_, i) => reviews[i].id !== reviewId),
+      );
+      setLikesState((prev) =>
+        prev.filter((_, i) => reviews[i].id !== reviewId),
+      );
+      setIsOpen((prev) => prev.filter((_, i) => reviews[i].id !== reviewId));
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.status === 403) {
+        alert('리뷰 작성자만 삭제할 수 있습니다.');
+      } else {
+        console.error('리뷰 삭제 중 오류 발생', error);
+      }
+    }
+  };
+
   return (
     <S.ReviewListContainer>
       <S.ReviewListTitle>리뷰 목록</S.ReviewListTitle>
@@ -63,8 +90,6 @@ export const ReviewList: React.FC<WineReviewsProps> = ({ reviews }) => {
         <S.NoReviewsMessage>
           아직 리뷰가 없네요~? <br /> <br />이 와인의 첫 번째 감별사가 될 기회를
           놓치지 마세요!
-          <br /> <br /> 당신의 취향이 다른 와인 탐험가들의 마음을 움직일 수
-          있습니다!
         </S.NoReviewsMessage>
       ) : (
         reviews.map((review, index) => (
@@ -95,8 +120,24 @@ export const ReviewList: React.FC<WineReviewsProps> = ({ reviews }) => {
                   >
                     {likesState[index] ? <S.LikedIcon /> : <S.LikeIcon />}
                   </S.LikeButton>
-                  <S.Dot3Button>
+                  <S.Dot3Button onClick={() => toggleDropdown(index)}>
                     <S.Dot3Icon />
+                    {isOpen[index] && (
+                      <S.DropdownList>
+                        <ul>
+                          <li>
+                            <S.DropdownItem>수정하기</S.DropdownItem>
+                          </li>
+                          <li>
+                            <S.DropdownItem
+                              onClick={() => deleteReview(review.id)}
+                            >
+                              삭제하기
+                            </S.DropdownItem>
+                          </li>
+                        </ul>
+                      </S.DropdownList>
+                    )}
                   </S.Dot3Button>
                 </S.LikeMoreContainer>
               </S.ReviewHeader>

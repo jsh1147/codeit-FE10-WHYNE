@@ -110,6 +110,7 @@ export const LikeIcon = styled(Like)`
 `;
 
 export const Dot3Button = styled.button`
+  position: relative;
   width: 38px;
   height: 38px;
 `;
@@ -263,4 +264,42 @@ export const NoReviewsMessage = styled.div`
   justify-content: center;
   align-items: center;
   height: 200px;
+`;
+
+export const DropdownList = styled.div`
+  position: absolute;
+  inset: 60px 0px auto auto;
+  border-radius: 16px;
+  border: 1px solid var(--gray-300);
+  background-color: white;
+
+  ${media.tablet`
+    top: 55px;
+  `}
+
+  ${media.mobile`
+    inset: 45px 20px auto auto;
+  `};
+`;
+
+export const DropdownItem = styled.button`
+  width: 120px;
+  height: 48px;
+  margin: 4px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--gray-800);
+  ${TextLgMedium}
+
+  ${media.mobile`
+    width: 96px;
+    height: 40px;
+    ${TextMdMedium};
+  `};
+
+  &:hover {
+    background-color: var(--purple-10);
+    color: var(--purple-100);
+  }
 `;
