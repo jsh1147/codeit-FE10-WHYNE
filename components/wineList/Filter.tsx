@@ -4,18 +4,18 @@ import { useState } from 'react';
 import BasicButton from './BasicButton';
 import CustomizedRadios from './CustomRadio';
 import * as S from './Filter.css';
+import { PC, TABLET, useResponsiveQuery } from '@/hooks/useResponsiveQuery';
 
 interface FilterProps {
   changeWineType: (newType?: 'RED' | 'WHITE' | 'SPARKLING') => void;
   changePriceRange: (minPrice: number, maxPrice: number) => void;
   changeRating: (newRating?: number) => void;
-  isTablet: boolean;
   toggleFilter: () => void;
 }
 
 export default function Filter(props: FilterProps) {
-  const { changeWineType, changePriceRange, changeRating, isTablet } = props;
-
+  const { changeWineType, changePriceRange, changeRating } = props;
+  const responsiveQuery = useResponsiveQuery();
   const [wineType, setWineType] = useState<'RED' | 'WHITE' | 'SPARKLING'>();
   const [price, setPrice] = useState<[number, number]>([0, 100000]);
 
@@ -26,7 +26,7 @@ export default function Filter(props: FilterProps) {
     } else {
       const newWineType = e.target.value as 'RED' | 'WHITE' | 'SPARKLING';
       setWineType(newWineType);
-      if (isTablet) return;
+      if (responsiveQuery !== PC) return;
       changeWineType(newWineType);
     }
   };
@@ -38,13 +38,13 @@ export default function Filter(props: FilterProps) {
     if (typeof value === 'number') return;
     const newPrice = value as [number, number];
     setPrice(newPrice);
-    if (isTablet) return;
+    if (responsiveQuery !== PC) return;
     changePriceRange(newPrice[0], newPrice[1]);
   };
 
   return (
     <S.FilterContainer>
-      {isTablet && (
+      {responsiveQuery === TABLET && (
         <S.TabletFilterTop>
           <S.TabletFilterTitle>필터</S.TabletFilterTitle>
           <CloseRoundedIcon
@@ -117,7 +117,7 @@ export default function Filter(props: FilterProps) {
         <S.FilterOptionTitle>RATING</S.FilterOptionTitle>
         <CustomizedRadios changeRating={changeRating} />
       </S.FilterRatingWrapper>
-      {isTablet && (
+      {responsiveQuery === TABLET && (
         <S.TabletFilterButton>
           <BasicButton
             $bgColor="var(--purple-10)"

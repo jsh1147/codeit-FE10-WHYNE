@@ -21,7 +21,7 @@ export default function WineCard({ wine }: { wine: WineDetails }) {
               fill
               style={{ objectFit: 'cover' }}
               alt="와인이미지"
-              sizes="(min-width: 1200px) 50vw, 25vw"
+              sizes="150px"
             />
           </S.ImageWrapper>
         </S.WineImageThumbnail>

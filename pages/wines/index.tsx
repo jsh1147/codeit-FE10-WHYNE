@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
 import BasicButton from '@/components/wineList/BasicButton';
 import CreateWineModal from '@/components/wineList/CreateWineModal';
 import Filter from '@/components/wineList/Filter';
@@ -9,33 +7,23 @@ import WineCardList, {
   WineFilterOptions,
 } from '@/components/wineList/WineCardList';
 import useDebounce from '@/hooks/useDebounce';
+import { PC, TABLET, useResponsiveQuery } from '@/hooks/useResponsiveQuery';
+import { useUser } from '@/store/UserContext';
 import * as S from '@/styles/Wines.css';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import { IconButton } from '@mui/material';
+import { useState } from 'react';
 
 export default function WineListPage(): React.ReactElement {
   const [isCreateButtonModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isLogin, setIsLogin] = useState(false);
-
-  const [isTablet, setIsTablet] = useState(false);
-  const [isPC, setIsPC] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const responsiveQuery = useResponsiveQuery();
+  const { user } = useUser();
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const toggleFilter = () => {
     setIsFilterOpen((prev) => !prev);
   };
-
-  const tabletQuery = useMediaQuery({ query: '(max-width: 1199px)' });
-  const mobileQuery = useMediaQuery({ query: '(max-width: 767px)' });
-  const pcQuery = useMediaQuery({ query: '(min-width: 1200px)' });
-
-  useEffect(() => {
-    setIsTablet(tabletQuery);
-    setIsMobile(mobileQuery);
-    setIsPC(pcQuery);
-  }, [isTablet, isPC, isMobile, tabletQuery, mobileQuery, pcQuery]);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -101,20 +89,13 @@ export default function WineListPage(): React.ReactElement {
 
   // }
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (localStorage.getItem('accessToken')) setIsLogin(true);
-      else setIsLogin(false);
-    }
-  }, []);
-
   return (
     <S.WinesPageContainer>
       <MonthlyWineSection />
-      {isPC && (
+      {responsiveQuery === PC && (
         <>
           <S.GridWrapper>
-            <S.SearchBarWrapper $isLogin={isLogin}>
+            <S.SearchBarWrapper $isLogin={user !== undefined}>
               <SearchBar searchByKeyword={searchByKeyword} />
             </S.SearchBarWrapper>
 
@@ -123,13 +104,12 @@ export default function WineListPage(): React.ReactElement {
             </S.WineCardListWrapper>
             <S.FilterWrapper>
               <Filter
-                isTablet={isTablet}
                 changeWineType={changeWineType}
                 changePriceRange={changePriceRange}
                 changeRating={changeRating}
                 toggleFilter={toggleFilter}
               />
-              {isLogin && (
+              {user !== undefined && (
                 <BasicButton onClick={() => setIsModalOpen(true)} $width="100%">
                   와인 등록하기
                 </BasicButton>
@@ -140,7 +120,7 @@ export default function WineListPage(): React.ReactElement {
       )}
       {isCreateButtonModalOpen && <CreateWineModal closeModal={closeModal} />}
 
-      {isTablet && (
+      {responsiveQuery === TABLET && (
         <>
           <S.TopActionWrapper>
             <IconButton
@@ -162,15 +142,14 @@ export default function WineListPage(): React.ReactElement {
                   changeWineType={changeWineType}
                   changePriceRange={changePriceRange}
                   changeRating={changeRating}
-                  isTablet={isTablet}
                   toggleFilter={toggleFilter}
                 />
               </S.ModalOverlay>
             )}
-            <S.SearchBarWrapper $isLogin={isLogin}>
+            <S.SearchBarWrapper $isLogin={user !== undefined}>
               <SearchBar searchByKeyword={searchByKeyword} />
             </S.SearchBarWrapper>
-            {isLogin && (
+            {user !== undefined && (
               <BasicButton onClick={() => setIsModalOpen(true)} $width="220px">
                 와인 등록하기
               </BasicButton>
