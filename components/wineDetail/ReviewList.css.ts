@@ -12,6 +12,7 @@ import media from '@/styles/mediaQuery';
 import Star from '@/public/icons/star.svg';
 import ProfileDefault from '@/public/icons/profile_default.svg';
 import Like from '@/public/icons/like.svg';
+import Liked from '@/public/icons/liked.svg';
 import Dot3Lg from '@/public/icons/dotLg.svg';
 import Collapse from '@/public/icons/collapse.svg';
 import Expand from '@/public/icons/expand.svg';
@@ -94,6 +95,11 @@ export const LikeMoreContainer = styled.div`
 `;
 
 export const LikeButton = styled.button`
+  width: 38px;
+  height: 38px;
+`;
+
+export const LikedIcon = styled(Liked)`
   width: 38px;
   height: 38px;
 `;

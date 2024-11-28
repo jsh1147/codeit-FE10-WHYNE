@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { instance } from '@/apis/instance';
 import { ReviewsType } from '@/types/wineDetailTypes';
 import { translateAroma } from './TranslateAroma';
 import { formatRelativeTime } from './FormatRelativeTime';
@@ -17,10 +18,42 @@ export const ReviewList: React.FC<WineReviewsProps> = ({ reviews }) => {
     reviews.map(() => false),
   );
 
+  const [likesState, setLikesState] = useState(
+    reviews.map((review) => review.isLiked),
+  );
+
   const toggleCollapse = (index: number) => {
     setCollapsedReviews((prev) =>
       prev.map((collapsed, i) => (i === index ? !collapsed : collapsed)),
     );
+  };
+
+  const postLike = async (reviewId: number) => {
+    try {
+      const response = await instance.post(`Reviews/${reviewId}/like`);
+      console.log('좋아요 요청 성공:', response.data);
+      setLikesState((prevLikes) =>
+        prevLikes.map((liked, i) =>
+          reviews[i].id === reviewId ? true : liked,
+        ),
+      );
+    } catch (error) {
+      console.error('좋아요 요청 중 오류 발생', error);
+    }
+  };
+
+  const deleteLike = async (reviewId: number) => {
+    try {
+      const response = await instance.delete(`Reviews/${reviewId}/like`);
+      console.log('좋아요 취소 성공:', response.data);
+      setLikesState((prevLikes) =>
+        prevLikes.map((liked, i) =>
+          reviews[i].id === reviewId ? false : liked,
+        ),
+      );
+    } catch (error) {
+      console.error('좋아요 취소 중 오류 발생', error);
+    }
   };
 
   return (
@@ -53,8 +86,14 @@ export const ReviewList: React.FC<WineReviewsProps> = ({ reviews }) => {
                   </S.UserNameContainer>
                 </S.UserContainer>
                 <S.LikeMoreContainer>
-                  <S.LikeButton>
-                    <S.LikeIcon />
+                  <S.LikeButton
+                    onClick={() =>
+                      likesState[index]
+                        ? deleteLike(review.id)
+                        : postLike(review.id)
+                    }
+                  >
+                    {likesState[index] ? <S.LikedIcon /> : <S.LikeIcon />}
                   </S.LikeButton>
                   <S.Dot3Button>
                     <S.Dot3Icon />
