@@ -3,9 +3,9 @@ import MyReviews from '@/components/myProfile/MyReviews';
 import MyWines from '@/components/myProfile/MyWines';
 import Profile from '@/components/myProfile/Profile';
 import DeleteModal from '@/components/common/DeleteModal'; 
+import EditWineModal from '@/components/myProfile/EditWineModal'; // 추가된 컴포넌트
 import * as S from '@/styles/myProfile.css';
-import { deleteReview } from '@/apis/DeleteEditApis';
-import { deleteWine } from '@/apis/DeleteEditApis';
+import { deleteReview, deleteWine } from '@/apis/itemDeleteEditApis';
 import { useRouter } from 'next/router';
 
 export default function MyProfile() {
@@ -14,6 +14,9 @@ export default function MyProfile() {
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false); 
     const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
     const [deleteTargetType, setDeleteTargetType] = useState<'review' | 'wine' | null>(null); // 삭제 대상 타입
+
+    const [isEditWineModalOpen, setEditWineModalOpen] = useState(false); // 수정 모달 상태
+    const [editWineId, setEditWineId] = useState<number | null>(null); // 수정 대상 와인 ID
 
     const openDeleteModal = (id: number, type: 'review' | 'wine') => {
         setDeleteTargetId(id);
@@ -24,6 +27,15 @@ export default function MyProfile() {
         setDeleteTargetId(null);
         setDeleteTargetType(null);
         setDeleteModalOpen(false);
+    };
+
+    const openEditWineModal = (id: number) => {
+        setEditWineId(id);
+        setEditWineModalOpen(true);
+    };
+    const closeEditWineModal = () => {
+        setEditWineId(null);
+        setEditWineModalOpen(false);
     };
 
     const handleDelete = async () => {
@@ -71,7 +83,10 @@ export default function MyProfile() {
                         </S.TabContent>
                         <S.TabContent $active={activeTab === 'wines'}>
                             {activeTab === 'wines' && (
-                                <MyWines openDeleteModal={(id) => openDeleteModal(id, 'wine')} />
+                                <MyWines 
+                                    openDeleteModal={(id) => openDeleteModal(id, 'wine')} 
+                                    openEditWineModal={(id) => openEditWineModal(id)} 
+                                />
                             )}
                         </S.TabContent>
                     </S.MyProfileContentWrapper>
@@ -82,6 +97,13 @@ export default function MyProfile() {
                 <DeleteModal 
                     onClose={closeDeleteModal}
                     onDelete={handleDelete} 
+                />
+            )}
+
+            {isEditWineModalOpen && editWineId !== null && (
+                <EditWineModal 
+                    wineId={editWineId} 
+                    closeModal={closeEditWineModal} 
                 />
             )}
         </S.MyProfilePageContainer>
