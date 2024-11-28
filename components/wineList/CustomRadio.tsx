@@ -3,6 +3,7 @@ import Radio, { RadioProps } from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { useState } from 'react';
 import * as S from './CustomRadio.css';
+import { useMediaQuery } from 'react-responsive';
 
 const RATING_ALL = 0;
 const RATING_45_50 = 1;
@@ -27,6 +28,7 @@ interface CustomizedRadiosProps {
 }
 
 export default function CustomizedRadios(props: CustomizedRadiosProps) {
+  const tabletQuery = useMediaQuery({ query: '(max-width: 1199px)' });
   const { changeRating } = props;
   const [rating, setRating] = useState<
     | typeof RATING_ALL
@@ -45,6 +47,9 @@ export default function CustomizedRadios(props: CustomizedRadiosProps) {
       | typeof RATING_30_35;
 
     setRating(newRating);
+
+    if (tabletQuery) return;
+
     if (newRating === RATING_ALL) {
       changeRating();
     } else {

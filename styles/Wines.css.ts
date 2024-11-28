@@ -31,7 +31,7 @@ export const GridWrapper = styled.div`
   `} */
 `;
 
-export const SearchBarWrapper = styled.div<{ isLogin: boolean }>`
+export const SearchBarWrapper = styled.div<{ $isLogin: boolean }>`
   grid-row: 1;
   grid-column: 2;
 
@@ -39,7 +39,7 @@ export const SearchBarWrapper = styled.div<{ isLogin: boolean }>`
     media.tablet`
       flex: 1;
       margin-left: 24px;
-      margin-right: ${props.isLogin ? '16px' : '0'};
+      margin-right: ${props.$isLogin ? '16px' : '0'};
     `}
 `;
 
@@ -64,4 +64,17 @@ export const TopActionWrapper = styled.div`
   justify-content: space-between;
   margin-top: 40px;
   margin-bottom: 32px;
+`;
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 101; // header가 100 이여서 101로 설정
 `;

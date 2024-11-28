@@ -1,5 +1,18 @@
+import media from '@/styles/mediaQuery';
 import { Slider } from '@mui/material';
 import styled from 'styled-components';
+
+export const TabletFilterTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const TabletFilterTitle = styled.h2`
+  color: var(--gray-800);
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 32px;
+`;
 
 export const FilterTypesWrapper = styled.div`
   display: flex;
@@ -47,6 +60,19 @@ export const FilterContainer = styled.section`
   flex-direction: column;
   gap: 60px;
   justify-content: space-between;
+
+  ${media.tablet`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 375px;
+    padding: 24px;
+    border-radius: 16px;
+    gap: 0px;
+
+  `}
 `;
 
 export const FilterPriceSliderWrapper = styled.div`
@@ -88,6 +114,10 @@ export const FilterPriceContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  ${media.tablet`
+    margin: 64px 0;
+  `}
 `;
 
 export const FilterPriceSlider = styled(Slider)`
@@ -132,4 +162,10 @@ export const FilterPriceSlider = styled(Slider)`
       display: none;
     }
   }
+`;
+
+export const TabletFilterButton = styled.div`
+  display: flex;
+  gap: 8px;
+  margin-top: 40px;
 `;

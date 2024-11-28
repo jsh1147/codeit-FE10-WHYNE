@@ -14,12 +14,18 @@ import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import { IconButton } from '@mui/material';
 
 export default function WineListPage(): React.ReactElement {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isCreateButtonModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState(false);
 
   const [isTablet, setIsTablet] = useState(false);
   const [isPC, setIsPC] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const toggleFilter = () => {
+    setIsFilterOpen((prev) => !prev);
+  };
 
   const tabletQuery = useMediaQuery({ query: '(max-width: 1199px)' });
   const mobileQuery = useMediaQuery({ query: '(max-width: 767px)' });
@@ -91,6 +97,10 @@ export default function WineListPage(): React.ReactElement {
     }
   };
 
+  // const changeTabletFilterOption = ({}) => {
+
+  // }
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (localStorage.getItem('accessToken')) setIsLogin(true);
@@ -104,7 +114,7 @@ export default function WineListPage(): React.ReactElement {
       {isPC && (
         <>
           <S.GridWrapper>
-            <S.SearchBarWrapper isLogin={isLogin}>
+            <S.SearchBarWrapper $isLogin={isLogin}>
               <SearchBar searchByKeyword={searchByKeyword} />
             </S.SearchBarWrapper>
 
@@ -113,9 +123,11 @@ export default function WineListPage(): React.ReactElement {
             </S.WineCardListWrapper>
             <S.FilterWrapper>
               <Filter
+                isTablet={isTablet}
                 changeWineType={changeWineType}
                 changePriceRange={changePriceRange}
                 changeRating={changeRating}
+                toggleFilter={toggleFilter}
               />
               {isLogin && (
                 <BasicButton onClick={() => setIsModalOpen(true)} $width="100%">
@@ -126,12 +138,13 @@ export default function WineListPage(): React.ReactElement {
           </S.GridWrapper>
         </>
       )}
-      {isModalOpen && <CreateWineModal closeModal={closeModal} />}
+      {isCreateButtonModalOpen && <CreateWineModal closeModal={closeModal} />}
 
       {isTablet && (
         <>
           <S.TopActionWrapper>
             <IconButton
+              onClick={toggleFilter}
               sx={{
                 backgroundColor: '#fff',
                 width: 48,
@@ -143,7 +156,18 @@ export default function WineListPage(): React.ReactElement {
             >
               <TuneRoundedIcon sx={{ color: 'var(--gray-300)' }} />
             </IconButton>
-            <S.SearchBarWrapper isLogin={isLogin}>
+            {isFilterOpen && (
+              <S.ModalOverlay>
+                <Filter
+                  changeWineType={changeWineType}
+                  changePriceRange={changePriceRange}
+                  changeRating={changeRating}
+                  isTablet={isTablet}
+                  toggleFilter={toggleFilter}
+                />
+              </S.ModalOverlay>
+            )}
+            <S.SearchBarWrapper $isLogin={isLogin}>
               <SearchBar searchByKeyword={searchByKeyword} />
             </S.SearchBarWrapper>
             {isLogin && (
