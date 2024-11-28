@@ -16,7 +16,7 @@ import {
 import useDebounce from '@/hooks/useDebounce';
 import { PC, TABLET, useResponsiveQuery } from '@/hooks/useResponsiveQuery';
 import { useUser } from '@/store/UserContext';
-import * as S from '@/styles/Wines.css';
+import * as S from '@/styles/wineList.css';
 import { RatingType } from '@/types/wineRatingType';
 import { WineType } from '@/types/wineType';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
