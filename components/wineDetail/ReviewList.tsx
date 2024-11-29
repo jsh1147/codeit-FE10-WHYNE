@@ -285,7 +285,7 @@ export const ReviewList: React.FC<WineReviewsProps> = ({
         </div>
       )}
       {deleteModalState.isOpen && deleteModalState.reviewId && (
-        <div ref={deleteModalRef}>
+        <div ref={deleteModalRef} onClick={(e) => e.stopPropagation()}>
           <DeleteReviewModal
             closeModal={closeDeleteModal}
             reviewId={deleteModalState.reviewId}

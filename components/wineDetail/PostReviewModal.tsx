@@ -344,13 +344,6 @@ export default function PostReviewModal({
           </S.ReviewDetailWrapper>
         </S.ModalContentWrapper>
         <S.ModalButtonWrapper>
-          <BasicButton
-            $bgColor="var(--purple-10)"
-            $fontColor="var(--purple-100)"
-            onClick={closeModal}
-          >
-            취소
-          </BasicButton>
           <BasicButton onClick={formSubmit}>리뷰 남기기</BasicButton>
         </S.ModalButtonWrapper>
       </S.ModalContent>

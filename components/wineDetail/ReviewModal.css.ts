@@ -12,6 +12,16 @@ export const ModalTitle = styled.h2`
   line-height: 32px;
 `;
 
+export const DeleteModalTitle = styled.h2`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gray-800);
+  line-height: 32px;
+`;
+
 export const ModalContentTitle = styled.h3`
   font-size: 16px;
   font-weight: 500;
@@ -23,11 +33,10 @@ export const ModalTitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 480px;
+  width: 100%;
   height: 34px;
 
   ${media.mobile`
-    width: 327px;
     height: 32px;
   `}
 `;
@@ -98,11 +107,7 @@ export const ModalButtonWrapper = styled.div`
   width: 100%;
 
   button:first-child {
-    width: 108px;
-  }
-
-  button:nth-child(2) {
-    flex-grow: 1;
+    width: 100%;
   }
 `;
 export const ReviewContentWrapper = styled.div`

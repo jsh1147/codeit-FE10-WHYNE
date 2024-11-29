@@ -4,7 +4,7 @@ import { MouseEvent, useState, useEffect } from 'react';
 import BasicButton from '@/components/wines/BasicButton';
 import { patchReview, getReview } from '@/apis/itemDeleteEditApis';
 import { Rating, Slider } from '@mui/material';
-import { translateAroma, translateAromaToKey } from './TranslateAroma';
+import { translateAroma, translateAromaToKey } from '@/utils/translateAroma';
 
 interface EditReviewModalProps {
   closeModal: () => void;
@@ -312,13 +312,6 @@ export default function EditReviewModal({
           </S.ReviewDetailWrapper>
         </S.ModalContentWrapper>
         <S.ModalButtonWrapper>
-          <BasicButton
-            $bgColor="var(--purple-10)"
-            $fontColor="var(--purple-100)"
-            onClick={closeModal}
-          >
-            취소
-          </BasicButton>
           <BasicButton onClick={formSubmit}>수정하기</BasicButton>
         </S.ModalButtonWrapper>
       </S.ModalContent>
