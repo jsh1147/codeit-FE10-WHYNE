@@ -14,11 +14,12 @@ interface SignUpFormData {
 export default function SignUpForm() {
   const { replace } = useRouter();
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<SignUpFormData>();
+  } = useForm<SignUpFormData>({ mode: 'onTouched' });
 
   const signUpSubmit: SubmitHandler<SignUpFormData> = async (data, event) => {
     event?.preventDefault();
@@ -32,8 +33,8 @@ export default function SignUpForm() {
         const message = error.response?.data.message as string;
 
         if (message.includes('이메일')) setError('email', { message });
-        if (message.includes('일치'))
-          setError('passwordConfirmation', { message });
+        if (message.includes('Internal'))
+          setError('nickname', { message: '이미 사용중인 닉네임입니다.' });
       });
   };
 
@@ -44,7 +45,13 @@ export default function SignUpForm() {
         type="email"
         id="email"
         placeholder="wine@email.com"
-        {...register('email')}
+        {...register('email', {
+          required: { value: true, message: '이메일은 필수 입력입니다.' },
+          pattern: {
+            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+            message: '이메일 형식으로 작성해 주세요.',
+          },
+        })}
       />
       <S.ErrorText>{errors.email?.message}</S.ErrorText>
       <S.Label htmlFor="nickname">닉네임</S.Label>
@@ -52,7 +59,13 @@ export default function SignUpForm() {
         type="text"
         id="nickname"
         placeholder="wine"
-        {...register('nickname')}
+        {...register('nickname', {
+          required: { value: true, message: '닉네임은 필수 입력입니다.' },
+          maxLength: {
+            value: 20,
+            message: '닉네임은 최대 20자까지 가능합니다.',
+          },
+        })}
       />
       <S.ErrorText>{errors.nickname?.message}</S.ErrorText>
       <S.Label htmlFor="password">비밀번호</S.Label>
@@ -60,7 +73,14 @@ export default function SignUpForm() {
         type="password"
         id="password"
         placeholder="영문, 숫자 포함 8자 이상"
-        {...register('password')}
+        {...register('password', {
+          required: { value: true, message: '비밀번호는 필수 입력입니다.' },
+          minLength: { value: 8, message: '비밀번호는 최소 8자 이상입니다.' },
+          pattern: {
+            value: /^([a-z]|[A-Z]|[0-9]|[!@#$%^&*])+$/,
+            message: '비밀번호는 영문, 숫자, 특수문자로만 가능합니다.',
+          },
+        })}
       />
       <S.ErrorText>{errors.password?.message}</S.ErrorText>
       <S.Label htmlFor="passwordConfirmation">비밀번호 확인</S.Label>
@@ -68,7 +88,16 @@ export default function SignUpForm() {
         type="password"
         id="passwordConfirmation"
         placeholder="비밀번호 확인"
-        {...register('passwordConfirmation')}
+        {...register('passwordConfirmation', {
+          required: {
+            value: true,
+            message: '비밀번호 확인은 필수 입력입니다.',
+          },
+          validate: {
+            value: (value) =>
+              value === watch('password') || '비밀번호가 일치하지 않습니다.',
+          },
+        })}
       />
       <S.ErrorText>{errors.passwordConfirmation?.message}</S.ErrorText>
       <S.SubmitButton type="submit">회원가입</S.SubmitButton>
