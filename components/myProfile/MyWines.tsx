@@ -4,9 +4,11 @@ import { getWines, GetWines, Wine } from '@/apis/myProfileApi';
 
 interface MyWineProps {
     openDeleteModal: (wineId:number) => void;
+    openEditWineModal: (wineId:number) => void;
 }
 
-export default function MyWines({ openDeleteModal } : MyWineProps) {
+
+export default function MyWines({ openDeleteModal, openEditWineModal } : MyWineProps) {
     const [wines, setWines] = useState<GetWines['list']>([]);
     const [cursor, setCursor] = useState<number>(0);
     const [totalCount, setTotalCount] = useState<number | null>(null);
@@ -16,6 +18,9 @@ export default function MyWines({ openDeleteModal } : MyWineProps) {
     const handleDeleteClick = (wineId:number) => {
         openDeleteModal(wineId);
     };
+    const handleEditClick = (wineId:number) => {
+        openEditWineModal(wineId);
+    }
     
     const toggleDropdown = (id: number) => {
         setActiveDropdown(prev => (prev === id ? null : id));
@@ -34,7 +39,7 @@ export default function MyWines({ openDeleteModal } : MyWineProps) {
                 setTotalCount(response.totalCount);
             }
         } catch (error) {
-            console.error('리뷰 불러오기 오류:', error);
+            console.error('와인 불러오기 오류:', error);
         }
     }, [cursor, wines.length, totalCount]);
 
@@ -78,9 +83,11 @@ export default function MyWines({ openDeleteModal } : MyWineProps) {
                 <S.WineItem>
                     <S.ItemWrapper>
                         <S.WineImageWrapper>
+
                             <S.ImageWrapper>
                                 <S.WineImage src={wine.image} alt="와인이미지" layout='fill' />
                             </S.ImageWrapper>
+ 
                         </S.WineImageWrapper>
                         
                     <S.WineInfoWrapper>
@@ -106,7 +113,7 @@ export default function MyWines({ openDeleteModal } : MyWineProps) {
                             <S.DropdownList>
                             <ul>
                               <li>
-                                <S.DropdownItem>
+                                <S.DropdownItem onClick={() => handleEditClick(wine.id)}>
                                   수정하기
                                 </S.DropdownItem>
                               </li>

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import MyReviews from '@/components/myProfile/MyReviews';
 import MyWines from '@/components/myProfile/MyWines';
-import Profile from '@/components/myProfile/Profile';
+import ProfileCard from '@/components/myProfile/MyProfile';
 import DeleteModal from '@/components/common/DeleteModal'; 
+import EditWineModal from '@/components/myProfile/EditWineModal'; 
 import * as S from '@/styles/myProfile.css';
-import { deleteReview } from '@/apis/DeleteEditApis';
-import { deleteWine } from '@/apis/DeleteEditApis';
+import { deleteReview, deleteWine } from '@/apis/itemDeleteEditApis';
 import { useRouter } from 'next/router';
 
 export default function MyProfile() {
@@ -13,7 +13,10 @@ export default function MyProfile() {
     const [activeTab, setActiveTab] = useState<'reviews' | 'wines'>('reviews');
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false); 
     const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
-    const [deleteTargetType, setDeleteTargetType] = useState<'review' | 'wine' | null>(null); // 삭제 대상 타입
+    const [deleteTargetType, setDeleteTargetType] = useState<'review' | 'wine' | null>(null); 
+
+    const [isEditWineModalOpen, setEditWineModalOpen] = useState(false);
+    const [editWineId, setEditWineId] = useState<number | null>(null); 
 
     const openDeleteModal = (id: number, type: 'review' | 'wine') => {
         setDeleteTargetId(id);
@@ -24,6 +27,15 @@ export default function MyProfile() {
         setDeleteTargetId(null);
         setDeleteTargetType(null);
         setDeleteModalOpen(false);
+    };
+
+    const openEditWineModal = (id: number) => {
+        setEditWineId(id);
+        setEditWineModalOpen(true);
+    };
+    const closeEditWineModal = () => {
+        setEditWineId(null);
+        setEditWineModalOpen(false);
     };
 
     const handleDelete = async () => {
@@ -46,7 +58,7 @@ export default function MyProfile() {
         <S.MyProfilePageContainer>
             <S.MyProfileContainer>
                 <S.MyProfileContentContainer>
-                    <Profile />
+                    <ProfileCard />
                     <S.MyProfileContentWrapper>
                         <S.MyProfileHeader>
                             <S.MyProfileHeaderItemWrapper>
@@ -71,7 +83,10 @@ export default function MyProfile() {
                         </S.TabContent>
                         <S.TabContent $active={activeTab === 'wines'}>
                             {activeTab === 'wines' && (
-                                <MyWines openDeleteModal={(id) => openDeleteModal(id, 'wine')} />
+                                <MyWines 
+                                    openDeleteModal={(id) => openDeleteModal(id, 'wine')} 
+                                    openEditWineModal={(id) => openEditWineModal(id)} 
+                                />
                             )}
                         </S.TabContent>
                     </S.MyProfileContentWrapper>
@@ -82,6 +97,13 @@ export default function MyProfile() {
                 <DeleteModal 
                     onClose={closeDeleteModal}
                     onDelete={handleDelete} 
+                />
+            )}
+
+            {isEditWineModalOpen && editWineId !== null && (
+                <EditWineModal 
+                    wineId={editWineId} 
+                    closeModal={closeEditWineModal} 
                 />
             )}
         </S.MyProfilePageContainer>
