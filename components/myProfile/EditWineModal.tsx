@@ -19,14 +19,14 @@ export default function EditWineModal({
 }: EditWineModalProps): JSX.Element {
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedWineType, setSelectedWineType] = useState<'red' | 'white' | 'sparkling'>('red');
+  const [selectedWineType, setSelectedWineType] = useState<'Red' | 'White' | 'Sparkling'>('Red');
 
   const [existingData, setExistingData] = useState<{
     id: number;
     name: string;
     price: number;
     region: string;
-    type: 'red' | 'white' | 'sparkling';
+    type: 'Red' | 'White' | 'Sparkling';
     image: string;
   } | null>(null);
 
@@ -45,7 +45,7 @@ export default function EditWineModal({
         setWineName(data.name);
         setRegion(data.region);
         setPrice(data.price);
-        setSelectedWineType(data.type); 
+        setSelectedWineType(data.type.charAt(0).toUpperCase() + data.type.slice(1).toLowerCase()); 
       } else {
         alert('와인 정보를 불러오지 못했습니다.');
         closeModal();
@@ -69,7 +69,7 @@ export default function EditWineModal({
     setIsDropdownOpen((prev) => !prev);
   };
   
-  const handleSelectWineType = (type: 'red' | 'white' | 'sparkling') => {
+  const handleSelectWineType = (type: 'Red' | 'White' | 'Sparkling') => {
     setSelectedWineType(type);
     setIsDropdownOpen(false); 
   };
@@ -158,13 +158,13 @@ export default function EditWineModal({
           <S.ModalContentLayoutBox>
             <S.Label>와인 타입</S.Label>
             <S.DropdownWrapper onClick={handleDropdownToggle}>
-              <span>{selectedWineType.toUpperCase()}</span>
+              <span>{selectedWineType}</span>
               <S.ArrowIcon isOpen={isDropdownOpen} />
             </S.DropdownWrapper>
             <S.DropdownList isOpen={isDropdownOpen}>
-              <S.DropdownItem onClick={() => handleSelectWineType('red')}>Red</S.DropdownItem>
-              <S.DropdownItem onClick={() => handleSelectWineType('white')}>White</S.DropdownItem>
-              <S.DropdownItem onClick={() => handleSelectWineType('sparkling')}>Sparkling</S.DropdownItem>
+              <S.DropdownItem onClick={() => handleSelectWineType('Red')}>Red</S.DropdownItem>
+              <S.DropdownItem onClick={() => handleSelectWineType('White')}>White</S.DropdownItem>
+              <S.DropdownItem onClick={() => handleSelectWineType('Sparkling')}>Sparkling</S.DropdownItem>
             </S.DropdownList>
           </S.ModalContentLayoutBox>
           <S.ModalContentLayoutBox>
