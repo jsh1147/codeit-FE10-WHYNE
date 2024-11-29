@@ -71,15 +71,6 @@ export default function EditReviewModal({
                     aroma:translatedAroma,
                     content,
                 });
-                console.log({
-                    rating,
-                    lightBold,
-                    smoothTannic,
-                    drySweet,
-                    softAcidic,
-                    translatedAroma,
-                    content,
-                })
                 router.reload();
             }
         } catch (err) {

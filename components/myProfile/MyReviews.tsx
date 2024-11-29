@@ -4,16 +4,21 @@ import { getReviews, GetReviews, Review } from '@/apis/myProfileApi';
 
 function formatTime(date: string): string {
     const now = new Date();
-    const updatedTime = new Date(date);
-    const timeDiff = now.getTime() - updatedTime.getTime();
+    const createdTime = new Date(date);
+    const timeDiff = now.getTime() - createdTime.getTime();
     const diffInHours = Math.floor(timeDiff / (1000 * 60 * 60));
 
     if (diffInHours < 0.5) {
         return '방금 전';
+    } else if (diffInHours < 24) {
+        return `${diffInHours}시간 전`;
     }
-    return `${diffInHours}시간 전`;
-}
+    const year = createdTime.getFullYear();
+    const month = String(createdTime.getMonth() + 1).padStart(2, '0'); 
+    const day = String(createdTime.getDate()).padStart(2, '0');
 
+    return `${year}.${month}.${day}`;
+}
 interface MyReviewsProps {
     openDeleteModal: (reviewId:number) => void;
     openEditReviewModal: (reviewId:number, wineName:string) => void;
@@ -100,7 +105,7 @@ export default function MyReviews({ openDeleteModal, openEditReviewModal }: MyRe
                                     <S.StarIcon aria-label="별점 아이콘" />
                                     <S.StarText>{review.rating}.0</S.StarText>
                                 </S.StarWrapper>
-                                <S.TimeText>{formatTime(review.updatedAt)}</S.TimeText>
+                                <S.TimeText>{formatTime(review.createdAt)}</S.TimeText>
                             </S.StarTimeWrapper>
                             <S.KebapIcon
                                 aria-label="수정삭제 드롭다운 버튼"
