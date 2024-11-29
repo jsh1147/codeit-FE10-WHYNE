@@ -50,10 +50,14 @@ export default function WineDetail() {
             avgRating={wine.avgRating}
             reviewCount={wine.reviewCount}
             avgRatings={wine.avgRatings}
+            wineId={wine.id}
+            wineName={wine.name}
           />
         }
       </S.WineStats>
-      <S.WineReviews>{<ReviewList reviews={wine.reviews} />}</S.WineReviews>
+      <S.WineReviews>
+        {<ReviewList reviews={wine.reviews} wineName={wine.name} />}
+      </S.WineReviews>
     </S.WineDetailContainer>
   );
 }

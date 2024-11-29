@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import * as S from './WineRating.css';
+import PostReviewModal from './PostReviewModal';
 
 interface WineRatingProps {
+  wineId: number;
+  wineName: string;
   avgRating: number | null;
   reviewCount: number;
   avgRatings: {
@@ -10,6 +13,8 @@ interface WineRatingProps {
 }
 
 export const WineRating: React.FC<WineRatingProps> = ({
+  wineId,
+  wineName,
   avgRating,
   reviewCount,
   avgRatings,
@@ -22,6 +27,22 @@ export const WineRating: React.FC<WineRatingProps> = ({
 
   const fullStars = avgRating ? Math.floor(avgRating) : 0;
   const emptyStars = 5 - fullStars;
+
+  const [modalState, setModalState] = useState<{
+    isOpen: boolean;
+    wineId: number | null;
+    wineName: string;
+  }>({ isOpen: false, wineId: null, wineName: '' });
+
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  const openModal = (wineId: number, wineName: string) => {
+    setModalState({ isOpen: true, wineId, wineName });
+  };
+
+  const closeModal = () => {
+    setModalState({ isOpen: false, wineId: null, wineName: '' });
+  };
 
   return (
     <S.WineRatingContainer>
@@ -56,8 +77,27 @@ export const WineRating: React.FC<WineRatingProps> = ({
         })}
       </S.RatingCount>
       <S.buttonBox>
-        <S.ReviewButton>리뷰 남기기</S.ReviewButton>
+        <S.ReviewButton onClick={() => openModal(wineId, wineName)}>
+          리뷰 남기기
+        </S.ReviewButton>
       </S.buttonBox>
+
+      {modalState.isOpen && modalState.wineId !== null && (
+        <div ref={modalRef}>
+          <PostReviewModal
+            closeModal={closeModal}
+            wineId={modalState.wineId}
+            wineName={modalState.wineName}
+            rating={0}
+            lightBold={0}
+            smoothTannic={0}
+            drySweet={0}
+            softAcidic={0}
+            aroma={[]}
+            content={''}
+          />
+        </div>
+      )}
     </S.WineRatingContainer>
   );
 };
