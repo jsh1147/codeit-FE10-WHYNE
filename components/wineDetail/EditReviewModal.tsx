@@ -79,16 +79,11 @@ export default function EditReviewModal({
   }, [reviewId, wineName]);
 
   const handleScentChange = (scent: string) => {
-    setAroma((prevAroma) => {
-      if (prevAroma.includes(scent)) {
-        return prevAroma.filter((item) => item !== scent);
-      }
-      if (prevAroma.length >= 5) {
-        alert('최대 5개의 향만 선택할 수 있습니다.');
-        return prevAroma;
-      }
-      return [...prevAroma, scent];
-    });
+    setAroma((prevAroma) =>
+      prevAroma.includes(scent)
+        ? prevAroma.filter((item) => item !== scent)
+        : [...prevAroma, scent],
+    );
   };
 
   const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
