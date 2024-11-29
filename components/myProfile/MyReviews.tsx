@@ -4,21 +4,27 @@ import { getReviews, GetReviews, Review } from '@/apis/myProfileApi';
 
 function formatTime(date: string): string {
     const now = new Date();
-    const updatedTime = new Date(date);
-    const timeDiff = now.getTime() - updatedTime.getTime();
+    const createdTime = new Date(date);
+    const timeDiff = now.getTime() - createdTime.getTime();
     const diffInHours = Math.floor(timeDiff / (1000 * 60 * 60));
 
     if (diffInHours < 0.5) {
         return '방금 전';
+    } else if (diffInHours < 24) {
+        return `${diffInHours}시간 전`;
     }
-    return `${diffInHours}시간 전`;
-}
+    const year = createdTime.getFullYear();
+    const month = String(createdTime.getMonth() + 1).padStart(2, '0'); 
+    const day = String(createdTime.getDate()).padStart(2, '0');
 
+    return `${year}.${month}.${day}`;
+}
 interface MyReviewsProps {
     openDeleteModal: (reviewId:number) => void;
+    openEditReviewModal: (reviewId:number, wineName:string) => void;
 }
 
-export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
+export default function MyReviews({ openDeleteModal, openEditReviewModal }: MyReviewsProps) {
     const [reviews, setReviews] = useState<GetReviews['list']>([]);
     const [cursor, setCursor] = useState<number>(0);
     const [totalCount, setTotalCount] = useState<number | null>(null);
@@ -27,6 +33,10 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
     const handleDeleteClick = (reviewId: number) => {
         openDeleteModal(reviewId); 
     };
+    const handleEditClick = (reviewId:number, wineName: string) => {
+        openEditReviewModal(reviewId, wineName);
+        console.log(wineName);
+    }
     const toggleDropdown = (id: number) => {
         setActiveDropdown(prev => (prev === id ? null : id));
     };
@@ -43,6 +53,7 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
                 setCursor(response.nextCursor);
                 setTotalCount(response.totalCount);
             }
+            
         } catch (error) {
             console.error('리뷰 불러오기 오류:', error);
         }
@@ -72,7 +83,6 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
     }, [fetchReviews]);
 
    
-
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (!(event.target as HTMLElement).closest('[data-dropdown]')) {
@@ -82,7 +92,7 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
         document.addEventListener('click', handleClickOutside);
         return () => document.removeEventListener('click', handleClickOutside);
     }, []);
-
+    
 
     return (
             <S.ReviewListContainer>
@@ -95,7 +105,7 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
                                     <S.StarIcon aria-label="별점 아이콘" />
                                     <S.StarText>{review.rating}.0</S.StarText>
                                 </S.StarWrapper>
-                                <S.TimeText>{formatTime(review.updatedAt)}</S.TimeText>
+                                <S.TimeText>{formatTime(review.createdAt)}</S.TimeText>
                             </S.StarTimeWrapper>
                             <S.KebapIcon
                                 aria-label="수정삭제 드롭다운 버튼"
@@ -106,7 +116,7 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
                                 <S.DropdownList>
                                     <ul>
                                         <li>
-                                            <S.DropdownItem >
+                                            <S.DropdownItem onClick={() => handleEditClick(review.id, review.wine.name)}>
                                                 수정하기
                                             </S.DropdownItem>
                                         </li>

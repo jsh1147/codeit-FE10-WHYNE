@@ -31,6 +31,7 @@ export default function MyWines({ openDeleteModal, openEditWineModal } : MyWineP
         try {
             const response = await getWines(5, cursor);
             if (response) {
+                
                 setWines(prev => [
                     ...prev,
                     ...response.list.filter(newItem => !prev.some(item => item.id === newItem.id)),

@@ -39,9 +39,8 @@ export default function MyProfile() {
               console.error('유저 정보 불러오기 에러:', error);
             }
         };
-        getUserProfile(); 
-        console.log(userInfo);
-    }, [userInfo]);
+        getUserProfile();
+    }, []);
 
     return (
         <S.ProfileContainer>
