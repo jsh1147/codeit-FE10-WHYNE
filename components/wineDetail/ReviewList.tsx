@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { instance } from '@/apis/instance';
 import { ReviewsType } from '@/types/wineDetailTypes';
 import { translateAroma } from './TranslateAroma';
 import { formatRelativeTime } from '@/utils/formatRelativeTime';
+import EditReviewModal from './EditReviewModal';
 import * as S from './ReviewList.css';
 import { AxiosError } from 'axios';
+import DeleteReviewModal from './DeleteReviewModal';
 
 interface WineReviewsProps {
   reviews: ReviewsType[];
+  wineName: string;
 }
 
 const Slider: React.FC<{ value: number }> = ({ value }) => (
@@ -16,6 +19,7 @@ const Slider: React.FC<{ value: number }> = ({ value }) => (
 
 export const ReviewList: React.FC<WineReviewsProps> = ({
   reviews: initialReviews,
+  wineName,
 }) => {
   const [reviews, setReviews] = useState(initialReviews);
   const [collapsedReviews, setCollapsedReviews] = useState(
@@ -30,12 +34,52 @@ export const ReviewList: React.FC<WineReviewsProps> = ({
     Array(initialReviews.length).fill(false),
   );
 
+  const [editModalState, setEditModalState] = useState<{
+    isOpen: boolean;
+    reviewId: number | null;
+  }>({ isOpen: false, reviewId: null });
+
+  const [deleteModalState, setDeleteModalState] = useState<{
+    isOpen: boolean;
+    reviewId: number | null;
+  }>({ isOpen: false, reviewId: null });
+
+  const editModalRef = useRef<HTMLDivElement | null>(null);
+  const deleteModalRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     setReviews(initialReviews);
     setCollapsedReviews(initialReviews.map(() => false));
     setLikesState(initialReviews.map((review) => review.isLiked));
     setIsOpen(Array(initialReviews.length).fill(false));
   }, [initialReviews]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        editModalRef.current &&
+        !editModalRef.current.contains(event.target as Node)
+      ) {
+        closeEditModal();
+      }
+      if (
+        deleteModalRef.current &&
+        !deleteModalRef.current.contains(event.target as Node)
+      ) {
+        closeDeleteModal();
+      }
+    };
+
+    if (editModalState.isOpen || deleteModalState.isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [editModalState.isOpen, deleteModalState.isOpen]);
 
   const toggleDropdown = (index: number) => {
     setIsOpen((prev) => prev.map((open, i) => (i === index ? !open : false)));
@@ -79,18 +123,20 @@ export const ReviewList: React.FC<WineReviewsProps> = ({
     }
   };
 
-  const deleteReview = async (reviewId: number) => {
-    try {
-      const response = await instance.delete(`reviews/${reviewId}`);
-      console.log('리뷰 삭제 성공', response.data);
-      setReviews((prev) => prev.filter((review) => review.id !== reviewId));
-    } catch (error) {
-      if (error instanceof AxiosError && error.response?.status === 403) {
-        alert('리뷰 작성자만 삭제할 수 있습니다.');
-      } else {
-        console.error('리뷰 삭제 중 오류 발생', error);
-      }
-    }
+  const openEditModal = (reviewId: number) => {
+    setEditModalState({ isOpen: true, reviewId });
+  };
+
+  const closeEditModal = () => {
+    setEditModalState({ isOpen: false, reviewId: null });
+  };
+
+  const openDeleteModal = (reviewId: number) => {
+    setDeleteModalState({ isOpen: true, reviewId });
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModalState({ isOpen: false, reviewId: null });
   };
 
   return (
@@ -136,11 +182,21 @@ export const ReviewList: React.FC<WineReviewsProps> = ({
                       <S.DropdownList>
                         <ul>
                           <li>
-                            <S.DropdownItem>수정하기</S.DropdownItem>
+                            <S.DropdownItem
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openEditModal(review.id);
+                              }}
+                            >
+                              수정하기
+                            </S.DropdownItem>
                           </li>
                           <li>
                             <S.DropdownItem
-                              onClick={() => deleteReview(review.id)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openDeleteModal(review.id);
+                              }}
                             >
                               삭제하기
                             </S.DropdownItem>
@@ -218,6 +274,23 @@ export const ReviewList: React.FC<WineReviewsProps> = ({
             </S.ReviewItem>
           </S.ReviewItemOutline>
         ))
+      )}
+      {editModalState.isOpen && editModalState.reviewId && (
+        <div ref={editModalRef} onClick={(e) => e.stopPropagation()}>
+          <EditReviewModal
+            closeModal={closeEditModal}
+            reviewId={editModalState.reviewId}
+            wineName={wineName}
+          />
+        </div>
+      )}
+      {deleteModalState.isOpen && deleteModalState.reviewId && (
+        <div ref={deleteModalRef}>
+          <DeleteReviewModal
+            closeModal={closeDeleteModal}
+            reviewId={deleteModalState.reviewId}
+          />
+        </div>
       )}
     </S.ReviewListContainer>
   );
