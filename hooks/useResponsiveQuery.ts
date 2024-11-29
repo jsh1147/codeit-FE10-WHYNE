@@ -20,10 +20,10 @@ export const useResponsiveQuery = ():
   useEffect(() => {
     if (pcQuery) {
       setResponsiveQuery(PC);
-    } else if (tabletQuery) {
-      setResponsiveQuery(TABLET);
     } else if (mobileQuery) {
       setResponsiveQuery(MOBILE);
+    } else if (tabletQuery) {
+      setResponsiveQuery(TABLET);
     }
   }, [pcQuery, tabletQuery, mobileQuery]);
 

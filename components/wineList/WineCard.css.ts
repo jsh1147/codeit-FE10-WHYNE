@@ -17,6 +17,10 @@ export const WineCardContainer = styled.section`
   border-radius: 16px;
   cursor: pointer;
   margin-top: 42px;
+
+  ${media.mobile`
+    margin-top: 0px;
+  `}
 `;
 
 export const WineImageThumbnail = styled.figure`
@@ -27,6 +31,12 @@ export const WineImageThumbnail = styled.figure`
 
   ${media.tablet`
     width: 74px;
+    margin-left: 40px;
+  `}
+
+  ${media.mobile`
+    margin-left: 20px;
+    margin-top: 0px;
   `}
 `;
 
@@ -35,6 +45,10 @@ export const ImageWrapper = styled.div`
   bottom: -20px;
   width: 100%;
   height: 100%;
+
+  img {
+    object-fit: cover;
+  }
 `;
 
 export const WineInfoSection = styled.section`
@@ -43,6 +57,11 @@ export const WineInfoSection = styled.section`
   flex-direction: column;
   flex: 1;
   margin: 36.5px 50px 23.5px 0;
+
+  ${media.mobile`
+    margin: 30px 19px 28px 0;
+    width: 187px;
+  `}
 `;
 
 export const WineInfoWrapper = styled.div`
@@ -50,9 +69,18 @@ export const WineInfoWrapper = styled.div`
   justify-content: space-between;
   gap: 81px;
 
+  ${media.tablet`
+    gap: 47px;
+  `}
+
+  ${media.mobile`
+    gap: 36px;
+  `}
+
   aside {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 `;
 
@@ -67,12 +95,24 @@ export const WineInfoSectionWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+
+  ${media.tablet`
+    align-items: flex-start;
+    `}
+
+  ${media.mobile`
+    flex-wrap: wrap;
+  `}
 `;
 
 export const RecentReviewSection = styled.section`
   border-top: 1px solid var(--gray-300);
   width: 100%;
   height: 127px;
+
+  ${media.mobile`
+    height: 118px;
+  `}
 `;
 
 export const RecentReviewWrapper = styled.div`
@@ -82,7 +122,12 @@ export const RecentReviewWrapper = styled.div`
     font-weight: 600;
     line-height: 26px;
     margin-bottom: 10px;
+    font-size: 14px;
   }
+
+  ${media.mobile`
+    margin: 7px 20px 0;
+  `}
 `;
 
 export const WineInfoTitle = styled.h2`
@@ -102,6 +147,11 @@ export const WineInfoTitle = styled.h2`
 
   ${media.tablet`
   width: 300px;
+  `}
+  ${media.mobile`
+  width: 187px;
+  font-size: 20px;
+  line-height: 32px;
   `}
 `;
 
@@ -126,6 +176,10 @@ export const WineInfoText = styled.p<{
 
   ${media.tablet`
     height: 26px;
+  `}
+
+  ${media.mobile`
+    font-size: 14px;
   `}
 `;
 

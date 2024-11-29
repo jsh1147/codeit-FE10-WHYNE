@@ -40,18 +40,14 @@ export const ModalContent = styled.div`
   flex-direction: column;
   gap: 40px;
   max-height: 90vh;
+  overflow-y: auto;
 
-  ${media.tablet`
-  max-height: 88vh;
-    
-    overflow-y: auto; 
+  ${media.mobile`
+    max-height: 88vh;
     position: absolute;
-    /* top: 50%; */
-    width: calc(100% - 18px);    
+    width: 100%;    
     left: 0;
-    bottom: 0;
-
-    
+    bottom: -6px;
   `}
 `;
 

@@ -34,26 +34,6 @@ export const FilterOptionTitle = styled.h3`
   text-transform: uppercase;
 `;
 
-export const FilterOptionBtn = styled.button`
-  padding: 8px 18px;
-  border-radius: 100px;
-  border: 1px solid var(--gray-300);
-  background-color: #fff;
-  color: var(--gray-800);
-  font-weight: 500;
-  line-height: 26px;
-
-  &:hover,
-  &:focus {
-    background-color: var(--purple-100);
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 26px;
-    color: #fff;
-  }
-`;
-
 export const FilterContainer = styled.section`
   width: 284px;
   display: flex;
@@ -71,21 +51,37 @@ export const FilterContainer = styled.section`
     padding: 24px;
     border-radius: 16px;
     gap: 0px;
-    max-height: 90vh; 
+    max-height: 80vh; 
     overflow: hidden;
     overflow-y: auto; 
-`}
+  `}
+
+  ${media.mobile`
+    left: 0;
+    top: 22vh;
+    max-height: 80vh;
+    transform: translate(0, 0);
+    width: 100%;
+  `}
 `;
 
 export const FilterPriceSliderWrapper = styled.div`
   margin-top: 20px;
   width: 263px;
+
+  ${media.mobile`
+    width: 90%;
+  `}
 `;
 
 export const FilterOptionBtnBox = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 10px;
+
+  ${media.mobile`
+    width: 327px;
+    `}
 
   input {
     display: none;
@@ -163,6 +159,10 @@ export const FilterPriceSlider = styled(Slider)`
     &:before {
       display: none;
     }
+
+    ${media.mobile`
+      right: -17px;
+      `}
   }
 `;
 

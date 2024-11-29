@@ -9,13 +9,11 @@ export const WinesPageContainer = styled.div`
     margin: 108px auto auto;
     width: min(1140px, 100% - 40px);
     position: relative;
-
   `}
 
   ${media.mobile`
     margin: 99px auto auto;
     width: calc(100% - 32px);
-    
   `}
 `;
 
@@ -41,6 +39,8 @@ export const SearchBarWrapper = styled.div<{ $isLogin: boolean }>`
 
   ${media.mobile`
     width: 80%;
+    margin-left: 10px;
+    margin-right: 0;
   `}
 `;
 
@@ -91,8 +91,9 @@ export const CreateWineButton = styled.div`
   width: calc(100% - 32px);
 
   button {
-      padding: 16px 172px;
       width: 100%;
+      display: flex;
+      justify-content: center;
       white-space: nowrap;
     }
   `}
