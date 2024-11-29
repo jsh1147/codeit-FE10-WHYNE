@@ -6,6 +6,15 @@ export interface PatchWineData {
     type: 'RED' | 'WHITE' | 'SPARKLING';
     image: string;
 }
+export interface PatchReviewData {
+    rating:number;
+    lightBold:number;
+    smoothTannic:number;
+    drySweet:number;
+    softAcidic:number;
+    aroma:string[];
+    content:string;
+}
 
 export const deleteReview = async (reviewId: number) => {
     try {
@@ -46,4 +55,23 @@ export const patchWine = async (
       alert('와인 수정 중 오류가 발생했습니다.');
     }
 };
+export const getReview = async (reviewId: number) => {
+    try{
+        const response = await instance.get(`/reviews/${reviewId}`)
+        return response.data;
+    }catch(error){
+        console.log('리뷰 정보 불러오기 오류')
+    }
+}
 
+export const patchReview = async (
+    reviewId: number,
+    data: PatchReviewData,
+): Promise<void> => {
+    try {
+      const res = await instance.patch(`/reviews/${reviewId}`, data);
+    } catch (err) {
+      console.error(err);
+      alert('리뷰 수정 중 오류가 발생했습니다.');
+    }
+};
