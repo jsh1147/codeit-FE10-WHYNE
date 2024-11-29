@@ -71,12 +71,14 @@ export default function EditReviewModal({
                     aroma:translatedAroma,
                     content,
                 });
-                router.reload();
+               router.reload();
             }
         } catch (err) {
             console.error('리뷰 수정 중 오류 발생:', err);
         }
     };
+
+    
 
     return (
         <S.ModalOverlay>

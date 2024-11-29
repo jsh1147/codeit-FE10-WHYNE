@@ -7,7 +7,6 @@ function formatTime(date: string): string {
     const createdTime = new Date(date);
     const timeDiff = now.getTime() - createdTime.getTime();
     const diffInHours = Math.floor(timeDiff / (1000 * 60 * 60));
-
     if (diffInHours < 0.5) {
         return '방금 전';
     } else if (diffInHours < 24) {
@@ -24,7 +23,7 @@ interface MyReviewsProps {
     openEditReviewModal: (reviewId:number, wineName:string) => void;
 }
 
-export default function MyReviews({ openDeleteModal, openEditReviewModal }: MyReviewsProps) {
+export default function MyReviews({ openDeleteModal, openEditReviewModal}: MyReviewsProps) {
     const [reviews, setReviews] = useState<GetReviews['list']>([]);
     const [cursor, setCursor] = useState<number>(0);
     const [totalCount, setTotalCount] = useState<number | null>(null);
@@ -35,7 +34,6 @@ export default function MyReviews({ openDeleteModal, openEditReviewModal }: MyRe
     };
     const handleEditClick = (reviewId:number, wineName: string) => {
         openEditReviewModal(reviewId, wineName);
-        console.log(wineName);
     }
     const toggleDropdown = (id: number) => {
         setActiveDropdown(prev => (prev === id ? null : id));
@@ -77,7 +75,6 @@ export default function MyReviews({ openDeleteModal, openEditReviewModal }: MyRe
         },
         [fetchReviews]
     );
-
     useEffect(() => {
         fetchReviews();
     }, [fetchReviews]);

@@ -5,7 +5,7 @@ import useImageUpload from '@/hooks/useImageUpload';
 import Image from 'next/image';
 import { MouseEvent, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getWine } from '@/apis/itemDeleteEditApis'; 
+import { getWine } from '@/apis/itemDeleteEditApis';
 import { patchWine } from '@/apis/itemDeleteEditApis';
 
 interface EditWineModalProps {
@@ -18,6 +18,8 @@ export default function EditWineModal({
   wineId,
 }: EditWineModalProps): JSX.Element {
   const router = useRouter();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedWineType, setSelectedWineType] = useState<'red' | 'white' | 'sparkling'>('red');
 
   const [existingData, setExistingData] = useState<{
     id: number;
@@ -26,12 +28,11 @@ export default function EditWineModal({
     region: string;
     type: 'red' | 'white' | 'sparkling';
     image: string;
-  } | null>(null); 
+  } | null>(null);
 
   const [wineName, setWineName] = useState('');
   const [region, setRegion] = useState('');
   const [price, setPrice] = useState<number>(0);
-  const [wineType, setWineType] = useState<'red' | 'white' | 'sparkling'>('red');
 
   const { previewImageSrc, handleImagePreview, uploadImage, imageFile } =
     useImageUpload();
@@ -44,7 +45,7 @@ export default function EditWineModal({
         setWineName(data.name);
         setRegion(data.region);
         setPrice(data.price);
-        setWineType(data.type);
+        setSelectedWineType(data.type); 
       } else {
         alert('와인 정보를 불러오지 못했습니다.');
         closeModal();
@@ -64,13 +65,22 @@ export default function EditWineModal({
     setPrice(numericValue);
   };
 
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+  
+  const handleSelectWineType = (type: 'red' | 'white' | 'sparkling') => {
+    setSelectedWineType(type);
+    setIsDropdownOpen(false); 
+  };
+
   const formSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (!wineName.trim()) return alert('와인 이름을 입력해주세요.');
     if (!price) return alert('가격을 입력해주세요.');
     if (!region.trim()) return alert('원산지를 입력해주세요.');
-    if (!wineType) return alert('와인 타입을 선택해주세요.');
+    if (!selectedWineType) return alert('와인 타입을 선택해주세요.');
 
     try {
       if (window.confirm('와인을 수정하시겠습니까?')) {
@@ -97,10 +107,16 @@ export default function EditWineModal({
           name: wineName,
           price,
           region,
-          type: wineType.toUpperCase() as 'RED' | 'WHITE' | 'SPARKLING',
+          type: selectedWineType.toUpperCase() as 'RED' | 'WHITE' | 'SPARKLING',
           image: imageUrl,
         });
-
+        console.log({
+          name: wineName,
+          price,
+          region,
+          type: selectedWineType.toUpperCase() as 'RED' | 'WHITE' | 'SPARKLING',
+          image: imageUrl,
+        });
         alert('와인이 성공적으로 수정되었습니다.');
         router.reload();
       }
@@ -140,25 +156,16 @@ export default function EditWineModal({
             />
           </S.ModalContentLayoutBox>
           <S.ModalContentLayoutBox>
-            <form>
-              <S.Label>와인 타입</S.Label>
-              <S.SelectWrapper>
-                <S.Select
-                  value={wineType}
-                  onChange={(e) =>
-                    setWineType(
-                      e.target.value as 'red' | 'white' | 'sparkling',
-                    )
-                  }
-                  required
-                >
-                  <option value="red">Red</option>
-                  <option value="white">White</option>
-                  <option value="sparkling">Sparkling</option>
-                </S.Select>
-                <S.ArrowIcon />
-              </S.SelectWrapper>
-            </form>
+            <S.Label>와인 타입</S.Label>
+            <S.DropdownWrapper onClick={handleDropdownToggle}>
+              <span>{selectedWineType.toUpperCase()}</span>
+              <S.ArrowIcon isOpen={isDropdownOpen} />
+            </S.DropdownWrapper>
+            <S.DropdownList isOpen={isDropdownOpen}>
+              <S.DropdownItem onClick={() => handleSelectWineType('red')}>Red</S.DropdownItem>
+              <S.DropdownItem onClick={() => handleSelectWineType('white')}>White</S.DropdownItem>
+              <S.DropdownItem onClick={() => handleSelectWineType('sparkling')}>Sparkling</S.DropdownItem>
+            </S.DropdownList>
           </S.ModalContentLayoutBox>
           <S.ModalContentLayoutBox>
             <S.ModalContentTitle>와인 사진</S.ModalContentTitle>
