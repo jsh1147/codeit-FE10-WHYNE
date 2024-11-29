@@ -4,6 +4,7 @@ import MyWines from '@/components/myProfile/MyWines';
 import ProfileCard from '@/components/myProfile/MyProfile';
 import DeleteModal from '@/components/common/DeleteModal'; 
 import EditWineModal from '@/components/myProfile/EditWineModal'; 
+import EditReviewModal from '@/components/myProfile/EditReviewModal';
 import * as S from '@/styles/myProfile.css';
 import { deleteReview, deleteWine } from '@/apis/itemDeleteEditApis';
 import { useRouter } from 'next/router';
@@ -17,6 +18,9 @@ export default function MyProfile() {
 
     const [isEditWineModalOpen, setEditWineModalOpen] = useState(false);
     const [editWineId, setEditWineId] = useState<number | null>(null); 
+    const [editWineName, setEditWineName] = useState<string>('');
+    const [isEditReviewModalOpen, setEditReviewModalOpen] = useState(false);
+    const [editReviewId, setEditReviewId] = useState<number | null>(null); 
 
     const openDeleteModal = (id: number, type: 'review' | 'wine') => {
         setDeleteTargetId(id);
@@ -36,6 +40,16 @@ export default function MyProfile() {
     const closeEditWineModal = () => {
         setEditWineId(null);
         setEditWineModalOpen(false);
+    };
+
+    const openEditReviewModal = (id: number, wineName: string) => {
+        setEditReviewId(id);
+        setEditReviewModalOpen(true);
+        setEditWineName(wineName);
+    };
+    const closeEditReviewModal = () => {
+        setEditReviewId(null);
+        setEditReviewModalOpen(false);
     };
 
     const handleDelete = async () => {
@@ -78,7 +92,10 @@ export default function MyProfile() {
                         </S.MyProfileHeader>
                         <S.TabContent $active={activeTab === 'reviews'}>
                             {activeTab === 'reviews' && (
-                                <MyReviews openDeleteModal={(id) => openDeleteModal(id, 'review')} />
+                                <MyReviews 
+                                    openDeleteModal={(id) => openDeleteModal(id, 'review')}
+                                    openEditReviewModal={(id,wineName) => openEditReviewModal(id, wineName)}
+                                />
                             )}
                         </S.TabContent>
                         <S.TabContent $active={activeTab === 'wines'}>
@@ -104,6 +121,14 @@ export default function MyProfile() {
                 <EditWineModal 
                     wineId={editWineId} 
                     closeModal={closeEditWineModal} 
+                />
+            )}
+
+            {isEditReviewModalOpen && editReviewId !== null && (
+                <EditReviewModal 
+                    reviewId={editReviewId} 
+                    wineName={editWineName}
+                    closeModal={closeEditReviewModal} 
                 />
             )}
         </S.MyProfilePageContainer>

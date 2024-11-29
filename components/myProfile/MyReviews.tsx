@@ -16,9 +16,10 @@ function formatTime(date: string): string {
 
 interface MyReviewsProps {
     openDeleteModal: (reviewId:number) => void;
+    openEditReviewModal: (reviewId:number, wineName:string) => void;
 }
 
-export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
+export default function MyReviews({ openDeleteModal, openEditReviewModal }: MyReviewsProps) {
     const [reviews, setReviews] = useState<GetReviews['list']>([]);
     const [cursor, setCursor] = useState<number>(0);
     const [totalCount, setTotalCount] = useState<number | null>(null);
@@ -27,6 +28,10 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
     const handleDeleteClick = (reviewId: number) => {
         openDeleteModal(reviewId); 
     };
+    const handleEditClick = (reviewId:number, wineName: string) => {
+        openEditReviewModal(reviewId, wineName);
+        console.log(wineName);
+    }
     const toggleDropdown = (id: number) => {
         setActiveDropdown(prev => (prev === id ? null : id));
     };
@@ -43,6 +48,7 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
                 setCursor(response.nextCursor);
                 setTotalCount(response.totalCount);
             }
+            
         } catch (error) {
             console.error('리뷰 불러오기 오류:', error);
         }
@@ -72,7 +78,6 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
     }, [fetchReviews]);
 
    
-
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (!(event.target as HTMLElement).closest('[data-dropdown]')) {
@@ -82,7 +87,7 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
         document.addEventListener('click', handleClickOutside);
         return () => document.removeEventListener('click', handleClickOutside);
     }, []);
-
+    
 
     return (
             <S.ReviewListContainer>
@@ -106,7 +111,7 @@ export default function MyReviews({ openDeleteModal }: MyReviewsProps) {
                                 <S.DropdownList>
                                     <ul>
                                         <li>
-                                            <S.DropdownItem >
+                                            <S.DropdownItem onClick={() => handleEditClick(review.id, review.wine.name)}>
                                                 수정하기
                                             </S.DropdownItem>
                                         </li>
