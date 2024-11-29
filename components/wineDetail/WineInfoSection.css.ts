@@ -18,6 +18,7 @@ export const WineInfoContainer = styled.div`
   align-items: center;
   width: min(1140px, 100%);
   height: 410px;
+  margin-top: 17px;
 
   ${media.tablet`
     padding: 0 20px;

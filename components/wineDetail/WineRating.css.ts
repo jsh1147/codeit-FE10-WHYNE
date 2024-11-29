@@ -17,12 +17,13 @@ export const WineRatingContainer = styled.div`
   flex-direction: column;
   width: 280px;
   height: 311px;
-  margin: 0 auto;
+  margin-right: 20px;
 
   ${media.tablet`
-    width: min(1199px, 100%);
+    width: min(875px, 100%);
     height: 162px;
-    padding: 0 85px;
+    padding: 20px 85px;
+    margin: 0 auto;
     display: grid;
     grid-template-areas: 
      'group1 group1 group3 group3'
@@ -32,9 +33,9 @@ export const WineRatingContainer = styled.div`
   `}
 
   ${media.mobile`
-    width: min(766px, 100%);
+    width: min(550px, 100%);
     height: 233px;
-    padding: 0 20px;
+    padding: 20px;
     display: grid;
     grid-template-areas: 
       'group1 group1 group1 group2'
