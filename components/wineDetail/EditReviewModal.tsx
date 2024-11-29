@@ -2,9 +2,11 @@ import * as S from './ReviewModal.css';
 import { useRouter } from 'next/router';
 import { MouseEvent, useState, useEffect } from 'react';
 import BasicButton from '@/components/wines/BasicButton';
-import { patchReview, getReview } from '@/apis/itemDeleteEditApis';
+import { getReview } from '@/apis/itemDeleteEditApis';
 import { Rating, Slider } from '@mui/material';
 import { translateAroma, translateAromaToKey } from '@/utils/translateAroma';
+import { AxiosError } from 'axios';
+import { instance } from '@/apis/instance';
 
 interface EditReviewModalProps {
   closeModal: () => void;
@@ -21,6 +23,23 @@ export interface PatchReviewData {
   aroma: string[];
   content: string;
 }
+
+const patchReview = async (
+  reviewId: number,
+  data: PatchReviewData,
+): Promise<void> => {
+  try {
+    const res = await instance.patch(`/reviews/${reviewId}`, data);
+    console.log('리뷰 수정 성공:', res.data);
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 403) {
+      alert('리뷰 작성자만 수정할 수 있습니다.');
+    } else {
+      alert('리뷰 수정 중 오류가 발생했습니다.');
+      console.error('리뷰 수정 중 오류 발생', error);
+    }
+  }
+};
 
 export default function EditReviewModal({
   closeModal,

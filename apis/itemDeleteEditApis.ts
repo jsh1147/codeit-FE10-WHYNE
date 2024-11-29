@@ -1,6 +1,4 @@
 import { instance } from './instance';
-import { AxiosError } from 'axios';
-
 export interface PatchWineData {
   name: string;
   price: number;
@@ -72,11 +70,8 @@ export const patchReview = async (
 ): Promise<void> => {
   try {
     const res = await instance.patch(`/reviews/${reviewId}`, data);
-  } catch (error) {
-    if (error instanceof AxiosError && error.response?.status === 403) {
-      alert('리뷰 작성자만 수정할 수 있습니다.');
-    } else {
-      console.error('리뷰 수정 중 오류 발생', error);
-    }
+  } catch (err) {
+    console.error(err);
+    alert('리뷰 수정 중 오류가 발생했습니다.');
   }
 };
