@@ -7,7 +7,6 @@ import CustomRating from '../common/CustomRating';
 import * as S from './WineCard.css';
 
 export default function WineCard({ wine }: { wine: WineDetails }) {
-  
   const navigateToWine = useWineNavigation();
 
   return (
@@ -16,10 +15,10 @@ export default function WineCard({ wine }: { wine: WineDetails }) {
         <S.WineImageThumbnail>
           <S.ImageWrapper>
             <Image
-              priority
+              placeholder="blur"
+              blurDataURL={wine.image}
               src={wine.image}
               fill
-              style={{ objectFit: 'cover' }}
               alt="와인이미지"
               sizes="150px"
             />
@@ -36,7 +35,7 @@ export default function WineCard({ wine }: { wine: WineDetails }) {
                 <strong>{wine.avgRating.toFixed(1)}</strong>
               </div>
               <CustomRating
-                defaultValue={wine.avgRating}
+                value={wine.avgRating}
                 size="medium"
                 readOnly
               />

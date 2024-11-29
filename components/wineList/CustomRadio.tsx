@@ -48,11 +48,11 @@ export default function CustomizedRadios(props: CustomizedRadiosProps) {
   };
 
   return (
-    <RadioGroup name="use-radio-group" defaultValue="4.5 - 4.0">
+    <RadioGroup name="use-radio-group" value="4.5 - 4.0">
       <FormControl>
         <S.StyledRadioGroup
           name="use-radio-group"
-          defaultValue={RATING_ALL}
+          value={RATING_ALL}
           onChange={handleRatingChange}
         >
           <S.StyledFormControlLabel

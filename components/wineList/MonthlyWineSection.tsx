@@ -70,7 +70,7 @@ export default function MonthlyWineSection() {
                     {/* NOTE: 정수일 때, 소수점 처리 */}
                     <p>{item.avgRating.toFixed(1)}</p>
                     <CustomRating
-                      defaultValue={item.avgRating}
+                      value={item.avgRating}
                       size="small"
                       readOnly
                     />

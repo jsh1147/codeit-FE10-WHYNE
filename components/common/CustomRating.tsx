@@ -3,21 +3,21 @@ import * as S from './CustomRating.css';
 
 interface CustomRatingProps {
   name?: string;
-  defaultValue: number;
+  value: number;
   size?: 'small' | 'large' | 'medium' | undefined;
   readOnly?: boolean;
 }
 
 export default function CustomRating({
   name,
-  defaultValue,
+  value,
   size = 'small',
   readOnly = true,
 }: CustomRatingProps) {
   return (
     <S.CustomRating
       name={name}
-      defaultValue={Math.floor(defaultValue)}
+      value={Math.floor(value)}
       size={size}
       readOnly={readOnly}
       emptyIcon={
