@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { postRefresh } from './auth';
+import { postRefresh } from './authApi';
 
 const BASE_URL = 'https://winereview-api.vercel.app/10-2/';
 

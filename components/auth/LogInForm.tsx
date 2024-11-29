@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { postLogIn } from '@/apis/auth';
+import { postLogIn } from '@/apis/authApi';
 import { useUser } from '@/store/UserContext';
 import * as S from './AuthForm.css';
 

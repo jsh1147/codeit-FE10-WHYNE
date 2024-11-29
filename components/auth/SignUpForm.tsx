@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { AxiosError } from 'axios';
-import { postSignUp } from '@/apis/auth';
+import { postSignUp } from '@/apis/authApi';
 import * as S from './AuthForm.css';
 
 interface SignUpFormData {
