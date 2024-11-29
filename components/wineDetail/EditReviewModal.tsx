@@ -12,6 +12,16 @@ interface EditReviewModalProps {
   wineName: string;
 }
 
+export interface PatchReviewData {
+  rating: number;
+  lightBold: number;
+  smoothTannic: number;
+  drySweet: number;
+  softAcidic: number;
+  aroma: string[];
+  content: string;
+}
+
 export default function EditReviewModal({
   closeModal,
   reviewId,
@@ -103,8 +113,8 @@ export default function EditReviewModal({
         });
         router.reload();
       }
-    } catch (err) {
-      console.error('리뷰 수정 중 오류 발생:', err);
+    } catch (error) {
+      console.error('리뷰 수정 중 오류 발생:', error);
     }
   };
 
