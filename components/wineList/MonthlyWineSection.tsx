@@ -31,8 +31,6 @@ export default function MonthlyWineSection() {
     const getRecommendedWines = async () => {
       try {
         const wines: Wine[] = await fetchRecommendedWines(10); // limit 값을 전달
-        //TODO: 테스트를 위한 코드, 수정 필요 --> 아래코드로 fast reload 경고 발생했었다.
-        // setRecommendedList([...wines, ...wines, ...wines]);
         setRecommendedList(wines || []);
       } catch (error) {
         console.error('추천와인 불러오기 에러:', error);

@@ -14,7 +14,12 @@ import {
   RATING_ALL,
 } from '@/constants/wineRating';
 import useDebounce from '@/hooks/useDebounce';
-import { PC, TABLET, useResponsiveQuery } from '@/hooks/useResponsiveQuery';
+import {
+  MOBILE,
+  PC,
+  TABLET,
+  useResponsiveQuery,
+} from '@/hooks/useResponsiveQuery';
 import { useUser } from '@/store/UserContext';
 import * as S from '@/styles/wineList.css';
 import { RatingType } from '@/types/wineRatingType';
@@ -30,7 +35,8 @@ export type FilterOptions = {
 };
 
 export default function WineListPage(): React.ReactElement {
-  const [isCreateButtonModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isCreateButtonModalOpen, setIsCreateButtonModalOpen] =
+    useState<boolean>(false);
   const responsiveQuery = useResponsiveQuery();
   const { user } = useUser();
 
@@ -64,7 +70,7 @@ export default function WineListPage(): React.ReactElement {
 
   /** 와인 등록 모달 상태 */
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsCreateButtonModalOpen(false);
   };
 
   const [debouncedOptions, options, setOptions] =
@@ -84,6 +90,14 @@ export default function WineListPage(): React.ReactElement {
 
     setOptions(newFilterOptions);
   };
+
+  useEffect(() => {
+    if (isCreateButtonModalOpen || isFilterOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isCreateButtonModalOpen, isFilterOpen]);
 
   useEffect(() => {
     let newRating: number;
@@ -139,7 +153,10 @@ export default function WineListPage(): React.ReactElement {
                 setModalFilter={setModalFilter}
               />
               {user !== undefined && (
-                <BasicButton onClick={() => setIsModalOpen(true)} $width="100%">
+                <BasicButton
+                  onClick={() => setIsCreateButtonModalOpen(true)}
+                  $width="100%"
+                >
                   와인 등록하기
                 </BasicButton>
               )}
@@ -149,21 +166,21 @@ export default function WineListPage(): React.ReactElement {
       )}
       {isCreateButtonModalOpen && <CreateWineModal closeModal={closeModal} />}
 
-      {responsiveQuery === TABLET && (
+      {(responsiveQuery === TABLET || responsiveQuery === MOBILE) && (
         <>
           <S.TopActionWrapper>
             <IconButton
               onClick={toggleFilter}
               sx={{
                 backgroundColor: '#fff',
-                width: 48,
-                height: 48,
+                width: responsiveQuery === MOBILE ? 38 : 48,
+                height: responsiveQuery === MOBILE ? 38 : 48,
                 border: '1px solid var(--gray-300)',
                 borderRadius: '8px',
                 '&:hover': { backgroundColor: 'transparent' },
               }}
             >
-              <TuneRoundedIcon sx={{ color: 'var(--gray-300)' }} />
+              <TuneRoundedIcon sx={{ color: 'var(--gray-500)' }} />
             </IconButton>
             {isFilterOpen && (
               <S.ModalOverlay>
@@ -181,9 +198,7 @@ export default function WineListPage(): React.ReactElement {
             </S.SearchBarWrapper>
             {user !== undefined && (
               <S.CreateWineButton>
-                <BasicButton
-                  onClick={() => setIsModalOpen(true)}
-                >
+                <BasicButton onClick={() => setIsCreateButtonModalOpen(true)}>
                   와인 등록하기
                 </BasicButton>
               </S.CreateWineButton>
