@@ -32,13 +32,19 @@ export default function Profile() {
 
   return (
     <>
-      <button type="button" onClick={handleProfileClick}>
+      <S.ProfileButton type="button" onClick={handleProfileClick}>
         {user?.image ? (
-          <S.ProfileImage src={user.image} alt="프로필 이미지" />
+          <S.ProfileImage
+            src={user.image}
+            alt="프로필 이미지"
+            width={0}
+            height={0}
+            sizes="100vw"
+          />
         ) : (
           <S.DefaultProfileImage aria-label="프로필 이미지" />
         )}
-      </button>
+      </S.ProfileButton>
       {isOpen && (
         <S.DropdownList>
           <ul>

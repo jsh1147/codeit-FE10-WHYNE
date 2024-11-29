@@ -10,7 +10,7 @@ export default function SignUp() {
   const { isLoading, user } = useUser();
 
   useEffect(() => {
-    if (user) replace('/wines');
+    if (user) replace('/');
   }, [user, replace]);
 
   return (
