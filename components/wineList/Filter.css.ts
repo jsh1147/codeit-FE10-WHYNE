@@ -74,25 +74,6 @@ export const FilterContainer = styled.section`
     max-height: 90vh; 
     overflow: hidden;
     overflow-y: auto; 
-
-    /** 스크롤바 커스텀 */
-    &::-webkit-scrollbar {
-    width: 6px;
-    }
-
-    /* 스크롤바: Track */
-    &::-webkit-scrollbar-track {
-      background-color: var(--gray-100);
-      background-color: #fff;
-      border-radius: 16px;
-      margin: 24px 0;
-    }
-    
-    /* 스크롤바: Handle */
-    &::-webkit-scrollbar-thumb {
-      background: var(--gray-500);
-      border-radius: 16px;
-    }
 `}
 `;
 

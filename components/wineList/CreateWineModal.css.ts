@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import ArrowDropDownIcon from '@/public/icons/dropdown.svg';
+import media from '@/styles/mediaQuery';
 
 export const ModalTitle = styled.h2`
   font-size: 24px;
@@ -29,7 +30,7 @@ export const ModalOverlay = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background: white;
+  background: #fff;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -38,6 +39,20 @@ export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+  max-height: 90vh;
+
+  ${media.tablet`
+  max-height: 88vh;
+    
+    overflow-y: auto; 
+    position: absolute;
+    /* top: 50%; */
+    width: calc(100% - 18px);    
+    left: 0;
+    bottom: 0;
+
+    
+  `}
 `;
 
 export const StyledInput = styled.input`

@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import media from '@/styles/mediaQuery';
+import styled from 'styled-components';
 
 export const WinesPageContainer = styled.div`
   width: min(1140px, 100%);
@@ -8,6 +8,7 @@ export const WinesPageContainer = styled.div`
   ${media.tablet`
     margin: 108px auto auto;
     width: min(1140px, 100% - 40px);
+    position: relative;
 
   `}
 
@@ -25,10 +26,6 @@ export const GridWrapper = styled.div`
   grid-row-gap: 20px;
   grid-column-gap: 60px;
   margin-top: 40px;
-
-  /* ${media.tablet`
-    display: block;
-  `} */
 `;
 
 export const SearchBarWrapper = styled.div<{ $isLogin: boolean }>`
@@ -37,10 +34,14 @@ export const SearchBarWrapper = styled.div<{ $isLogin: boolean }>`
 
   ${(props) =>
     media.tablet`
-      flex: 1;
+      width: 90%;
       margin-left: 24px;
       margin-right: ${props.$isLogin ? '16px' : '0'};
     `}
+
+  ${media.mobile`
+    width: 80%;
+  `}
 `;
 
 export const FilterWrapper = styled.div`
@@ -61,7 +62,6 @@ export const WineCardListWrapper = styled.div`
 // Tablet UI
 export const TopActionWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   margin-top: 40px;
   margin-bottom: 32px;
 `;
@@ -77,4 +77,23 @@ export const ModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 101; // header가 100 이여서 101로 설정
+`;
+
+export const CreateWineButton = styled.div`
+  ${media.tablet`
+  width: 220px;
+  `}
+
+  ${media.mobile`
+    z-index: 100;
+  bottom: 35px;
+  position: fixed;
+  width: calc(100% - 32px);
+
+  button {
+      padding: 16px 172px;
+      width: 100%;
+      white-space: nowrap;
+    }
+  `}
 `;

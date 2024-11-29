@@ -180,9 +180,13 @@ export default function WineListPage(): React.ReactElement {
               <SearchBar searchByKeyword={searchByKeyword} />
             </S.SearchBarWrapper>
             {user !== undefined && (
-              <BasicButton onClick={() => setIsModalOpen(true)} $width="220px">
-                와인 등록하기
-              </BasicButton>
+              <S.CreateWineButton>
+                <BasicButton
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  와인 등록하기
+                </BasicButton>
+              </S.CreateWineButton>
             )}
           </S.TopActionWrapper>
           <S.WineCardListWrapper>
