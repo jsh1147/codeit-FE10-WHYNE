@@ -172,6 +172,7 @@ export const ReviewRatingStar = styled(Star)`
 `;
 
 export const Content = styled.p`
+  white-space: pre-wrap;
   margin-bottom: 20px;
 `;
 
@@ -262,6 +263,7 @@ export const StyledSlider = styled.input`
 export const NoReviewsMessage = styled.div`
   display: flex;
   justify-content: center;
+
   align-items: center;
   height: 200px;
 `;

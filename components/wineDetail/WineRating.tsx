@@ -27,7 +27,7 @@ export const WineRating: React.FC<WineRatingProps> = ({
     <S.WineRatingContainer>
       <S.Group1>
         <S.AvgRating>
-          {avgRating !== null ? avgRating.toFixed(1) : '0'}
+          {avgRating !== null ? avgRating.toFixed(1) : '0.0'}
         </S.AvgRating>
         <S.Group1_2>
           <S.StarRating>

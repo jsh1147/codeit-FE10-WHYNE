@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { instance } from '@/apis/instance';
 import { ReviewsType } from '@/types/wineDetailTypes';
 import { translateAroma } from './TranslateAroma';
-import { formatRelativeTime } from './FormatRelativeTime';
+import { formatRelativeTime } from '@/utils/formatRelativeTime';
 import * as S from './ReviewList.css';
 import { AxiosError } from 'axios';
 
