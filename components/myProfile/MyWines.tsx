@@ -132,5 +132,4 @@ export default function MyWines({ openDeleteModal, openEditWineModal } : MyWineP
         <div ref={setupObserver}></div>
         </S.WineListContainer>
     );
-}
-
+};

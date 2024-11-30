@@ -2,6 +2,10 @@ import styled from 'styled-components';
 import ArrowDropDownIcon from '@/public/icons/dropdown.svg';
 import media from '@/styles/mediaQuery';
 
+interface DropdownProps {
+  isOpen: boolean;
+}
+
 export const ModalTitle = styled.h2`
   font-size: 24px;
   font-weight: 700;
@@ -86,7 +90,6 @@ export const ModalContentLayoutBox = styled.div`
   gap: 16px;
 `;
 
-// TODO: <option> 태그가 커스텀이 안되서 드롭다운 스타일 수정 필요
 export const Label = styled.label`
   display: block;
   margin-bottom: 0.5rem;
@@ -98,27 +101,59 @@ export const Label = styled.label`
   line-height: 26px;
 `;
 
-export const Select = styled.select`
+export const DropdownWrapper = styled.div`
+  position: relative;
   width: 100%;
-  height: 100%;
-  margin-bottom: 1rem;
+  height: 48px;
   border: 1px solid var(--gray-300);
   border-radius: 16px;
-  color: var(--gray-500);
-  padding: 11px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  cursor: pointer;
+  color: var(--gray-800);
+  background-color: #fff;
 `;
 
-export const SelectWrapper = styled.div`
+export const DropdownList = styled.div<DropdownProps>`
   position: relative;
-  height: 48px;
+  border: 1px solid var(--gray-300);
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+  z-index: 999;
+  border-radius: 16px;
 `;
 
-export const ArrowIcon = styled(ArrowDropDownIcon)`
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  pointer-events: none;
+export const DropdownItem = styled.div`
+  position:relative;
+  padding: 12px 16px;
+  font-size: 16px;
+  color: var(--gray-800);
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 26px;
+  border: 0.5px solid var(--gray-300);
+
+  &:hover {
+    background-color: var(--gray-100);
+  }
+
+  &:active {
+    background-color: var(--gray-200);
+  }
+`;
+
+export const ArrowIcon = styled(ArrowDropDownIcon)<DropdownProps>`
+  transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
+  transition: transform 0.3s ease;
 `;
 
 export const StyledFileUpload = styled.label`
@@ -126,7 +161,6 @@ export const StyledFileUpload = styled.label`
     display: none;
   }
 
-  // 와인 사진 업로드 가능한 박스
   display: inline-block;
   cursor: pointer;
   width: 140px;
