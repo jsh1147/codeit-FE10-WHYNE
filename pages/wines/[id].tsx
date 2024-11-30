@@ -6,11 +6,13 @@ import { instance } from '@/apis/instance';
 import { WineInfo } from '../../components/wineDetail/WineInfoSection';
 import { WineRating } from '../../components/wineDetail/WineRating';
 import * as S from '../../styles/WineDetail.css';
+import { useUser } from '@/store/UserContext';
 
 export default function WineDetail() {
   const [wine, setWine] = useState<WineDetailTypes | null>(null);
   const router = useRouter();
   const { id } = router.query;
+  const { isLoading, user } = useUser();
 
   const wineId = Number(id);
 
@@ -25,9 +27,14 @@ export default function WineDetail() {
   }
 
   useEffect(() => {
-    if (!wineId) return;
-    getWine(wineId);
-  }, [wineId]);
+    if (isLoading) return;
+    if (user) {
+      getWine(wineId);
+    } else {
+      alert('로그인 후 이용 가능합니다.');
+      router.replace('/wines');
+    }
+  }, [isLoading, router, user, wineId]);
 
   if (!wine) return null;
 
