@@ -1,10 +1,11 @@
 import { fetchWineList } from '@/apis/wineListApi';
 import { WineDetails } from '@/types/wineListTypes';
+import { WineType } from '@/types/wineType';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface useWineListProps {
   cursor?: number;
-  type?: 'RED' | 'WHITE' | 'SPARKLING';
+  type?: WineType;
   minPrice?: number;
   maxPrice?: number;
   rating?: number;

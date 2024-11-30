@@ -21,6 +21,25 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  /** 스크롤바 커스텀 */
+  *::-webkit-scrollbar {
+    width: 6px;
+    }
+
+    /* 스크롤바: Track */
+    *::-webkit-scrollbar-track {
+      background-color: var(--gray-100);
+      background-color: #fff;
+      border-radius: 16px;
+      margin: 24px 0;
+    }
+    
+    /* 스크롤바: Handle */
+    *::-webkit-scrollbar-thumb {
+      background: var(--gray-500);
+      border-radius: 16px;
+    }
+
   a {
     text-decoration: none;
     color: inherit;
@@ -51,16 +70,10 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    min-width: 375px;
     overflow-y: scroll;
     color: var(--gray-800);
     word-break: keep-all;
     font-family: "Pretendard", sans-serif;
-  }
-
-  .container {
-    max-width: calc(100vw - 780px); /* 100%에서 좌우 여백(390px * 2)을 뺀 넓이 */
-    margin: 0 auto; 
   }
 `;
 

@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useUser } from '@/store/UserContext';
-import LogInForm from '@/components/login/LogInForm';
-import SocialLogIn from '@/components/login/SocialLogIn';
+import LogInForm from '@/components/auth/LogInForm';
+import SocialLogIn from '@/components/auth/SocialLogIn';
 import * as S from '@/styles/auth.css';
 
 export default function LogIn() {
@@ -11,7 +11,7 @@ export default function LogIn() {
   const { isLoading, user } = useUser();
 
   useEffect(() => {
-    if (user) replace('/wines');
+    if (user) replace('/');
   }, [user, replace]);
 
   return (

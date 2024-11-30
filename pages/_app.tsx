@@ -4,7 +4,7 @@ import Head from 'next/head';
 import localFont from 'next/font/local';
 import { UserProvider } from '@/store/UserContext';
 import Layout from '@/components/layout/Layout';
-import GlobalStyle from '@/styles/GlobalStyles';
+import GlobalStyles from '@/styles/GlobalStyles';
 
 const pretendard = localFont({
   src: '../public/fonts/PretendardVariable.woff2',
@@ -26,10 +26,11 @@ export default function App({ Component, pageProps }: MyAppProps) {
   return (
     <>
       <Head>
+        <title>WINE</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <GlobalStyle />
+      <GlobalStyles />
       <ProviderComponent>
         <LayoutComponent>
           <Component className={pretendard.className} {...pageProps} />

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import * as S from './WineRating.css';
+import PostReviewModal from './PostReviewModal';
 
 interface WineRatingProps {
-  avgRating: number;
+  wineId: number;
+  wineName: string;
+  avgRating: number | null;
   reviewCount: number;
   avgRatings: {
     [key: number]: number;
@@ -10,6 +13,8 @@ interface WineRatingProps {
 }
 
 export const WineRating: React.FC<WineRatingProps> = ({
+  wineId,
+  wineName,
   avgRating,
   reviewCount,
   avgRatings,
@@ -20,13 +25,31 @@ export const WineRating: React.FC<WineRatingProps> = ({
     ratingCounts[i - 1] = avgRatings[i] || 0;
   }
 
-  const fullStars = Math.floor(avgRating);
+  const fullStars = avgRating ? Math.floor(avgRating) : 0;
   const emptyStars = 5 - fullStars;
+
+  const [modalState, setModalState] = useState<{
+    isOpen: boolean;
+    wineId: number | null;
+    wineName: string;
+  }>({ isOpen: false, wineId: null, wineName: '' });
+
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  const openModal = (wineId: number, wineName: string) => {
+    setModalState({ isOpen: true, wineId, wineName });
+  };
+
+  const closeModal = () => {
+    setModalState({ isOpen: false, wineId: null, wineName: '' });
+  };
 
   return (
     <S.WineRatingContainer>
       <S.Group1>
-        <S.AvgRating>{avgRating.toFixed(1)}</S.AvgRating>
+        <S.AvgRating>
+          {avgRating !== null ? avgRating.toFixed(1) : '0.0'}
+        </S.AvgRating>
         <S.Group1_2>
           <S.StarRating>
             {[...Array(fullStars)].map((_, index) => (
@@ -54,10 +77,27 @@ export const WineRating: React.FC<WineRatingProps> = ({
         })}
       </S.RatingCount>
       <S.buttonBox>
-        <S.ReviewButton>
-          <button>리뷰 남기기</button>
+        <S.ReviewButton onClick={() => openModal(wineId, wineName)}>
+          리뷰 남기기
         </S.ReviewButton>
       </S.buttonBox>
+
+      {modalState.isOpen && modalState.wineId !== null && (
+        <div ref={modalRef}>
+          <PostReviewModal
+            closeModal={closeModal}
+            wineId={modalState.wineId}
+            wineName={modalState.wineName}
+            rating={0}
+            lightBold={0}
+            smoothTannic={0}
+            drySweet={0}
+            softAcidic={0}
+            aroma={[]}
+            content={''}
+          />
+        </div>
+      )}
     </S.WineRatingContainer>
   );
 };

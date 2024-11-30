@@ -39,4 +39,9 @@ export const MoveButton = styled.button`
   font-size: 16px;
   font-weight: 700;
   color: var(--white);
+  transition: 0.2s;
+
+  &:hover {
+    filter: saturate(70%) contrast(130%);
+  }
 `;

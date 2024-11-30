@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useUser } from '@/store/UserContext';
-import SignUpForm from '@/components/login/SignUpForm';
+import SignUpForm from '@/components/auth/SignUpForm';
 import * as S from '@/styles/auth.css';
 
 export default function SignUp() {
@@ -10,7 +10,7 @@ export default function SignUp() {
   const { isLoading, user } = useUser();
 
   useEffect(() => {
-    if (user) replace('/wines');
+    if (user) replace('/');
   }, [user, replace]);
 
   return (

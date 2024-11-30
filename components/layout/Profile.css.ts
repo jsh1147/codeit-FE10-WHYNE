@@ -3,11 +3,16 @@ import media from '@/styles/mediaQuery';
 import Image from 'next/image';
 import DefaultImage from '@/public/icons/profile_default.svg';
 
+export const ProfileButton = styled.button`
+  border-radius: 100%;
+`;
+
 const ImageCss = css`
   width: 40px;
   height: 40px;
   border-radius: 100%;
   border: 1px solid var(--gray-300);
+  background-color: var(--gray-300);
 
   ${media.mobile`
     width: 30px;

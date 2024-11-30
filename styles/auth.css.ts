@@ -74,9 +74,14 @@ export const MoveLink = styled(Link)`
   ${F.TextLgMedium}
   color: var(--purple-100);
   text-decoration: underline;
+  transition: 0.2s;
 
   ${media.mobile`
     margin-left: 8px;
     ${F.TextMdMedium}
   `}
+
+  &:hover {
+    font-weight: bold;
+  }
 `;

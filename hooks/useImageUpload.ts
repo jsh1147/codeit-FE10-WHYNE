@@ -34,15 +34,16 @@ const useImageUpload = () => {
       const formData = new FormData();
       formData.append('image', file);
 
-      const res = await instance.post('/images/upload', formData);
-      console.log('이미지 업로드 성공!', res.data.url);
+      const res = await instance.post('/images/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
       return res.data.url;
     } catch (error) {
       console.error('이미지 업로드에 실패했습니다......', error);
       return null;
     }
   };
-  
+
   return { previewImageSrc, handleImagePreview, uploadImage, imageFile };
 };
 
