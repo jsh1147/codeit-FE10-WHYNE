@@ -1,7 +1,7 @@
 import * as S from './DeleteReviewModal.css';
 import { useRouter } from 'next/router';
 import { MouseEvent } from 'react';
-import BasicButton from '@/components/wines/BasicButton';
+import BasicButton from '@/components/wineList/BasicButton';
 import { AxiosError } from 'axios';
 import { instance } from '@/apis/instance';
 

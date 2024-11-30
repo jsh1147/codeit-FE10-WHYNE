@@ -34,11 +34,7 @@ export default function WineCard({ wine }: { wine: WineDetails }) {
               <div aria-label="평점">
                 <strong>{wine.avgRating.toFixed(1)}</strong>
               </div>
-              <CustomRating
-                value={wine.avgRating}
-                size="medium"
-                readOnly
-              />
+              <CustomRating value={wine.avgRating} size="medium" readOnly />
               <S.WineInfoText $fontSize={'14px'} $lineHeight={'24px'}>
                 {wine.reviewCount}개의 후기
               </S.WineInfoText>

@@ -77,8 +77,6 @@ export const MonthlyWineCardInfoText = styled.span`
   }
 `;
 
-
-
 export const StyledSlider = styled(Slider)`
   .slick-prev:before,
   .slick-next:before {

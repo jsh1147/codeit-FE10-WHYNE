@@ -5,7 +5,8 @@ export function useInfiniteScroll(hasMore: boolean, loadMore: () => void) {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    if (!loadMoreRef.current || !hasMore) return;
+    const ref = loadMoreRef.current;
+    if (!ref || !hasMore) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -21,11 +22,11 @@ export function useInfiniteScroll(hasMore: boolean, loadMore: () => void) {
       },
     );
 
-    observer.observe(loadMoreRef.current);
+    observer.observe(ref);
 
     return () => {
-      if (loadMoreRef.current) {
-        observer.unobserve(loadMoreRef.current);
+      if (ref) {
+        observer.unobserve(ref);
       }
     };
   }, [hasMore, loadMore]);

@@ -1,7 +1,7 @@
 import * as S from './ReviewModal.css';
 import { useRouter } from 'next/router';
 import { MouseEvent, useState, useEffect } from 'react';
-import BasicButton from '@/components/wines/BasicButton';
+import BasicButton from '@/components/wineList/BasicButton';
 import { getReview } from '@/apis/itemDeleteEditApis';
 import { Rating, Slider } from '@mui/material';
 import { translateAroma, translateAromaToKey } from '@/utils/translateAroma';

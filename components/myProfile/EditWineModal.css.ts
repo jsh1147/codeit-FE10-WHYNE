@@ -39,8 +39,8 @@ export const ModalContent = styled.div`
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 460px;
-  max-height: 80vh; 
-  overflow-y: auto; 
+  max-height: 80vh;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -131,7 +131,7 @@ export const DropdownList = styled.div<DropdownProps>`
 `;
 
 export const DropdownItem = styled.div`
-  position:relative;
+  position: relative;
   padding: 12px 16px;
   font-size: 16px;
   color: var(--gray-800);

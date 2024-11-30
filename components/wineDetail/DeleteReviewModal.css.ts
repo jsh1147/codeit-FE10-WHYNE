@@ -46,7 +46,7 @@ export const ModalContent = styled.div`
   gap: 40px;
 
   ${media.mobile`
-      width: 375px;
+    width: 375px;
   `}
 `;
 

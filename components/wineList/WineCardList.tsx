@@ -70,7 +70,7 @@ export default function WineCardList(props: WineCardListProps) {
         next={fetchMoreWines}
         hasMore={hasMore}
         scrollThreshold="90%"
-        loader={<h4 style={{textAlign: 'center'}}>Loading...</h4>}
+        loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
       >
         <S.WineCardListContainer>
           {wines.map((wine) => (
