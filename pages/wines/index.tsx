@@ -1,25 +1,80 @@
-import BasicButton from '@/components/wines/BasicButton';
-import CreateWineModal from '@/components/wines/CreateWineModal';
-import Filter from '@/components/wines/Filter';
-import MonthlyWineSection from '@/components/wines/MonthlyWineSection';
-import SearchBar from '@/components/wines/SearchBar';
+import BasicButton from '@/components/wineList/BasicButton';
+import CreateWineModal from '@/components/wineList/CreateWineModal';
+import Filter from '@/components/wineList/Filter';
+import MonthlyWineSection from '@/components/wineList/MonthlyWineSection';
+import SearchBar from '@/components/wineList/SearchBar';
 import WineCardList, {
   WineFilterOptions,
-} from '@/components/wines/WineCardList';
+} from '@/components/wineList/WineCardList';
+import {
+  RATING_30_35,
+  RATING_35_40,
+  RATING_40_45,
+  RATING_45_50,
+  RATING_ALL,
+} from '@/constants/wineRating';
 import useDebounce from '@/hooks/useDebounce';
-import * as S from '@/styles/Wines.css';
+import {
+  MOBILE,
+  PC,
+  TABLET,
+  useResponsiveQuery,
+} from '@/hooks/useResponsiveQuery';
+import { useUser } from '@/store/UserContext';
+import * as S from '@/styles/wineList.css';
+import { RatingType } from '@/types/wineRatingType';
+import { WineType } from '@/types/wineType';
+import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
+import { IconButton } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-export default function WineListPage(): React.ReactElement {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isLogin, setIsLogin] = useState(false);
+export type FilterOptions = {
+  type?: WineType;
+  price: [number, number];
+  rating: RatingType;
+};
 
+export default function WineListPage(): React.ReactElement {
+  const [isCreateButtonModalOpen, setIsCreateButtonModalOpen] =
+    useState<boolean>(false);
+  const responsiveQuery = useResponsiveQuery();
+  const { user } = useUser();
+
+  const [filter, setFilter] = useState<FilterOptions>({
+    price: [0, 1000000],
+    rating: RATING_ALL,
+  });
+
+  const [modalFilter, setModalFilter] = useState<FilterOptions>({
+    price: [0, 1000000],
+    rating: RATING_ALL,
+  });
+
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  /** 필터 옵션 모달 상태 */
+  const toggleFilter = () => {
+    // 모달을 열 때,
+    if (!isFilterOpen) {
+      // PC의 필터값을 모바일 필터로 복사
+      setModalFilter((prev) => ({ ...prev, ...filter }));
+    }
+    setIsFilterOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (responsiveQuery === PC) {
+      setIsFilterOpen(false);
+    }
+  }, [responsiveQuery]);
+
+  /** 와인 등록 모달 상태 */
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsCreateButtonModalOpen(false);
   };
 
   const [debouncedOptions, options, setOptions] =
-    useDebounce<WineFilterOptions>({}, 500);
+    useDebounce<WineFilterOptions>({}, 100);
 
   const searchByKeyword = (newKeyword?: string) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,78 +91,124 @@ export default function WineListPage(): React.ReactElement {
     setOptions(newFilterOptions);
   };
 
-  const changeWineType = (newType?: 'RED' | 'WHITE' | 'SPARKLING') => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { type, ...others } = options;
-
-    let newFilterOptions: WineFilterOptions;
-
-    if (newType === undefined) {
-      newFilterOptions = { ...others };
+  useEffect(() => {
+    if (isCreateButtonModalOpen || isFilterOpen) {
+      document.body.style.overflow = 'hidden';
     } else {
-      newFilterOptions = { ...others, type: newType };
+      document.body.style.overflow = 'auto';
     }
-
-    setOptions(newFilterOptions);
-  };
-
-  const changePriceRange = (minPrice: number, maxPrice: number) => {
-    setOptions((prev) => ({
-      ...prev,
-      minPrice: minPrice,
-      maxPrice: maxPrice,
-    }));
-  };
-
-  const changeRating = (newRating?: number) => {
-    console.log('changeRating - ' + 'newRating: ' + newRating);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { rating, ...others } = options;
-    if (newRating === undefined) {
-      setOptions({
-        ...others,
-      });
-    } else {
-      setOptions({
-        ...others,
-        rating: newRating,
-      });
-    }
-  };
+  }, [isCreateButtonModalOpen, isFilterOpen]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (localStorage.getItem('accessToken')) setIsLogin(true);
-      else setIsLogin(false);
+    let newRating: number;
+    switch (filter.rating) {
+      case RATING_ALL:
+        // no action
+        break;
+
+      case RATING_45_50:
+        newRating = 5;
+        break;
+
+      case RATING_40_45:
+        newRating = 4.5;
+        break;
+
+      case RATING_35_40:
+        newRating = 4;
+        break;
+
+      case RATING_30_35:
+        newRating = 3.5;
+        break;
     }
-  }, []);
+
+    setOptions((prev) => ({
+      ...prev,
+      type: filter.type,
+      minPrice: filter.price[0],
+      maxPrice: filter.price[1],
+      rating: newRating,
+    }));
+  }, [filter, setOptions]);
 
   return (
-    <div className="container">
-      <S.WinesPageContainer>
-        <MonthlyWineSection />
-        <S.GridWrapper>
-          <S.SearchBarWrapper>
-            <SearchBar searchByKeyword={searchByKeyword} />
-          </S.SearchBarWrapper>
+    <S.WinesPageContainer>
+      <MonthlyWineSection />
+      {responsiveQuery === PC && (
+        <>
+          <S.GridWrapper>
+            <S.SearchBarWrapper $isLogin={user !== undefined}>
+              <SearchBar searchByKeyword={searchByKeyword} />
+            </S.SearchBarWrapper>
+
+            <S.WineCardListWrapper>
+              <WineCardList filterOptions={debouncedOptions} />
+            </S.WineCardListWrapper>
+            <S.FilterWrapper>
+              <Filter
+                filter={filter}
+                setFilter={setFilter}
+                modalFilter={modalFilter}
+                setModalFilter={setModalFilter}
+              />
+              {user !== undefined && (
+                <BasicButton
+                  onClick={() => setIsCreateButtonModalOpen(true)}
+                  $width="100%"
+                >
+                  와인 등록하기
+                </BasicButton>
+              )}
+            </S.FilterWrapper>
+          </S.GridWrapper>
+        </>
+      )}
+      {isCreateButtonModalOpen && <CreateWineModal closeModal={closeModal} />}
+
+      {(responsiveQuery === TABLET || responsiveQuery === MOBILE) && (
+        <>
+          <S.TopActionWrapper>
+            <IconButton
+              onClick={toggleFilter}
+              sx={{
+                backgroundColor: '#fff',
+                width: responsiveQuery === MOBILE ? 38 : 48,
+                height: responsiveQuery === MOBILE ? 38 : 48,
+                border: '1px solid var(--gray-300)',
+                borderRadius: '8px',
+                '&:hover': { backgroundColor: 'transparent' },
+              }}
+            >
+              <TuneRoundedIcon sx={{ color: 'var(--gray-500)' }} />
+            </IconButton>
+            {isFilterOpen && (
+              <S.ModalOverlay>
+                <Filter
+                  toggleFilter={toggleFilter}
+                  filter={filter}
+                  setFilter={setFilter}
+                  modalFilter={modalFilter}
+                  setModalFilter={setModalFilter}
+                />
+              </S.ModalOverlay>
+            )}
+            <S.SearchBarWrapper $isLogin={user !== undefined}>
+              <SearchBar searchByKeyword={searchByKeyword} />
+            </S.SearchBarWrapper>
+            {user !== undefined && (
+              <S.CreateWineButton>
+                <BasicButton onClick={() => setIsCreateButtonModalOpen(true)}>
+                  와인 등록하기
+                </BasicButton>
+              </S.CreateWineButton>
+            )}
+          </S.TopActionWrapper>
           <S.WineCardListWrapper>
             <WineCardList filterOptions={debouncedOptions} />
           </S.WineCardListWrapper>
-          <S.FilterWrapper>
-            <Filter
-              changeWineType={changeWineType}
-              changePriceRange={changePriceRange}
-              changeRating={changeRating}
-            />
-            {isLogin && (
-              <BasicButton onClick={() => setIsModalOpen(true)} $width="100%">
-                와인 등록하기
-              </BasicButton>
-            )}
-          </S.FilterWrapper>
-        </S.GridWrapper>
-        {isModalOpen && <CreateWineModal closeModal={closeModal} />}
-      </S.WinesPageContainer>
-    </div>
+        </>
+      )}
+    </S.WinesPageContainer>
   );
 }

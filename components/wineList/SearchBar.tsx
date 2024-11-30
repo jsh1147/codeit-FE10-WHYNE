@@ -37,7 +37,11 @@ export default function SearchBar({ searchByKeyword }: SearchBarProps) {
 
   return (
     <S.Container>
-      <SearchIcon alt="검색" />
+      <SearchIcon
+        className="search-icon"
+        alt="검색"
+        style={{ fill: `var(--gray-500)` }}
+      />
       <S.SearchBarInput
         value={keyword}
         onChange={handleInputChange}
@@ -45,6 +49,7 @@ export default function SearchBar({ searchByKeyword }: SearchBarProps) {
         placeholder="검색할 키워드를 입력해 주세요"
       />
       <CancelIcon
+        className="cancel-icon"
         style={{
           visibility: keyword === '' ? 'hidden' : 'visible',
           fill: `var(--gray-300)`,

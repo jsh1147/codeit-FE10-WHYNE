@@ -1,12 +1,14 @@
+import { instance } from '@/apis/instance';
+import { RED, SPARKLING, WHITE } from '@/constants/wineType';
+import useImageUpload from '@/hooks/useImageUpload';
 import IconPhoto from '@/public/icons/photo.svg';
+import { WineType } from '@/types/wineType';
+import { HttpStatusCode } from 'axios';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { MouseEvent, useState } from 'react';
 import BasicButton from './BasicButton';
 import * as S from './CreateWineModal.css';
-import useImageUpload from '@/hooks/useImageUpload';
-import Image from 'next/image';
-import { MouseEvent, useState } from 'react';
-import { instance } from '@/apis/instance';
-import { HttpStatusCode } from 'axios';
-import { useRouter } from 'next/router';
 
 interface CreateWineModalProps {
   closeModal: () => void;
@@ -20,9 +22,7 @@ export default function CreateWineModal({
   const [wineName, setWineName] = useState('');
   const [region, setRegion] = useState('');
   const [price, setPrice] = useState<number>(0);
-  const [wineType, setWineType] = useState<'red' | 'white' | 'sparkling'>(
-    'red',
-  );
+  const [wineType, setWineType] = useState<WineType>(RED);
 
   const { previewImageSrc, handleImagePreview, uploadImage, imageFile } =
     useImageUpload();
@@ -34,8 +34,8 @@ export default function CreateWineModal({
 
     const numericValue = Number(value);
 
-    // 10만 원 이하만 입력 가능 (필터에 걸려서 10만 이상은 입력 불가)
-    if (numericValue > 100000) return;
+    // 100만 원 이하만 입력 가능 (필터에 걸려서 100만 이상은 입력 불가)
+    if (numericValue > 1000000) return;
 
     setPrice(numericValue);
   };
@@ -81,7 +81,6 @@ export default function CreateWineModal({
 
         if (res.status === HttpStatusCode.Created) {
           alert('와인이 등록되었습니다.');
-          console.log(res.data);
           router.push(`/wines/${res.data.id}`);
         } else {
           alert('게시글 등록에 실패했습니다.');
@@ -109,7 +108,7 @@ export default function CreateWineModal({
             <S.ModalContentTitle>가격</S.ModalContentTitle>
             <S.StyledInput
               onChange={handlePriceChange}
-              placeholder="가격 입력 (10만원 이하)"
+              placeholder="가격 입력 (100만원 이하)"
             />
           </S.ModalContentLayoutBox>
           <S.ModalContentLayoutBox>
@@ -125,15 +124,13 @@ export default function CreateWineModal({
               <S.SelectWrapper>
                 <S.Select
                   onChange={(e) => {
-                    setWineType(
-                      e.target.value as 'red' | 'white' | 'sparkling',
-                    );
+                    setWineType(e.target.value as WineType);
                   }}
                   required
                 >
-                  <option value="red">Red</option>
-                  <option value="white">White</option>
-                  <option value="sparkling">Sparkling</option>
+                  <option value={RED}>Red</option>
+                  <option value={WHITE}>White</option>
+                  <option value={SPARKLING}>Sparkling</option>
                 </S.Select>
                 <S.ArrowIcon />
               </S.SelectWrapper>

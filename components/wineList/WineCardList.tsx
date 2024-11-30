@@ -1,17 +1,18 @@
 import { useWineList } from '@/hooks/useWineList';
 import { WineDetails } from '@/types/wineListTypes';
+import { WineType } from '@/types/wineType';
 import { useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import WineCard from './WineCard';
 import * as S from './WineCardList.css';
 
-export class WineFilterOptions {
-  type?: 'RED' | 'WHITE' | 'SPARKLING';
+export type WineFilterOptions = {
+  type?: WineType;
   minPrice?: number;
   maxPrice?: number;
   rating?: number;
   name?: string;
-}
+};
 
 interface WineCardListProps {
   filterOptions: WineFilterOptions;
@@ -28,7 +29,6 @@ export default function WineCardList(props: WineCardListProps) {
   const [hasMore, setHasMore] = useState(true);
 
   const fetchMoreWines = async () => {
-    console.log('fetchMoreWines');
     setOptions((prev) => ({
       ...prev,
       cursor: cursorRef.current,
@@ -36,13 +36,12 @@ export default function WineCardList(props: WineCardListProps) {
   };
 
   useEffect(() => {
-    console.log('useEffect-filterOptions');
     cursorRef.current = undefined;
     setOptions(filterOptions);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterOptions]);
 
   useEffect(() => {
-    console.log('useEffect-wineList');
     setHasMore(nextCursor !== null);
 
     const prevWines = [...wines];
@@ -60,6 +59,7 @@ export default function WineCardList(props: WineCardListProps) {
     }
 
     setWines(newWines);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wineList]);
 
   return (
@@ -70,8 +70,7 @@ export default function WineCardList(props: WineCardListProps) {
         next={fetchMoreWines}
         hasMore={hasMore}
         scrollThreshold="90%"
-        loader={<h4>Loading...</h4>}
-        endMessage={<p>No more wines available</p>}
+        loader={<h4 style={{textAlign: 'center'}}>Loading...</h4>}
       >
         <S.WineCardListContainer>
           {wines.map((wine) => (

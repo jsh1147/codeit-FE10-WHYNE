@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import ArrowDropDownIcon from '@/public/icons/dropdown.svg';
+import media from '@/styles/mediaQuery';
 
 export const ModalTitle = styled.h2`
   font-size: 24px;
@@ -25,11 +26,11 @@ export const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 101; // header가 100 이여서 101로 설정
 `;
 
 export const ModalContent = styled.div`
-  background: white;
+  background: #fff;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -38,6 +39,16 @@ export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  ${media.mobile`
+    max-height: 88vh;
+    position: absolute;
+    width: 100%;    
+    left: 0;
+    bottom: -6px;
+  `}
 `;
 
 export const StyledInput = styled.input`
