@@ -18,11 +18,11 @@ export default function Header() {
         <Link
           href="/"
           onClick={handleLogoClick}
-          aria-label="메인 페이지 바로가기"
+          aria-label="랜딩 페이지 바로가기"
         >
           <S.Logo aria-label="WINE 로고" />
         </Link>
-       {!isLoading &&
+        {!isLoading &&
           (user ? (
             <Profile />
           ) : (
@@ -30,7 +30,7 @@ export default function Header() {
               <Link href="/login">로그인</Link>
               <Link href="/signup">회원가입</Link>
             </S.AccountBox>
-        ))} 
+          ))}
       </S.HeaderContainer>
     </S.Header>
   );

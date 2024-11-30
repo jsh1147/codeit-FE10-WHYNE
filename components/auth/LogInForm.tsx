@@ -1,6 +1,5 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { AxiosError } from 'axios';
-import { postLogIn } from '@/apis/auth';
+import { postLogIn } from '@/apis/authApi';
 import { useUser } from '@/store/UserContext';
 import * as S from './AuthForm.css';
 
@@ -14,12 +13,13 @@ export default function LogInForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { isValid, errors },
     setError,
-  } = useForm<LoginFormData>();
+  } = useForm<LoginFormData>({ mode: 'onTouched' });
 
   const logInSubmit: SubmitHandler<LoginFormData> = async (data, event) => {
     event?.preventDefault();
+    if (!isValid) return;
 
     await postLogIn(data)
       .then(
@@ -28,15 +28,12 @@ export default function LogInForm() {
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
           if (setUser) setUser({ email, nickname, image });
-
-          window.alert('로그인되었습니다!\n즐거운 WINE 되세요.');
         },
       )
-      .catch((error: AxiosError<{ message: string }>) => {
-        const message = error.response?.data.message as string;
-
-        if (message.includes('이메일')) setError('email', { message });
-        if (message.includes('비밀번호')) setError('password', { message });
+      .catch(() => {
+        setError('email', {
+          message: '이메일 혹은 비밀번호를 확인해 주세요.',
+        });
       });
   };
 
@@ -47,7 +44,13 @@ export default function LogInForm() {
         type="email"
         id="email"
         placeholder="이메일 입력"
-        {...register('email')}
+        {...register('email', {
+          required: { value: true, message: '이메일은 필수 입력입니다.' },
+          pattern: {
+            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+            message: '이메일 형식으로 작성해 주세요.',
+          },
+        })}
       />
       <S.ErrorText>{errors.email?.message}</S.ErrorText>
       <S.Label htmlFor="password">비밀번호</S.Label>
@@ -55,7 +58,9 @@ export default function LogInForm() {
         type="password"
         id="password"
         placeholder="비밀번호 입력"
-        {...register('password')}
+        {...register('password', {
+          required: { value: true, message: '비밀번호는 필수 입력입니다.' },
+        })}
       />
       <S.ErrorText>{errors.password?.message}</S.ErrorText>
       <S.SubmitButton type="submit">로그인</S.SubmitButton>

@@ -56,6 +56,7 @@ export const MoveButton = styled.button`
   font-size: 16px;
   font-weight: 700;
   color: var(--white);
+  transition: 0.2s;
 
   ${media.tablet`
     margin: 20px 0 30px;
@@ -64,6 +65,10 @@ export const MoveButton = styled.button`
   ${media.mobile`
     margin: 20px 0 30px;
   `};
+
+  &:hover {
+    filter: saturate(70%) contrast(130%);
+  }
 `;
 
 export const CardsImage = styled(Image)`

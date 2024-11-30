@@ -60,10 +60,15 @@ export const SubmitButton = styled.button`
   background-color: var(--purple-100);
   ${F.TextLgBold}
   color: var(--white);
+  transition: 0.2s;
 
   ${media.mobile`
     height: 48px;
     border-radius: 12px;
     ${F.TextMdRegular}
   `}
+
+  &:hover {
+    filter: saturate(70%) contrast(130%);
+  }
 `;

@@ -1,4 +1,4 @@
-import { getMe } from '@/apis/user';
+import { getMe } from '@/apis/userApi';
 import {
   createContext,
   useState,
